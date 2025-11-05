@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1><%= title %></h1>
+      <nav>
+        <a href="/">Accueil</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h2><%= subtitle %></h2>
+        <p><%= content %></p>
+        <img
+          src="img_hotels/<%= imageName %>"
+          alt="Image dynamique / chambre_hotel"
+          class="responsive-img"
+        />
+      </section>
+      <section>
+        <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
+        <% if (hotelsList && hotelsList.length > 0) { %>
+        <ul>
+          <% hotelsList.forEach(function(hotel) { %>
+          <li><strong><%= hotel.name %></strong>, situé à <%= hotel.city %></li>
+          <% }); %>
+        </ul>
+        <% } else { %>
+        <p style="color: red">
+          Aucun hôtel trouvé ou connexion à la base de données échouée.
+        </p>
+        <% } %>
+        <hr />
+        <p>
+          Ce champ prouve que la liaison Node.js (server.js) <-> MySQL (DB) <->
+          EJS (index.ejs) est fonctionnelle.
+        </p>
+      </section>
+      <section>
+        <h2>ceci n'est pas Gilbert.fr</h2>
+        <p>Page provisoire pour tester Node.js.</p>
+        <img
+          src="img_rooms/img_hotel_0013.jpg"
+          alt="Description de l'image"
+          class="responsive-img"
+        />
+        <br />
+      </section>
+    </main>
+    <footer>
+      <p>© 2025 Mon Site de test Node.JS + express</p>
+    </footer>
+  </body>
+</html>
