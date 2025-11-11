@@ -9,6 +9,7 @@
   <body>
     <header>
       <h1><%= title %></h1>
+      <h2><%= pageTitle %></h2>
       <nav>
         <a href="/">Accueil</a>
         <a href="/contact">Contact</a>
@@ -42,6 +43,38 @@
           Ce champ prouve que la liaison Node.js (server.js) <-> MySQL (DB) <->
           EJS (index.ejs) est fonctionnelle.
         </p>
+      </section>
+      <section>
+        <h2>Formulaire de Recherche</h2>
+        <form action="search" method="GET" novalidate>
+          <label for="lieu">Destination (obligatoire) :</label>
+          <input type="text" id="lieu" name="lieu" required />
+          <label for="date_debut">Date d'arriver (obligatoire) :</label>
+          <input type="date" id="date_debut" name="date_debut" required />
+          <label for="date_fin">Date de départ (obligatoire) :</label>
+          <input type="date" id="date_fin" name="date_fin" required />
+          <label for="adultes">Nombre d'adultes (obligatoire) :</label>
+          <input type="number" id="adultes" name="adultes" required />
+          <label for="enfants">Nombre d'enfants :</label>
+          <input type="number" id="enfants" name="enfants" value="0" />
+          <label>
+            <input type="checkbox" name="animaux" value="true" />
+            Animaux acceptés </label
+          ><br />
+          <label>
+            <input type="checkbox" name="wifi" value="true" />
+            Wi-Fi gratuit </label
+          ><br />
+          <label>
+            <input type="checkbox" name="piscine" value="true" />
+            Piscine </label
+          ><br />
+          <label>
+            <input type="checkbox" name="spa" value="true" />
+            Spa / Centre de bien-être </label
+          ><br />
+          <div><button type="submit">Envoyer</button></div>
+        </form>
       </section>
       <section>
         <h2>ceci n'est pas Gilbert.fr</h2>

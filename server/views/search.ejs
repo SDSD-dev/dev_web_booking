@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1>Résultats de votre recherche</h1>
+
+    <% if (searchList && searchList.length > 0) { %>
+    <p><%= searchList.length %> résultats trouvés.</p>
+    <ul>
+      <% searchList.forEach(function(hotel) { %>
+      <li>
+        Hôtel: <strong><%= hotel.name %></strong>, Ville: <%= hotel.city %>,
+        Type de chambre: <%= hotel.type_chambre %>
+      </li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>Désolé, aucune chambre ne correspond à vos critères de recherche.</p>
+    <% } %>
+  </body>
+</html>

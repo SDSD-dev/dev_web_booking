@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, "../client/public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-danz; // --- Route principale pour la Home Page -------------------------------------------------------
+// --- Route principale pour la Home Page -------------------------------------------------------
 app.get("/", async (req, res) => {
   let connection;
   let hotels = [];
@@ -66,11 +66,12 @@ app.get("/", async (req, res) => {
     // 2. Exécuter la requête SQL
     // Nous sélectionnons le nom et la ville des 3 premiers hôtels.
     const [rows] = await connection.execute(
-      "SELECT name, city FROM hotel LIMIT 3"
+      "SELECT name, city FROM hotel LIMIT 4"
     );
     hotels = rows; // Les résultats sont dans 'rows'
 
     console.log(`Données récupérées: ${hotels.length} hôtels trouvés.`);
+    console.log(hotels);
 
     // 3. Rendre la vue EJS avec les données
     viewData.hotelsList = rows;
@@ -130,6 +131,127 @@ app.post("/contact_form", async (req, res) => {
   } catch (error) {
     console.error("Erreur:", error);
     res.status(500).send("Une erreur est survenue, veuillez réessayer.");
+  }
+});
+
+// Recherche hotel -------------------------------------------------------
+
+app.get("/search", async (req, res) => {
+  let connection;
+
+  let viewSearch = {
+    title: "Résultats de Recherche",
+    content: "Résultats des hôtels disponibles",
+    // 2. Initialiser searchList
+    searchList: [],
+  };
+
+  // 1. Récupération des critères de recherche depuis l'URL
+  const {
+    lieu,
+    date_debut,
+    date_fin,
+    adultes,
+    enfants,
+    piscine, // Ces valeurs seront 'true' ou undefined
+    spa,
+    animaux,
+    wifi,
+  } = req.query; // Récupère tous les champs du formulaire
+
+  // Préparation des variables
+  const params = []; // Array pour stocker les valeurs sécurisées (?)
+
+  // Requête de base avec la clause de disponibilité (dates)
+  let sql = `
+	SELECT 
+		T1.name, T1.city, T2.type_chambre, T2.prix_base, T2.capacite_max, T1.id_hotel
+	FROM 
+		hotel AS T1
+	JOIN 
+		chambres AS T2 ON T1.id_hotel = T2.hotel_id
+	WHERE 
+		1=1
+	AND T2.id_chambre NOT IN (
+		SELECT 
+			LC.chambre_id  -- C'est la table LIGNES_COMMANDE (LC) qui contient chambre_id !
+		FROM 
+			lignes_commande AS LC
+        -- Nous joignons commandes pour accéder aux dates
+        JOIN 
+            commandes AS C ON LC.commande_id = C.id_commande
+		WHERE
+			-- Condition de chevauchement sur les dates de la COMMANDE (C)
+			C.date_sejour_debut <= ?  
+			AND C.date_sejour_fin >= ?
+		)
+	`;
+
+  // ----------------------------------------------------
+  // INJECTION DES PARAMÈTRES DE DISPONIBILITÉ (CRITIQUE)
+  // ----------------------------------------------------
+  if (date_debut && date_fin) {
+    // SQL : date_sejour_debut <= [date_fin_demandée]
+    params.push(date_fin);
+    // SQL : date_sejour_fin >= [date_debut_demandée]
+    params.push(date_debut);
+  } else {
+    // Si les dates sont manquantes (mais obligatoires), nous devons éviter de planter
+    // Si les champs sont requis dans le formulaire, ce bloc est facultatif.
+    // Sinon, on remplace par des dates extrêmes pour ne pas filtrer
+    params.push("3000-01-01", "1900-01-01");
+  }
+
+  try {
+    // 1. Établir la connexion
+    connection = await getConnection();
+
+    // 2. Filtre Lieu (si le champ n'est pas vide)
+    if (lieu) {
+      sql += ` AND (T1.city LIKE ? OR T1.country LIKE ?)`;
+      params.push(`%${lieu}%`, `%${lieu}%`); // % pour la recherche partielle
+    }
+
+    // 3. Filtre Capacité
+    const capaciteDemandee = parseInt(adultes || 0) + parseInt(enfants || 0);
+    if (capaciteDemandee > 0) {
+      sql += ` AND T2.capacite_max >= ?`;
+      params.push(capaciteDemandee);
+    }
+
+    // 4. Filtres Checkbox (si l'attribut est présent, on filtre)
+    // Note: Si vous utilisez value="true" dans le HTML, la valeur est 'true' (string)
+    if (piscine) {
+      sql += ` AND T1.piscine = TRUE`;
+    }
+    if (spa) {
+      sql += ` AND T1.spa = TRUE`;
+    }
+    if (animaux) {
+      sql += ` AND T1.animaux = TRUE`;
+    }
+    if (wifi) {
+      sql += ` AND T1.wifi = TRUE`;
+    }
+
+    // 5. Exécuter la requête SQL
+    const [rows] = await connection.execute(sql, params);
+
+    // 6. Mettre à jour l'objet de données de la vue
+    viewSearch.searchList = rows;
+
+    console.log(`Requête exécutée. ${rows.length} résultats trouvés.`);
+  } catch (error) {
+    console.error("Erreur SQL ou de connexion:", error);
+    // Si une erreur survient, on met un message dans l'objet de vue
+    viewSearch.title = "Erreur de Base de Données";
+    viewSearch.content = "Une erreur est survenue lors de la recherche.";
+  } finally {
+    // 7. Fermer la connexion (Doit toujours être fait)
+    if (connection) {
+      await connection.end();
+    }
+    res.render("search", viewSearch);
   }
 });
 

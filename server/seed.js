@@ -31,12 +31,15 @@ function createHotelName() {
 }
 
 function createRandomHotel() {
+  const CITIES = ["Paris", "Lyon", "Lille", "Bordeaux", "Marseille", "Lourdes"];
   return {
     name: createHotelName(), // Utilisation de la fonction helper
     address: faker.location.streetAddress(), // Plus précis pour une adresse
-    city: faker.location.city(),
-    country: faker.location.country(),
-    currency: faker.finance.currencyCode(), // Ex: 'EUR', 'USD'
+    // city: faker.location.city(),
+    city: faker.helpers.arrayElement(CITIES), // Limité à 5 villes
+    country: "France", // Simplification pour le test
+    // country: faker.location.country(),
+    currency: faker.helpers.arrayElement(["EUR", "USD", "GBP"]), // Ex: 'EUR', 'USD', 'GBP'
     piscine: faker.datatype.boolean(),
     spa: faker.datatype.boolean(),
     animaux: faker.datatype.boolean(),
@@ -103,12 +106,26 @@ function createRandomChambres() {
 
 // NOTE: Cette fonction simule des commandes passées.
 function createRandomCommandes() {
-  const start = faker.date.past({ years: 1 }); // Une date passée pour la référence
+  // 1. Générer la date de début (entre il y a 1 an et dans 2 ans)
+  const start = faker.date.future({
+    years: 2,
+    refDate: faker.date.past({ years: 1 }),
+  });
+
+  // 2. Générer la date de fin APRÈS la date de début (+1 à +10 jours)
+  const end = faker.date.soon({ days: 10, refDate: start });
+
+  // 3. Générer les autres dates
+  const date_commande = faker.date.past({ days: 30, refDate: start });
+  const date_reservation = date_commande;
   return {
-    date_commande: start,
-    date_reservation: faker.date.recent({ days: 30, refDate: start }), // La réservation est récente par rapport à la commande
-    date_sejour_debut: faker.date.soon({ days: 365 }), // Séjour dans le futur
-    date_sejour_fin: faker.date.soon({ days: 400 }),
+    date_commande: date_commande.toISOString().split("T")[0],
+    date_reservation: date_reservation
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " "),
+    date_sejour_debut: start.toISOString().split("T")[0],
+    date_sejour_fin: end.toISOString().split("T")[0],
     nbr_adulte: faker.number.int({ min: 1, max: 4 }),
     nbr_enfant: faker.number.int({ min: 0, max: 3 }),
     paye: faker.datatype.boolean(),
@@ -224,15 +241,22 @@ async function seedDatabase() {
     `\n✅ Connexion MySQL établie. Amorçage de la DB: ${process.env.DB_NAME}`
   );
 
-  // --- ÉTAPE 1 : VIDER LES TABLES (Dans l'ordre inverse des dépendances) ---
-  // N'oubliez pas d'inclure les clés étrangères que vous avez définies:
+  // --- ÉTAPE 1 : VIDER LES TABLES (Ordre : ENFANT -> PARENT) ---
+
+  // 1. Tables dépendantes d'autres tables (le plus bas niveau)
   await connection.execute("DELETE FROM lignes_commande");
+  await connection.execute("DELETE FROM chambre_images"); // <-- NOUVEL ORDRE (avant chambres)
+  await connection.execute("DELETE FROM hotel_images"); // <-- NOUVEL ORDRE (avant hotel)
+  await connection.execute("DELETE FROM avis");
+  await connection.execute("DELETE FROM connexions");
+  await connection.execute("DELETE FROM contact"); // Autonome, mais bonne pratique de le vider tôt
+
+  // 2. Tables parentes (qui sont référencées par les tables vidées ci-dessus)
   await connection.execute("DELETE FROM commandes");
   await connection.execute("DELETE FROM chambres");
-  await connection.execute("DELETE FROM hotel_images"); // Nouvelle table
-  await connection.execute("DELETE FROM connexions");
-  await connection.execute("DELETE FROM avis");
   await connection.execute("DELETE FROM clients");
+
+  // 3. Tables racines (qui ne dépendent de rien d'autre)
   await connection.execute("DELETE FROM hotel");
 
   console.log("Tables vidées avec succès.");
