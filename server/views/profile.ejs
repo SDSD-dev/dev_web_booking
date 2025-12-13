@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <%- include('partials/header.ejs') %>
+    <section>
+      <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
+      <ul>
+        <h1>Bienvenue, <%= clientProfil.prenom %> <%= clientProfil.nom %></h1>
+        <p>Email : <%= clientProfil.email %></p>
+        <p>Adresse : <%= clientProfil.rue %>, <%= clientProfil.ville %></p>
+      </ul>
+      <hr />
+      <p>
+        La création d'un client (register.ejs + login.ejs + profil.ejs avec une
+        session) est fonctionnelle.
+      </p>
+      <button style="padding: 5px 10px;">
+        <a href="/logout">Déconnexion</a>
+      </button>
+    </section>
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>

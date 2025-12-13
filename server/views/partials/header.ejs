@@ -1,0 +1,16 @@
+<header>
+  <h1><%= title %></h1>
+  <h2><%= subtitle %></h2>
+  <nav>
+    <a href="/">Acceuil</a>
+    <% if (user) { %>
+    <a href="/profile">Profil (<%= user.role %>)</a>
+    <a href="/contact">Contact</a>
+    <a href="/logout">Déconnexion</a>
+    <% } else { %>
+    <a href="/contact">Contact</a>
+    <a href="/register">Inscription</a>
+    <a href="/login">Connexion</a>
+    <% } %>
+  </nav>
+</header>

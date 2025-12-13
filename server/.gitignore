@@ -1,0 +1,38 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv
+.env
+.env.local
+.env.*.local
+server/.env
+**/.env
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# VSCode
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# Builds
+dist/
+build/
+coverage/
+
+# Dependency lock files (optionnel selon ton gestionnaire)
+package-lock.json
+yarn.lock
+
+# Misc
+*.bak
+*.tmp
