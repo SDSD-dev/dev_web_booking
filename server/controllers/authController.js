@@ -1,5 +1,5 @@
 // server/controllers/authController.js
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
 const User = require("../models/User"); // Importation du modèle
 
 // --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---

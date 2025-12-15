@@ -11,39 +11,48 @@
 
     <div>
       <% if (searchList && searchList.length > 0) { %>
-      
-    <table>
-    <% searchList.forEach(function(hotel) { %>
-      <caption>
-      <p><%= searchList.length %> résultats trouvés.</p>
-      </caption>
-      <tr>				
-      <th scope="col" colspan="2">
-        <h2>Hôtel: <strong><%= hotel.name %></strong>, Ville: <%= hotel.city %></h2>
-      </th>
-      </tr>
-      <tr>
-      <td>
-        <img style="max-width: 50%"	src="<%= hotel.main_image_url %>" alt="Image de l'hôtel"/>
-      </td>
-      <td>
-        <p>URL : <%= hotel.main_image_url %></p>
-        <p>Prix : <%= hotel.prix_base %> €</p>
-        <p>Capacité max : <%= hotel.capacite_max %> personnes</p>
-        <p>Note moyenne : <%= hotel.average_rating || "Pas_encore_noté" %></p>
-        <p>Nombre d'avis : <%= hotel.review_count %></p>
-        <button>Réserver</button>
-      </td>
-      </tr>
-      <% }); %>
-    </table>
+
+      <table>
+        <caption>
+          <p><%= searchList.length %> résultats trouvés.</p>
+        </caption>
+        <% searchList.forEach(function(hotel) { %>
+        <tr>
+          <th scope="col" colspan="2">
+            <h2>
+              Hôtel: <strong><%= hotel.name %></strong>, Ville: <%= hotel.city
+              %>
+            </h2>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <img
+              style="max-width: 50%"
+              src="<%= hotel.main_image_url %>"
+              alt="Image de l'hôtel"
+            />
+          </td>
+          <td>
+            <p>URL : <%= hotel.main_image_url %></p>
+            <p>Prix : <%= hotel.prix_base %> €</p>
+            <p>Capacité max : <%= hotel.capacite_max %> personnes</p>
+            <p>
+              Note moyenne : <%= hotel.average_rating || "Pas_encore_noté" %>
+            </p>
+            <p>Nombre d'avis : <%= hotel.review_count %></p>
+            <button>Réserver</button>
+          </td>
+        </tr>
+        <% }); %>
+      </table>
       <% } else { %>
       <p>
         Désolé, aucune chambre ne correspond à vos critères de recherche. :)
       </p>
       <% searchList.length %> <% } %>
       <br />
-    </div>    
+    </div>
     <%- include('partials/footer.ejs') %>
   </body>
 </html>

@@ -58,3 +58,15 @@ Le projet suit strictement le modèle **MVC (Modèle - Vue - Contrôleur)** pour
 * **Back-Office (Admin) :** CRUD complet pour gérer les hôtels et services (Rôle Administrateur/Prestataire).
 * **Amélioration du Front-End (Bloc 1)**  :  HTML5, CSS3 (Vanilla + Custom), JavaScript
 * **Refonte Framework (Bloc 3) :** Transformation du Back-end en API REST et création d'un client Angular.
+
+## ⚙️ Installation
+
+1. Cloner le dépôt. 
+
+2. `npm install` pour installer les dépendances. 
+
+3. Configurer le fichier `.env` (DB_HOST, DB_USER, etc.). 
+
+4. Lancer `node server/seed.js` pour initialiser la BDD. 
+
+5. Lancer `node server/server.js` pour démarrer l'application.

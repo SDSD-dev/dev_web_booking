@@ -7,7 +7,6 @@ const fs = require("node:fs");
 const path = require("path");
 // const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise"); // Version promise pour async/await
-const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
 // express-session pour la gestion des sessions utilisateur
 const session = require("express-session");
 const { subtle } = require("node:crypto");
@@ -15,7 +14,7 @@ const { subtle } = require("node:crypto");
 // création de la constante app -> express() est une fonction
 const app = express();
 
-// Exemple d'initialisation de votre serveur Express
+// Initialisation de votre serveur Express
 // const port = process.env.SERVER_PORT || 3000;
 
 // --- Fonction de connexion à MySQL -------------------------------------------------------

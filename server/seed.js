@@ -37,7 +37,7 @@ function createRandomHotel() {
     address: faker.location.streetAddress(), // Plus précis pour une adresse
     // city: faker.location.city(),
     city: faker.helpers.arrayElement(CITIES), // Limité à 5 villes
-    country: "France", // Simplification pour le test
+    country: "France", // Simplification pour le test -> 1 seul pays
     // country: faker.location.country(),
     currency: faker.helpers.arrayElement(["EUR", "USD", "GBP"]), // Ex: 'EUR', 'USD', 'GBP'
     piscine: faker.datatype.boolean(),
@@ -53,7 +53,7 @@ function createRandomClient() {
   return {
     nom: faker.person.lastName(),
     prenom: faker.person.firstName(),
-    // Téléphone format international pour plus de réalisme
+    // Téléphone format international France
     telephone: faker.phone.number("+33 6 ## ## ## ##"),
     email: faker.internet.email(), // email unique
     pays: faker.location.country(),
