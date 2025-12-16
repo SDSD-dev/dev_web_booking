@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
+  <body> -->
     <%- include('partials/header.ejs') %>
 
     <div>
@@ -41,7 +41,10 @@
               Note moyenne : <%= hotel.average_rating || "Pas_encore_noté" %>
             </p>
             <p>Nombre d'avis : <%= hotel.review_count %></p>
-            <button>Réserver</button>
+            <!-- <button>Réserver</button> -->
+            <a href="/hotel/<%= hotel.id_hotel %>" class="btn-reserver">
+              Voir l'hôtel
+            </a>
           </td>
         </tr>
         <% }); %>
@@ -54,5 +57,5 @@
       <br />
     </div>
     <%- include('partials/footer.ejs') %>
-  </body>
-</html>
+  <!-- </body>
+</html> -->

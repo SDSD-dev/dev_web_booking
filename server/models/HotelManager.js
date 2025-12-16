@@ -11,7 +11,7 @@ class HotelManager {
     let sql = `
     SELECT 
         T1.name, T1.city, T2.type_chambre, T2.prix_base, T2.capacite_max, T1.id_hotel,
-        (SELECT url_image FROM chambre_images WHERE chambre_id = T2.id_chambre ORDER BY id_image LIMIT 1) AS main_image_url,
+        (SELECT url_image FROM hotel_images WHERE hotel_id = T1.id_hotel ORDER BY id_image LIMIT 1) AS main_image_url,
         (SELECT AVG(note) FROM avis WHERE hotel_id = T1.id_hotel) AS average_rating,
         (SELECT COUNT(*) FROM avis WHERE hotel_id = T1.id_hotel) AS review_count
       FROM hotel AS T1
@@ -49,17 +49,39 @@ class HotelManager {
     if (options.wifi) sql += ` AND T1.wifi = TRUE`;
     if (options.parking) sql += ` AND T1.parking = TRUE`;
 
+
+
     // 4. EXÉCUTION
     // On utilise db.execute directement (pas besoin de getConnection/release avec mysql2 pool simple)
     try {
       const [rows] = await db.execute(sql, params);
+    
+      const uniqueHotels = [];
+      // Un Set est comme une liste, mais qui ne peut contenir aucun doublon !!!!
+      const seen = new Set();
 
-      // C'est ICI qu'on retourne les données au contrôleur
-      return rows;
+      rows.forEach(row => {
+        if (!seen.has(row.id_hotel)) {
+          seen.add(row.id_hotel);
+          uniqueHotels.push(row);
+        }
+      });
+      
+      return uniqueHotels;
     } catch (error) {
       throw error; // On renvoie l'erreur au contrôleur pour qu'il la gère
     }
-  }
+  };
+  static async getOneById(idHotel) {
+    // Récupèrations des infos de l'hôtel + images + note moyenne
+    const sql = `SELECT hotel.*,
+    (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as note_moyenne,
+    (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as nb_avis
+    FROM hotel
+    WHERE hotel.id_hotel = ?`;
+    const [rows] = await db.execute(sql, [idHotel]);
+    return rows[0]; // return un objet unique (indice 0) et non un tableau
+  };
 }
 
 module.exports = HotelManager;
