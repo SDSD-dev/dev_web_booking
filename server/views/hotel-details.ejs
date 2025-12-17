@@ -1,25 +1,31 @@
 <%- include('partials/header.ejs') %>
 
 <div class="hotel-header">
-    <h1><%= hotel.name %></h1>
-    <p><strong>Lieu :</strong> <%= hotel.city %> - <%= hotel.country %> </p>
-    <p><%= hotel.description_hotel %></p>
+  <h1><%= hotel.name %></h1>
+  <p><strong>Lieu :</strong> <%= hotel.city %> - <%= hotel.country %></p>
+  <p><%= hotel.description_hotel %></p>
 </div>
 <h2>Chambres Disponibles</h2>
 <div class="room-list">
-    <% chambres.forEach(chambre => { %>
-    <div class="room-card">
-        <img src="<%= chambre.image_chambre %>" alt="Image de la chambre" class="room-image"/>
-        <div class="room-details">
-            <h5>Type de Chambre: <%= chambre.type_chambre %></h5>
-            <p>Capacité: <%= chambre.capacite_max %> personnes</p>
-            <p>Prix par nuit: <%= chambre.prix_base %> €</p>
-            <p><%= chambre.description_chambre %></p>
-            <a href="/book/room/<%= chambre.id_chambre %>" class="btn-reserver">Réserver cette chambre</a>
-            <hr/>
-        </div>
-    <% }) %>   
+  <% chambres.forEach(chambre => { %>
+  <div class="room-card">
+    <img
+      src="<%= chambre.image_chambre %>"
+      alt="Image de la chambre"
+      class="room-image"
+    />
+    <div class="room-details">
+      <h5>Type de Chambre: <%= chambre.type_chambre %></h5>
+      <p>Capacité: <%= chambre.capacite_max %> personnes</p>
+      <p>Prix par nuit: <%= chambre.prix_base %> €</p>
+      <p><%= chambre.description_chambre %></p>
+      <a href="/book/room/<%= chambre.id_chambre %>" class="btn-reserver"
+        >Réserver cette chambre</a
+      >
+      <hr />
+    </div>
+    <% }) %>
+  </div>
 </div>
 
 <%- include('partials/footer.ejs') %>
-

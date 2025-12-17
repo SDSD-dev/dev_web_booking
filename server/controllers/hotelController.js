@@ -28,11 +28,11 @@ exports.viewSearch = async (req, res) => {
 
     // --- LOGIQUE MÉTIER (Calculs) ---
 
-    // A. Calcul de la capacité (L'assistant fait le calcul ici)
+    // Calcul de la capacité (L'assistant fait le calcul ici)
     const capaciteTotale = parseInt(adultes || 0) + parseInt(enfants || 0);
 
-    // B. Gestion des dates par défaut
-    // On prépare les valeurs finales à envoyer au Modèle
+    // Gestion des dates par défaut
+    // Si pas de date fournie, on met des bornes très larges
     let start = "1900-01-01";
     let end = "3000-01-01";
     if (date_debut && date_fin) {
@@ -40,8 +40,8 @@ exports.viewSearch = async (req, res) => {
       end = date_fin;
     }
 
-    // 3. CRÉATION DU "DOSSIER CRITÈRES" (L'objet propre)
-    // C'est cet objet 'criteres' qui est passé au Manager
+
+    // C'est cet objet 'hotelSearchParams' qui est passé au Manager
     const hotelSearchParams = {
       lieu: lieu, // Peut être undefined
       dateDebut: start, // A une valeur sûre
@@ -61,7 +61,7 @@ exports.viewSearch = async (req, res) => {
 
     viewSearch.searchList = results;
 
-    // 6. AFFICHAGE
+    // AFFICHAGE
     console.log(`Résultats trouvés : ${results.length}`);
     res.render("search", viewSearch);
   } catch (error) {
@@ -83,7 +83,7 @@ exports.viewHotelDetails = async (req, res) => {
     }
     // Récupération des chambres de l'hôtel
     const chambres = await RoomManager.getRoomsByHotelId(idHotel);
-    //la vue
+    // Rendu de la vue avec les données de l'hôtel et ses chambres
     res.render("hotel-details", {
       title: hotel.name,
       subtitle: "Chambres Disponibles",

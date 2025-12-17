@@ -1,45 +1,34 @@
-<!-- <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register - Connexions</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body> -->
-    <%- include('partials/header.ejs') %>
-    <main>
-      <section>        
-        <form action="/register" method="POST" novalidate>
-          <h2>Formulaire d'inscription</h2>
-          <label for="nom">Nom (obligatoire) :</label>
-          <input type="text" id="nom" name="nom" required />
-          <label for="nom">Prenom (obligatoire) :</label>
-          <input type="text" id="prenom" name="prenom" required />
-          <label for="email">Email (obligatoire) :</label>
-          <input type="email" id="email" name="email" required />
-          <label for="telephone">Téléphone :</label>
-          <input type="tel" id="telephone" name="telephone" required />
+<%- include('partials/header.ejs') %>
+<main>
+  <section>
+    <form action="/register" method="POST" novalidate>
+      <h2>Formulaire d'inscription</h2>
+      <label for="nom">Nom (obligatoire) :</label>
+      <input type="text" id="nom" name="nom" required />
+      <label for="nom">Prenom (obligatoire) :</label>
+      <input type="text" id="prenom" name="prenom" required />
+      <label for="email">Email (obligatoire) :</label>
+      <input type="email" id="email" name="email" required />
+      <label for="telephone">Téléphone :</label>
+      <input type="tel" id="telephone" name="telephone" required />
 
-          <label for="email">Rue :</label>
-          <input type="text" id="rue" name="rue" required />
-          <label for="email">Code Postal :</label>
-          <input type="text" id="code_postal" name="code_postal" required />
-          <label for="email">Ville :</label>
-          <input type="text" id="ville" name="ville" required />
-          <label for="email">Pays :</label>
-          <input type="text" id="pays" name="pays" required />
+      <label for="email">Rue :</label>
+      <input type="text" id="rue" name="rue" required />
+      <label for="email">Code Postal :</label>
+      <input type="text" id="code_postal" name="code_postal" required />
+      <label for="email">Ville :</label>
+      <input type="text" id="ville" name="ville" required />
+      <label for="email">Pays :</label>
+      <input type="text" id="pays" name="pays" required />
 
-          <hr />
-          <label
-            >Mot de passe :
-            <input type="password" name="mot_de_passe" required /></label
-          ><br />
+      <hr />
+      <label
+        >Mot de passe :
+        <input type="password" name="mot_de_passe" required /></label
+      ><br />
 
-          <button type="submit">S'inscrire</button>
-        </form>
-      </section>
-    </main>
-    <%- include('partials/footer.ejs') %>
-  <!-- </body>
-</html> -->
+      <button type="submit">S'inscrire</button>
+    </form>
+  </section>
+</main>
+<%- include('partials/footer.ejs') %>

@@ -1,40 +1,24 @@
-<!-- <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact - Mon Site</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body> -->
-    <%- include('partials/header.ejs') %>
-    <main>
-      <section>        
-        <form action="/contact" method="POST" novalidate>
-          <h2>Formulaire de contact</h2>
-          <label for="nom">Nom (obligatoire) :</label>
-          <input type="text" id="nom" name="nom" required />
-          <label for="nom">Prenom (obligatoire) :</label>
-          <input type="text" id="prenom" name="prenom" required />
-          <label for="email">Email (obligatoire) :</label>
-          <input type="email" id="email" name="email" required />
-          <label for="phone">Téléphone :</label>
-          <input type="tel" id="phone" name="phone" required />
-          <label for="message">Message (obligatoire) :</label>
-          <textarea id="message" name="message" required></textarea>
-          <label
-            ><input
-              type="checkbox"
-              name="consent_public"
-              value="yes"
-              required
-            />
-            Je consens à la publication de mon message.</label
-          >
-          <div><button type="submit">Envoyer</button></div>
-        </form>
-      </section>
-    </main>
-    <%- include('partials/footer.ejs') %>
-  <!-- </body>
-</html> -->
+<%- include('partials/header.ejs') %>
+<main>
+  <section>
+    <form action="/contact" method="POST" novalidate>
+      <h2>Formulaire de contact</h2>
+      <label for="nom">Nom (obligatoire) :</label>
+      <input type="text" id="nom" name="nom" required />
+      <label for="nom">Prenom (obligatoire) :</label>
+      <input type="text" id="prenom" name="prenom" required />
+      <label for="email">Email (obligatoire) :</label>
+      <input type="email" id="email" name="email" required />
+      <label for="phone">Téléphone :</label>
+      <input type="tel" id="phone" name="phone" required />
+      <label for="message">Message (obligatoire) :</label>
+      <textarea id="message" name="message" required></textarea>
+      <label
+        ><input type="checkbox" name="consent_public" value="yes" required /> Je
+        consens à la publication de mon message.</label
+      >
+      <div><button type="submit">Envoyer</button></div>
+    </form>
+  </section>
+</main>
+<%- include('partials/footer.ejs') %>

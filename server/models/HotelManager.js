@@ -5,7 +5,7 @@ class HotelManager {
   static async getHotelSearch(hotelSearchParams) {
     const { lieu, dateDebut, dateFin, capacite, options } = hotelSearchParams;
 
-    let connection;
+    // let connection;
     const params = [];
 
     let sql = `
@@ -60,9 +60,13 @@ class HotelManager {
       // Un Set est comme une liste, mais qui ne peut contenir aucun doublon !!!!
       const seen = new Set();
 
+      // On parcourt toutes les lignes retournées par la requête
       rows.forEach(row => {
+        // Si on n'a pas encore vu cet id_hotel, on l'ajoute
         if (!seen.has(row.id_hotel)) {
+          // On l'ajoute au Set des id déjà vus
           seen.add(row.id_hotel);
+          // On l'ajoute au tableau des résultats uniques
           uniqueHotels.push(row);
         }
       });

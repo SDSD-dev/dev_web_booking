@@ -1,124 +1,103 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <!-- <link rel="stylesheet" href="css/style.css" /> -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">     -->
-  </head>
-  <body>
-    <%- include('partials/header.ejs') %>
-    <main>
-      <section>
-        <h2 style="text-align: center;">Front-end provisoire pour tester Node.js avec EJS et MySQL.</h2>
-        <p>
-          <ul style="margin-left: 25%;">
-            <li>Formulaire de recherche -> fonctionnelle</li>
-            <li>Connexion à la base de données MySQL local -> fonctionnelle</li>
-            <li>Affichage des données des hôtels depuis la BDD -> fonctionnelle</li>
-            <li>Pages de contact et d'inscription -> fonctionnelles</li>
-          </ul>
-        </p>
-      </section>
+<%- include('partials/header.ejs') %>
+<main>
+  <section>
+    <h2 style="text-align: center;">Front-end provisoire pour tester Node.js avec EJS et MySQL.</h2>
+    <p>
+      <ul style="margin-left: 25%;">
+        <li>Formulaire de recherche -> fonctionnelle</li>
+        <li>Connexion à la base de données MySQL local -> fonctionnelle</li>
+        <li>Affichage des données des hôtels depuis la BDD -> fonctionnelle</li>
+        <li>Pages de contact et d'inscription -> fonctionnelles</li>
+      </ul>
+    </p>
+  </section>
 
-      <div class="container mb-4">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-bs-target="#carouselExampleIndicators" class="active"></li>
-            <li data-bs-target="#carouselExampleIndicators" ></li>
-            <li data-bs-target="#carouselExampleIndicators" ></li>
-          </ol>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img class="d-block w-100" src="img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" alt="Hotel Truc">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_resultat.jpg" alt="Hotel Machin">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" alt="Hotel Bidule">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </a>
+  <div class="container mb-4">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-bs-target="#carouselExampleIndicators" class="active"></li>
+        <li data-bs-target="#carouselExampleIndicators" ></li>
+        <li data-bs-target="#carouselExampleIndicators" ></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" alt="Hotel Truc">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_resultat.jpg" alt="Hotel Machin">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" alt="Hotel Bidule">
         </div>
       </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
+    </div>
+  </div>
 
-<!-- 
-      <section>
-        <img
-        src="img_hotels/<%= imageName %>"
-        alt="Image dynamique / chambre_hotel"
-        class="responsive-img"
-        />
-      </section> -->
+  <section>        
+    <form action="search" method="GET" novalidate>
+      <h2>Formulaire de Recherche</h2>           
+      <select name="lieu" id="lieu" required>
+        <option value="">--Veuillez choisir une ville (obligatoire)--</option>
+        <option value="Paris">Paris</option>
+        <option value="Lyon">Lyon</option>
+        <option value="Lille">Lille</option>
+        <option value="Bordeaux">Bordeaux</option>
+        <option value="Marseille">Marseille</option>
+        <option value="Lourdes">Lourdes</option>
+      </select>
+      <label for="date_debut">Date d'arriver (obligatoire) :</label>
+      <input type="date" id="date_debut" name="date_debut" required />
+      <label for="date_fin">Date de départ (obligatoire) :</label>
+      <input type="date" id="date_fin" name="date_fin" required />
+      <label for="adultes">Nombre d'adultes (obligatoire) :</label>
+      <input type="number" id="adultes" name="adultes" required />
+      <label for="enfants">Nombre d'enfants :</label>
+      <input type="number" id="enfants" name="enfants" value="0" />
+      <label>
+        <input type="checkbox" name="animaux" value="true" /> Animaux acceptés </label
+      ><br />
+      <label>
+        <input type="checkbox" name="wifi" value="true" /> Wi-Fi gratuit </label
+      ><br />
+      <label>
+        <input type="checkbox" name="piscine" value="true" /> Piscine </label
+      ><br />
+      <label>
+        <input type="checkbox" name="spa" value="true" /> Spa / Centre de bien-être </label
+      ><br />
+      <div><button type="submit">Envoyer</button></div>
+    </form>
+  </section>
+  <section>
+    <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
+    <% if (hotelsList && hotelsList.length > 0) { %>
+    <ul>
+      <% hotelsList.forEach(function(hotel) { %>
+      <li><strong><%= hotel.name %></strong>, situé à <%= hotel.city %></li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p style="color: red">
+      Aucun hôtel trouvé ou connexion à la base de données échouée.
+    </p>
+    <% } %>
+    <hr />
+    <p>
+      Ce champ prouve que la liaison Node.js (server.js) <-> MySQL (DB) <-> EJS (index.ejs) est fonctionnelle.
+    </p>
+  </section>
+  <section>
+    <p>Page work in progress pour tester Node.js.</p>
+    <br />
+  </section>
+</main>
+<%- include('partials/footer.ejs') %>
 
-      <section>        
-        <form action="search" method="GET" novalidate>
-          <h2>Formulaire de Recherche</h2>           
-          <select name="lieu" id="lieu" required>
-            <option value="">--Veuillez choisir une ville (obligatoire)--</option>
-            <option value="Paris">Paris</option>
-            <option value="Lyon">Lyon</option>
-            <option value="Lille">Lille</option>
-            <option value="Bordeaux">Bordeaux</option>
-            <option value="Marseille">Marseille</option>
-            <option value="Lourdes">Lourdes</option>
-          </select>
-          <label for="date_debut">Date d'arriver (obligatoire) :</label>
-          <input type="date" id="date_debut" name="date_debut" required />
-          <label for="date_fin">Date de départ (obligatoire) :</label>
-          <input type="date" id="date_fin" name="date_fin" required />
-          <label for="adultes">Nombre d'adultes (obligatoire) :</label>
-          <input type="number" id="adultes" name="adultes" required />
-          <label for="enfants">Nombre d'enfants :</label>
-          <input type="number" id="enfants" name="enfants" value="0" />
-          <label>
-            <input type="checkbox" name="animaux" value="true" /> Animaux acceptés </label
-          ><br />
-          <label>
-            <input type="checkbox" name="wifi" value="true" /> Wi-Fi gratuit </label
-          ><br />
-          <label>
-            <input type="checkbox" name="piscine" value="true" /> Piscine </label
-          ><br />
-          <label>
-            <input type="checkbox" name="spa" value="true" /> Spa / Centre de bien-être </label
-          ><br />
-          <div><button type="submit">Envoyer</button></div>
-        </form>
-      </section>
-      <section>
-        <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
-        <% if (hotelsList && hotelsList.length > 0) { %>
-        <ul>
-          <% hotelsList.forEach(function(hotel) { %>
-          <li><strong><%= hotel.name %></strong>, situé à <%= hotel.city %></li>
-          <% }); %>
-        </ul>
-        <% } else { %>
-        <p style="color: red">
-          Aucun hôtel trouvé ou connexion à la base de données échouée.
-        </p>
-        <% } %>
-        <hr />
-        <p>
-          Ce champ prouve que la liaison Node.js (server.js) <-> MySQL (DB) <-> EJS (index.ejs) est fonctionnelle.
-        </p>
-      </section>
-      <section>
-        <p>Page work in progress pour tester Node.js.</p>
-        <br />
-      </section>
-    </main>
-    <%- include('partials/footer.ejs') %>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> -->
-  </body>
-</html>

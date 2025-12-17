@@ -5,7 +5,6 @@ require("dotenv").config();
 const express = require("express");
 const fs = require("node:fs");
 const path = require("path");
-// const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise"); // Version promise pour async/await
 // express-session pour la gestion des sessions utilisateur
 const session = require("express-session");
@@ -64,8 +63,7 @@ app.use((req, res, next) => {
 // Middleware pour parser les données du formulaire ------------------------------------------
 
 // express.urlencoded(...) : Il permet de parser (analyser) les données envoyées dans le corps d’une requête HTTP POST (souvent via un formulaire).
-// { extended: true } : Cela indique comment parser les objets imbriqués dans les données du formulaire.
-// app.use(bodyParser.urlencoded({ extended: true }));
+// { extended: true } : Indique comment parser les objets imbriqués dans les données du formulaire.
 app.use(express.urlencoded({ extended: true }));
 
 // Chemin pour les fichiers statiques
@@ -87,14 +85,6 @@ const hotelRoutes = require("./routes/hotelRoutes");
 app.use("/", authRoutes); // Pour login, register, profile
 app.use("/", contactRoutes); // Pour /contact (GET et POST)
 app.use("/", hotelRoutes); // Pour /search (GET)
-
-// Route Home (Peut rester ici ou aller dans un mainController)
-// app.get("/", (req, res) => {
-//     res.render("index", {
-//         pageTitle: "Accueil",
-//         isLoggedIn: req.session.isLoggedIn // Utile pour afficher "Mon Compte" ou "Connexion" dans le menu
-//     });
-// });
 
 // ****************************************************
 // ****************************************************
