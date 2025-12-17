@@ -40,7 +40,7 @@ L'approche de développement privilégie la fonctionnalité (Back-End First). Ce
 * **État du Design :** Maquettes Haute-Fidélité (Hi-Fi) réalisées.
 * **Approche :** Mobile-First, respectant les heuristiques d'utilisabilité.
 
-> **Note :** La capture d'écran ci-dessous montre la maquette cible vs l'état actuel du développement.
+> **Note :** La capture d'écran ci-dessous montre la maquette cible.
 http://www.darkserge.com/wp-content/uploads/2025/12/SDSD-dev-Screeshot-FIGMA-02.jpg
 
 ## 🚀 État d'Avancement

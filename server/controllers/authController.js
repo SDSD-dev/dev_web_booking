@@ -1,6 +1,6 @@
 // server/controllers/authController.js
 const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
-const User = require("../models/User"); // Importation du modèle
+const UserManager = require("../models/UserManager"); // Importation du modèle
 
 // --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
 
@@ -15,7 +15,7 @@ exports.viewLogin = (req, res) => {
 exports.viewProfile = async (req, res) => {
   try {
     const userId = req.session.userId;
-    const clientProfile = await User.findProfileById(userId);
+    const clientProfile = await UserManager.findProfileById(userId);
 
     res.render("profile", {
       title: "Mon Profil",
@@ -44,7 +44,7 @@ exports.register = async (req, res) => {
     } = req.body;
 
     // Vérification si email existe déjà
-    const existingUser = await User.findByEmail(email);
+    const existingUser = await UserManager.findByEmail(email);
     if (existingUser) {
       return res.render("register", {
         title: "Inscription",
@@ -57,7 +57,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(mot_de_passe, 10);
 
     // Appel au Modèle pour créer
-    const newClientId = await User.create(
+    const newClientId = await UserManager.create(
       { nom, prenom, email, telephone, rue, code_postal, ville, pays }, // Infos Client
       { email, hash: hashedPassword } // Infos Auth
     );
@@ -82,10 +82,11 @@ exports.login = async (req, res) => {
     const { email, mot_de_passe } = req.body;
 
     // 1. Chercher l'user
-    const user = await User.findByEmail(email);
+    const user = await UserManager.findByEmail(email);
     if (!user)
       return res.render("login", {
         title: "Connexion",
+        subtitle: "Erreur",
         error: "Email inconnu",
       });
 
@@ -94,6 +95,7 @@ exports.login = async (req, res) => {
     if (!match)
       return res.render("login", {
         title: "Connexion",
+        subtitle: "Erreur",
         error: "Mot de passe incorrect",
       });
 

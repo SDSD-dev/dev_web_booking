@@ -1,7 +1,7 @@
-// server/models/User.js
+// server/models/UserManager.js
 const db = require("../config/db");
 
-class User {
+class UserManager {
   // Trouver un utilisateur par son email
   static async findByEmail(email) {
     const [rows] = await db.execute(
@@ -63,4 +63,4 @@ class User {
   }
 }
 
-module.exports = User;
+module.exports = UserManager;
