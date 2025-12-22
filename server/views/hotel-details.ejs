@@ -19,7 +19,7 @@
       <p>Capacité: <%= chambre.capacite_max %> personnes</p>
       <p>Prix par nuit: <%= chambre.prix_base %> €</p>
       <p><%= chambre.description_chambre %></p>
-      <a href="/book/room/<%= chambre.id_chambre %>" class="btn-reserver"
+      <a href="/book/room/<%= chambre.id_chambre %>?date_debut=<%= searchParams.date_debut %>&date_fin=<%= searchParams.date_fin %>&adultes=<%= searchParams.adultes %>&enfants=<%= searchParams.enfants %>" class="btn-reserver"
         >Réserver cette chambre</a
       >
       <hr />
@@ -27,5 +27,18 @@
     <% }) %>
   </div>
 </div>
+<!-- <script>
+function reserverChambre(idChambre) {
+    const debut = document.getElementById('date_debut').value;
+    const fin = document.getElementById('date_fin').value;
 
+    if(!debut || !fin) {
+        alert("Veuillez sélectionner vos dates de séjour.");
+        return;
+    }
+
+    // Redirection manuelle vers la route de réservation
+    window.location.href = `/book/room/${idChambre}?date_debut=${debut}&date_fin=${fin}`;
+}
+</script> -->
 <%- include('partials/footer.ejs') %>

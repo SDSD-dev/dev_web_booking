@@ -56,25 +56,36 @@ class HotelManager {
     try {
       const [rows] = await db.execute(sql, params);
     
-      const uniqueHotels = [];
-      // Un Set est comme une liste, mais qui ne peut contenir aucun doublon !!!!
-      const seen = new Set();
-
-      // On parcourt toutes les lignes retournées par la requête
+      const hotelsMap = new Map();
+      
       rows.forEach(row => {
-        // Si on n'a pas encore vu cet id_hotel, on l'ajoute
-        if (!seen.has(row.id_hotel)) {
-          // On l'ajoute au Set des id déjà vus
-          seen.add(row.id_hotel);
-          // On l'ajoute au tableau des résultats uniques
-          uniqueHotels.push(row);
+      // On compte le nombre de types de chambres par hôtel
+        if (!hotelsMap.has(row.id_hotel)) {
+          // row.nb_types_chambrs = 1;
+
+          // Premier type de chambre pour cet hôtel
+          // On crée une copie de l'objet row pour éviter les références partagées
+          const cleanHotel = {
+            ...row,
+            nb_types_chambres: 1
+          };
+          hotelsMap.set(row.id_hotel, cleanHotel)
+        } else {
+          // Hôtel déjà vu, on incrémente son compteur
+          const existingHotel = hotelsMap.get(row.id_hotel);
+          // On incrémente le nombre de types de chambres
+          if (typeof existingHotel.nb_types_chambres !== 'number') {
+            existingHotel.nb_types_chambres = 0;
+          }
+          existingHotel.nb_types_chambres += 1;
         }
       });
-      
-      return uniqueHotels;
+
+    return Array.from(hotelsMap.values());
     } catch (error) {
       throw error; // On renvoie l'erreur au contrôleur pour qu'il la gère
     }
+
   };
   static async getOneById(idHotel) {
     // Récupèrations des infos de l'hôtel + images + note moyenne

@@ -98,6 +98,20 @@
     <p>Page work in progress pour tester Node.js.</p>
     <br />
   </section>
+  <script>
+    // Script pour gérer les dates dans le formulaire de recherche
+    // Empêche de choisir une date passée
+    // Définit la date minimale pour les deux champs de date
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("date_debut").setAttribute("min", today);
+    document.getElementById("date_fin").setAttribute("min", today);
+    const dateDebutInput = document.getElementById("date_debut");
+    const dateFinInput = document.getElementById("date_fin");
+
+    dateDebutInput.addEventListener("change", function () {
+      dateFinInput.setAttribute("min", this.value);
+    });
+  </script>
 </main>
 <%- include('partials/footer.ejs') %>
 

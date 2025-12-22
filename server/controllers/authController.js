@@ -95,7 +95,7 @@ exports.login = async (req, res) => {
     if (!match)
       return res.render("login", {
         title: "Connexion",
-        subtitle: "Erreur",
+        subtitle: "Mot de passe incorrect",
         error: "Mot de passe incorrect",
       });
 

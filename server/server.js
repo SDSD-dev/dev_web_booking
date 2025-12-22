@@ -80,11 +80,13 @@ app.set("views", path.join(__dirname, "views"));
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile
 app.use("/", contactRoutes); // Pour /contact (GET et POST)
 app.use("/", hotelRoutes); // Pour /search (GET)
+app.use("/", bookingRoutes); // Pour /bookingRoutes (GET)
 
 // ****************************************************
 // ****************************************************

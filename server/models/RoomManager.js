@@ -7,7 +7,15 @@ class RoomManager {
         FROM chambres WHERE chambres.hotel_id = ?`;
         const [rows] = await db.execute(sql, [idHotel]);
         return rows; // return la liste des chambres de cet hôtel
-    }    
+    }
+    static async getOneById(idChambre) {        
+        const sql = `SELECT chambres.*, hotel.name as hotel_name, hotel.city, hotel.address
+        FROM chambres
+        JOIN hotel ON chambres.hotel_id = hotel.id_hotel
+        WHERE chambres.id_chambre = ?`;
+        const [rows] = await db.execute(sql, [idChambre])
+        return rows[0];
+    }
 }
 
 module.exports = RoomManager;

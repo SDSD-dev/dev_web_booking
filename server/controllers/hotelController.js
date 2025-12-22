@@ -4,13 +4,6 @@ const RoomManager = require("../models/RoomManager");
 
 // --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
 exports.viewSearch = async (req, res) => {
-  let viewSearch = {
-    title: "Résultats de Recherche",
-    subtitle: "Résultats des hôtels disponibles",
-    // 2. Initialiser searchList
-    searchList: [],
-  };
-
   try {
     // 2. Récupérer les données BRUTES du formulaire
     const {
@@ -25,7 +18,32 @@ exports.viewSearch = async (req, res) => {
       wifi,
       parking,
     } = req.query;
+    
+    let viewSearch = {
+    title: "Résultats de Recherche",
+    subtitle: "Résultats des hôtels disponibles",
+    // 2. Initialiser searchList
+    searchList: [],
+    // searchParams: {} // Pour garder le témoin de recherche
+    searchParams: {
+            date_debut,
+            date_fin,
+            adultes,
+            enfants,
+            lieu // pour revenir en arrière
+        }
+    };    
 
+    // Vérification des dates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const checkDate = new Date(date_debut);
+    if (date_debut && checkDate < today) {
+      return res.render("index", {
+        error: "Vous ne pouvez pas réserver dans le passé, Marty McFly !"
+      });
+    }
+    
     // --- LOGIQUE MÉTIER (Calculs) ---
 
     // Calcul de la capacité (L'assistant fait le calcul ici)
@@ -41,7 +59,7 @@ exports.viewSearch = async (req, res) => {
     }
 
 
-    // C'est cet objet 'hotelSearchParams' qui est passé au Manager
+    // C'est cet objet 'hotelSearchParams' qui est passé au Manager (HotelManager)
     const hotelSearchParams = {
       lieu: lieu, // Peut être undefined
       dateDebut: start, // A une valeur sûre
@@ -61,40 +79,57 @@ exports.viewSearch = async (req, res) => {
 
     viewSearch.searchList = results;
 
+    viewSearch.searchParams = {
+        date_debut: start, // On renvoie la variable 'start' qui contient la date valide
+        date_fin: end,     // On renvoie la variable 'end'
+        adultes: adultes || 0,
+        enfants: enfants || 0,
+        lieu: lieu
+    };
+
     // AFFICHAGE
     console.log(`Résultats trouvés : ${results.length}`);
     res.render("search", viewSearch);
+    
   } catch (error) {
     console.error("Erreur lors de la recherche d'hôtels :", error);
     res.status(500).render("search", {
       title: "Erreur de Recherche",
-      content: "Une erreur est survenue lors de la recherche d'hôtels.",
+      subtitle: "Une erreur est survenue lors de la recherche d'hôtels.",
       searchList: [],
     });
   };
 };
+
 exports.viewHotelDetails = async (req, res) => {
-  try {
-    const idHotel = req.params.id; // Récupérer l'ID de l'hôtel depuis les paramètres de l'URL
-    // Récupération des infos de l'hôtel (En-tête de page)
-    const hotel = await HotelManager.getOneById(idHotel);
-    if (!hotel) {
-      return res.status(404).send("Hôtel introuvable");
+    try {
+        const idHotel = req.params.id;
+        
+        // 1. RÉCUPÉRER LES PARAMÈTRES DE RECHERCHE (Le témoin)
+        const { date_debut, date_fin, adultes, enfants } = req.query;
+
+        const hotel = await HotelManager.getOneById(idHotel);
+        if (!hotel) return res.status(404).send("Hôtel introuvable");
+
+        const chambres = await RoomManager.getRoomsByHotelId(idHotel);
+
+        res.render("hotel-details", {
+            title: hotel.name,
+            subtitle: "Chambres Disponibles",
+            hotel: hotel,
+            chambres: chambres,
+            // 2. TRANSMETTRE LE TÉMOIN À LA VUE
+            searchParams: {
+                date_debut,
+                date_fin,
+                adultes,
+                enfants
+            }
+        });
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des détails de l'hôtel :", error);
+        res.status(500).send("Erreur serveur");        
     }
-    // Récupération des chambres de l'hôtel
-    const chambres = await RoomManager.getRoomsByHotelId(idHotel);
-    // Rendu de la vue avec les données de l'hôtel et ses chambres
-    res.render("hotel-details", {
-      title: hotel.name,
-      subtitle: "Chambres Disponibles",
-      hotel: hotel, // Infos de l'hôtel
-      chambres: chambres, // Liste des chambres de l'hôtel disponibles
-    });
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération des détails de l'hôtel :",
-      error
-    );
-    res.status(500).send("Erreur serveur");
-  };
 };
+

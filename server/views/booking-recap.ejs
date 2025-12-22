@@ -1,0 +1,29 @@
+<%- include('partials/header.ejs') %>
+    <div class="card">
+        <h2><%= recap.chambre.hotel_name %> - <%= recap.chambre.type_chambre %></h2>
+        <p>Adresse : <%= recap.chambre.address %>, <%= recap.chambre.city %></p>
+        
+        <ul>
+            <li>Arrivée : <%= recap.dates.debut %></li>
+            <li>Départ : <%= recap.dates.fin %></li>
+            <li>Durée : <%= recap.dates.nbrNuits %> nuits</li>
+        </ul>
+
+        <hr>
+        <h3>Total à payer : <%= recap.prix.total %> €</h3>
+
+        <form action="/book/validate" method="POST">
+            <input type="hidden" name="chambre_id" value="<%= recap.chambre.id_chambre %>">
+            <input type="hidden" name="hotel_id" value="<%= recap.chambre.hotel_id %>">
+            <input type="hidden" name="date_debut" value="<%= recap.dates.debut %>">
+            <input type="hidden" name="date_fin" value="<%= recap.dates.fin %>">
+            <input type="hidden" name="nbr_nuits" value="<%= recap.dates.nbrNuits %>">
+
+            <input type="hidden" name="prix_unitaire" value="<%= recap.prix.unitaire %>">
+            <input type="hidden" name="prix_total" value="<%= recap.prix.total %>">
+            
+            <button type="submit" class="btn-payer">Confirmer et Payer</button>
+        </form>
+    </div>
+
+<%- include('partials/footer.ejs') %>
