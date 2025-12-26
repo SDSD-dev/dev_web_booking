@@ -15,6 +15,48 @@
     <a href="/logout">Déconnexion</a>
   </button>
 </section>
+<hr>
+<section>
+  <% if (reservations && reservations.length > 0) { %>
+        <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Hôtel</th>
+                    <th>Dates</th>
+                    <th>Prix</th>
+                    <th>Statut</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% reservations.forEach(function(resa) { %>
+                    <tr>
+                        <td>
+                            <strong><%= resa.hotel_name %></strong><br>
+                            <small><%= resa.hotel_city %></small>
+                        </td>
+                        <td>
+                            Du <%= new Date(resa.date_sejour_debut).toLocaleDateString() %><br>
+                            au <%= new Date(resa.date_sejour_fin).toLocaleDateString() %>
+                        </td>
+                        <td><%= resa.montant_total %> €</td>
+                        <td>
+                            <span class="statut-<%= resa.statut_commande %>">
+                                <%= resa.statut_commande %>
+                            </span>
+                        </td>
+                        <td>
+                            <a href="/hotel/<%= resa.id_hotel %>">Revoir l'hôtel</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Vous n'avez pas encore effectué de réservation.</p>
+        <a href="/" class="btn">Trouver un hôtel</a>
+    <% } %>
+</section>
 <hr />
 <h2>Rechercher un hôtel</h2>
 <section>

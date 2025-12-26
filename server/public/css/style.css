@@ -114,4 +114,13 @@ th {
   padding: 0.3rem;
 }
 
-
+.statut-confirmee {
+    color: green;
+    font-weight: bold;
+}
+.statut-annulee { /* Si vous en avez plus tard */
+    color: red;
+}
+.statut-en-attente {
+    color: orange;
+}

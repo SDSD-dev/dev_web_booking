@@ -1,6 +1,6 @@
 // server/controllers/bookingController.js
 const RoomManager = require("../models/RoomManager");
-const HotelManager = require("../models/OrderManager");
+const OrderManager = require("../models/OrderManager");
 
 exports.viewBookingRecap = async (req, res) => {
   try {
@@ -62,4 +62,59 @@ exports.viewBookingRecap = async (req, res) => {
     console.error("Erreur lors de la récupération des réservations :", error);
     res.status(500).send("Erreur serveur");
   }
+}
+
+exports.validateBooking = async (req,res) => {
+  try{
+    // 1. Récupérer toutes les données du formulaire caché
+    const {
+      chambre_id, 
+      hotel_id, 
+      date_debut, 
+      date_fin, 
+      nbr_nuits, 
+      prix_unitaire, 
+      prix_total
+    } = req.body;
+
+    const userId = req.session.userId; // L'utilisateur connecté
+
+    // 2. Préparer l'objet pour le Manager
+    const orderData = {
+      client_id: userId,
+      hotel_id: hotel_id,
+      chambre_id: chambre_id,
+      date_debut: date_debut,
+      date_fin: date_fin,
+      nbr_nuits: nbr_nuits,
+      prix_unitaire: prix_unitaire,
+      prix_total: prix_total
+    };
+
+    // 3. Lancer la création (Transaction SQL)
+    const orderId = await OrderManager.createOrder(orderData);
+
+    // 4. Succès ! Redirection vers une page de confirmation
+    // (Pour l'instant, on redirige vers le profil pour voir l'historique plus tard)
+    // res.send(`Bravo ! Commande ${orderId} validée.`);
+    res.render("booking-success",{orderId: orderId,
+      title: "Réservation",
+      subtitle: "Bravo ! Commande ${orderId} validée.",
+    })
+
+
+  } catch (error) {
+    console.error("Erreur validation commande :", error);
+    res.status(500).send("Erreur lors du paiement. Veuillez réessayer.");
+    if (error.message === "ROOM_ALREADY_BOOKED") {
+      return res.render("booking-recap", {
+        title: "Oups !",
+        subtitle: "Trop tard...",
+        error: "Désolé, cette chambre vient d'être réservée par quelqu'un d'autre à l'instant.",
+        recap: null,
+        user: req.session.userId
+      });
+    }
+  }
+
 }

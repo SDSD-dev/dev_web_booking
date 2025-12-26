@@ -1,6 +1,7 @@
 // server/controllers/authController.js
 const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
-const UserManager = require("../models/UserManager"); // Importation du modèle
+const UserManager = require("../models/UserManager");
+const OrderManager = require("../models/OrderManager");
 
 // --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
 
@@ -15,12 +16,17 @@ exports.viewLogin = (req, res) => {
 exports.viewProfile = async (req, res) => {
   try {
     const userId = req.session.userId;
+    // Récupérer les infos perso via le UserManager
     const clientProfile = await UserManager.findProfileById(userId);
+
+    // Récupérer l'historique des commandes
+    const reservationsList = await OrderManager.getHistoryByClientId(userId);
 
     res.render("profile", {
       title: "Mon Profil",
       subtitle: "Infos personnelles",
       clientProfil: clientProfile,
+      reservations: reservationsList
     });
   } catch (error) {
     console.error(error);

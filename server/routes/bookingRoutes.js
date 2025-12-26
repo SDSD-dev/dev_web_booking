@@ -8,7 +8,7 @@ const checkAuth = require('../middleware/authMiddleware');
 router.get('/book/room/:id', checkAuth, bookingController.viewBookingRecap);
 
 // POST : Traiter le formulaire
-// router.post('/book/validate', checkAuth, bookingController.validateBooking);
+router.post('/book/validate', checkAuth, bookingController.validateBooking);
 
 
 module.exports = router;

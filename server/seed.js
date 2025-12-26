@@ -3,8 +3,8 @@ const path = require("path");
 require("dotenv").config();
 const { faker } = require("@faker-js/faker");
 const mysql = require("mysql2/promise");
-const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
-
+// Bcrypt pour le hachage des mots de passe
+const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10; // Niveau de complexité du hachage (standard)
 
 // Les fonctions de création de data pour faker.js
@@ -23,6 +23,7 @@ function createHotelName() {
     faker.person.lastName(),
     faker.location.city(),
   ];
+
   // Choisir aléatoirement une partie de nom et un suffixe
   const baseName = faker.helpers.arrayElement(nameParts);
   const suffix = faker.helpers.arrayElement(suffixes);
@@ -164,7 +165,7 @@ function createRandomLignes_commande() {
 function createRandomAvis() {
   return {
     avis: faker.lorem.lines(3),
-    notes: faker.number.int({ min: 1, max: 5 }),
+    note: faker.number.int({ min: 1, max: 5 }),
     date_avis: faker.date.past({ years: 1 }),
     // hotel_id et client_id seront gérés par le script
   };
@@ -173,10 +174,14 @@ function createRandomAvis() {
 // IMAGES ---------------------------------------------------------------------------
 
 // Le chemin vers le dossier d'images (attention position du seed.js -> normalement dans dossier 'server/' )
-const BASE_DIR = path.join(__dirname, "..", "client", "public");
+const BASE_DIR = path.join(__dirname, "public");
 
 const HOTEL_IMAGES_DIR = path.join(BASE_DIR, "img_hotels");
 const ROOM_IMAGES_DIR = path.join(BASE_DIR, "img_rooms");
+
+// Log pour vérifier
+console.log("Chemin des images d'hôtels :", HOTEL_IMAGES_DIR);
+console.log("Fichiers trouvés :", fs.readdirSync(HOTEL_IMAGES_DIR));
 
 // Fonction utilitaire pour lire le répertoire d'images
 const readImageFiles = (dir) => {
@@ -409,10 +414,10 @@ async function seedDatabase() {
     const randomHotelId = faker.helpers.arrayElement(hotelsIds);
 
     await connection.execute(
-      "INSERT INTO avis (avis, notes, date_avis, hotel_id, client_id) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO avis (avis, note, date_avis, hotel_id, client_id) VALUES (?, ?, ?, ?, ?)",
       [
         avisData.avis,
-        avisData.notes,
+        avisData.note,
         avisData.date_avis,
         randomHotelId,
         randomClientId,
@@ -443,64 +448,96 @@ async function seedDatabase() {
   }
   console.log(`   [+] 30 Contacts insérés.`);
 
-  // Insertion des Commandes
+
+  // --- INSERTION DES COMMANDES ET LIGNES DE COMMANDE ---
+
+  console.log(`\n   [+] Récupération de la carte des chambres par hôtel...`);
+
+  // 1. On récupère toutes les chambres existantes avec leur hotel_id
+  // Permet de savoir quelles chambres sont disponibles pour quel hôtel
+  const [allRooms] = await connection.execute("SELECT id_chambre, hotel_id FROM chambres");
+  
+  // On organise ça dans un objet : { 156: [12, 13, 14], 177: [55] }
+  // Clé = ID Hôtel, Valeur = Liste des ID Chambres
+  const roomsByHotel = {};
+  allRooms.forEach(room => {
+      if (!roomsByHotel[room.hotel_id]) {
+          roomsByHotel[room.hotel_id] = [];
+      }
+      roomsByHotel[room.hotel_id].push(room.id_chambre);
+  });
+
+  console.log(`   [+] Génération des commandes et lignes cohérentes...`);
+
   const commandesIds = [];
+
+  // On crée 100 commandes
   for (let i = 0; i < 100; i++) {
-    const commandeData = createRandomCommandes(); // Assurez-vous que cette fonction existe
+    
+    // A. CHOIX DE L'HÔTEL ET DU CLIENT
+    // On choisit un hôtel au hasard, MAIS on vérifie qu'il a des chambres !
+    let randomHotelId;
+    let validRooms = [];
+    
+    // Petite sécurité : on cherche un hôtel qui a bien des chambres
+    let attempts = 0;
+    do {
+        randomHotelId = faker.helpers.arrayElement(hotelsIds);
+        validRooms = roomsByHotel[randomHotelId] || [];
+        attempts++;
+    } while (validRooms.length === 0 && attempts < 100);
 
-    // Choix aléatoire d'un client et d'un hôtel existants
+    // Si vraiment pas de chambre (cas rare), on passe
+    if (validRooms.length === 0) continue;
+
     const randomClientId = faker.helpers.arrayElement(clientIds);
-    const randomHotelId = faker.helpers.arrayElement(hotelsIds);
+    const commandeData = createRandomCommandes(); // Votre fonction existante
 
-    // Requête complète pour la table commandes (vous devrez compléter les champs)
+    // B. CALCUL COHÉRENT DES DATES (Pour que nbr_nuits colle aux dates)
+    const start = new Date(commandeData.date_sejour_debut);
+    const end = new Date(commandeData.date_sejour_fin);
+    const diffTime = Math.abs(end - start);
+    const realNbrNuits = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Durée réelle
+
+    // C. INSERTION COMMANDE
     const [commandeResult] = await connection.execute(
-      "INSERT INTO commandes (client_id, hotel_id, date_commande, date_reservation, date_sejour_debut, date_sejour_fin, nbr_adulte, nbr_enfant, paye, montant_total, statut_commande) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO commandes (client_id, hotel_id, date_commande, date_sejour_debut, date_sejour_fin, nbr_adulte, nbr_enfant, montant_total, statut_commande) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         randomClientId,
         randomHotelId,
-        commandeData.date_commande,
-        commandeData.date_reservation,
+        commandeData.date_commande,        
         commandeData.date_sejour_debut,
         commandeData.date_sejour_fin,
         commandeData.nbr_adulte,
         commandeData.nbr_enfant,
-        commandeData.paye,
         commandeData.montant_total,
         commandeData.statut_commande,
       ]
     );
-    commandesIds.push(commandeResult.insertId);
-  }
-  console.log(`   [+] ${commandesIds.length} Commandes insérées.`);
+    
+    const newCommandeId = commandeResult.insertId;
+    commandesIds.push(newCommandeId);
 
-  // --- DANS seedDatabase(), après l'insertion des Commandes et Chambres ---
-
-  console.log(`\n   [+] Amorçage des lignes de commande...`);
-
-  // Nous allons créer 150 lignes de commande pour lier les 100 commandes aux 60 types de chambres
-  for (let i = 0; i < 150; i++) {
-    const lignes_commandeData = createRandomLignes_commande();
-
-    // Sélection aléatoire d'un ID de commande et de chambre existants
-    const randomCommandeId = faker.helpers.arrayElement(commandesIds);
-    const randomChambresId = faker.helpers.arrayElement(chambresIds);
+    // D. INSERTION LIGNE DE COMMANDE
+    // On pioche une chambre DANS L'HÔTEL CHOISI (validRooms)
+    const randomChambreId = faker.helpers.arrayElement(validRooms);
+    
+    const lignesData = createRandomLignes_commande(); // Votre fonction
 
     await connection.execute(
-      // CORRECTION 1 & 2: Cible la bonne table ET ajoute les clés étrangères dans les colonnes
-      "INSERT INTO lignes_commande (commande_id, chambre_id, quantite, prix_unitaire_valide, nbr_nuits, prix_total_ligne) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO lignes_commande (commande_id, chambre_id, quantite, prix_unitaire_facture, nbr_nuits, prix_total_ligne) VALUES (?, ?, ?, ?, ?, ?)",
       [
-        // CORRECTION 3: L'ordre des valeurs doit correspondre aux colonnes
-        randomCommandeId, // FK
-        randomChambresId, // FK
-        lignes_commandeData.quantite,
-        lignes_commandeData.prix_unitaire_valide,
-        lignes_commandeData.nbr_nuits,
-        lignes_commandeData.prix_total_ligne,
+        newCommandeId,
+        randomChambreId, // une chambre valide pour cet hôtel
+        1, // Quantité forcée à 1 pour simplifier la logique seed
+        lignesData.prix_unitaire_valide,
+        realNbrNuits, // On utilise la vraie durée calculée plus haut
+        lignesData.prix_unitaire_valide * realNbrNuits // Total cohérent
       ]
     );
   }
-  console.log(`   [+] 150 Lignes de commande insérées.`);
-  //--
+
+  console.log(`   [+] ${commandesIds.length} commandes générées avec lignes associées.`);
 
   // Fermeture de la connexion
   await connection.end();
