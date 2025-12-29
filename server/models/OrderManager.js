@@ -50,7 +50,7 @@ class OrderManager {
 
             const newOrderId = resultCmd.insertId; // Récupération de l'ID de la commande créée !
 
-            // --- B. INSERTION DANS 'LIGNES_COMMANDE' ---
+            // --- INSERTION DANS 'LIGNES_COMMANDE' ---
             const sqlLigne = `
                 INSERT INTO lignes_commande (commande_id, chambre_id, quantite, 
                     prix_unitaire_facture, nbr_nuits, prix_total_ligne) 

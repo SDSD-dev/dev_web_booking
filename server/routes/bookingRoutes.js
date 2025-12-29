@@ -10,5 +10,16 @@ router.get('/book/room/:id', checkAuth, bookingController.viewBookingRecap);
 // POST : Traiter le formulaire
 router.post('/book/validate', checkAuth, bookingController.validateBooking);
 
+//Stripe
+// URL déclenchée par le bouton "Payer" (Envoie vers Stripe)
+router.post('/book/validate', checkAuth, bookingController.validateBooking);
+
+// URL appelée par Stripe quand c'est payé (Enregistre en BDD)
+router.get('/booking/success', checkAuth, bookingController.finalizeBooking);
+
+// URL d'annulation (Optionnel, à créer plus tard si besoin)
+// router.get('/booking/cancel', (req, res) => {
+//     res.send("Paiement annulé. Vous pouvez réessayer.")});
+router.get('/booking/cancel', bookingController.cancelBooking);
 
 module.exports = router;
