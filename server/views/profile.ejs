@@ -50,9 +50,19 @@
                         <td>
                             <a href="/hotel/<%= resa.id_hotel %>">Revoir l'hôtel</a>
                             <br>
-                            <!-- <a href="/hotel/<%= resa.id_hotel %>">Annulation</a> -->
+                            <% 
+                            // On peut annuler si le séjour n'est pas passé ET si ce n'est pas déjà annulé
+                            const today = new Date();
+                            const dateSejour = new Date(resa.date_sejour_debut);
+                            if (dateSejour > today && resa.statut_commande === 'confirmee') { %>
+                              <form class="form_none" action="/booking/cancel/<%= resa.id_commande %>" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir annuler ce séjour ?');">
+                                <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">
+                                    Annuler
+                                </button>
+                              </form>
+                            <% } %>
                         </td>
-                    </tr>
+                    </tr>                    
                 <% }); %>
             </tbody>
         </table>

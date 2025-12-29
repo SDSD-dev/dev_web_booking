@@ -100,6 +100,19 @@ class OrderManager {
         const [rows] = await db.execute(sql, [clientId]);
         return rows;
     }
+
+    // Méthode pour modifier le statut
+    static async cancelOrder(orderId, clientId) {
+        // Sécurité : "AND client_id = ?" pour vérifier que la commande appartient bien à celui qui essaie de l'annuler.
+        const sql = `
+        UPDATE commandes
+        SET statut_commande = 'annulée'
+        WHERE id_commande = ? AND client_id = ?
+        `;
+        const [result] = await db.execute(sql, [orderId, clientd]);
+        // On retourne true si une ligne a été modifiée, false sinon (ex: mauvais ID)
+        return result.affectedRows > 0;
+    };
 }
 
 module.exports = OrderManager;

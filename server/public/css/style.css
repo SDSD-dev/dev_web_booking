@@ -44,6 +44,12 @@ form {
   margin: 0 auto;
 }
 
+.form_none {
+  padding: 0;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
 /* Règle générale pour les labels (sauf checkbox) */
 form label:not(:has(input[type="checkbox"])) {
   display: block;

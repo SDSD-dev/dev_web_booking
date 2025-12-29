@@ -21,7 +21,7 @@ class HotelManager {
         SELECT LC.chambre_id 
         FROM lignes_commande AS LC 
         JOIN commandes AS C ON LC.commande_id = C.id_commande 
-        WHERE C.date_sejour_debut <= ? AND C.date_sejour_fin >= ?
+        WHERE C.date_sejour_debut <= ? AND C.date_sejour_fin >= ? AND C.statut_commande != 'annulée'
       )`;
 
     // 2. INJECTION DES DATES (fournies par le contrôleur)

@@ -185,13 +185,38 @@ exports.finalizeBooking = async (req, res) => {
   }
 };
 
-// Page d'annulation de réservation
-exports.cancelBooking = async (req, res) => {
+// Page d'abandon de paiement
+exports.cancelPayment = async (req, res) => {
   try {
     res.render("booking-cancel", {
       title: "Réservation",
       subtitle: "Annulation", });
-  } catch {
-    console.error("Erreur", error);
+  } catch (error) {
+    console.error("Erreur annulation :", error);
+    res.status(500).send("Erreur lors de l'annulation.");
     }
-  }
+};
+
+// Page d'annulation de réservation
+exports.cancelBooking = async (req, res) => {
+    try {
+      const orderId = req.params.id;
+      const clientId = req.session.userId;
+
+      //Appel au manager
+      const success = await OrderManager.cancelOrder(orderId, clientId);
+
+      if (success) {
+        console.log(`Commande ${orderId} annulée par le client ${clientId}`);
+      } else {
+        console.log("Tentative d'annulation échouée (Commande introuvable ou mauvais client)");
+      }
+      // Retour au profil 
+      res.redirect('/profile');
+
+    } catch (error) {
+      console.error("Erreur annulation :", error);
+      res.status(500).send("Erreur lors de l'annulation."); 
+      } 
+};
+

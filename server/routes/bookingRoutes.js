@@ -20,6 +20,7 @@ router.get('/booking/success', checkAuth, bookingController.finalizeBooking);
 // URL d'annulation (Optionnel, à créer plus tard si besoin)
 // router.get('/booking/cancel', (req, res) => {
 //     res.send("Paiement annulé. Vous pouvez réessayer.")});
-router.get('/booking/cancel', bookingController.cancelBooking);
+router.get('/booking/cancel', checkAuth, bookingController.cancelPayment);
+router.post('/booking/cancel/:id', checkAuth, bookingController.cancelBooking);
 
 module.exports = router;

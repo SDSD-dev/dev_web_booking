@@ -3,16 +3,19 @@ const bcrypt = require("bcrypt"); // Nécessaire pour le hachage du mot de passe
 const UserManager = require("../models/UserManager");
 const OrderManager = require("../models/OrderManager");
 
-// --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
 
+// --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
+// Afficher la page d'inscription -> render register.ejs
 exports.viewRegister = (req, res) => {
   res.render("register", { title: "Inscription", subtitle: "Créer un compte" });
 };
 
+// Afficher la page de connexion -> render login.ejs
 exports.viewLogin = (req, res) => {
   res.render("login", { title: "Connexion", subtitle: "Accéder à mon compte" });
 };
 
+// Afficher le profil utilisateur -> render profile.ejs
 exports.viewProfile = async (req, res) => {
   try {
     const userId = req.session.userId;
@@ -35,6 +38,7 @@ exports.viewProfile = async (req, res) => {
 };
 
 // --- GESTION DES ACTIONS (POST) ---
+// Gérer l'inscription
 exports.register = async (req, res) => {
   try {
     const {
@@ -83,6 +87,7 @@ exports.register = async (req, res) => {
   }
 };
 
+// Gérer la connexion
 exports.login = async (req, res) => {
   try {
     const { email, mot_de_passe } = req.body;
@@ -117,6 +122,7 @@ exports.login = async (req, res) => {
   }
 };
 
+// Gérer la déconnexion
 exports.logout = (req, res) => {
   req.session.destroy(() => {
     res.redirect("/");
