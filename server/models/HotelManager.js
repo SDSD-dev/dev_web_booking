@@ -87,6 +87,7 @@ class HotelManager {
     }
 
   };
+
   static async getOneById(idHotel) {
     // Récupèrations des infos de l'hôtel + images + note moyenne
     const sql = `SELECT hotel.*,
@@ -97,6 +98,62 @@ class HotelManager {
     const [rows] = await db.execute(sql, [idHotel]);
     return rows[0]; // return un objet unique (indice 0) et non un tableau
   };
+  
+  static async findAll() {
+    const sql = `SELECT * FROM hotel ORDER BY id_hotel DESC`;
+    const [rows] = await db.execute(sql);
+    return rows;
+  };
+
+  static async create(data) {
+    const sql = `
+            INSERT INTO hotel (
+                name, address, city, country, description_hotel, piscine, spa, animaux, wifi, parking, currency, user_id
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'EUR', ?)
+        `;
+    const [result] = await db.execute(sql, [
+      data.name, 
+      data.address, 
+      data.city, 
+      data.country, 
+      data.description,
+      data.piscine ? 1 : 0,
+      data.spa ? 1 : 0,
+      data.animaux ? 1 : 0,
+      data.wifi ? 1 : 0,
+      data.parking ? 1 : 0,
+      data.user_id
+    ]);
+    return result.insertId;
+  };
+
+  static async delete(id) {
+    const sql = `DELETE FROM hotel WHERE id_hotel = ?`;
+    await db.execute(sql, [id])
+  };
+
+  static async update(id, data) {
+    const sql = `UPDATE hotel SET 
+        name = ?, address = ?, city = ?, country = ?, description_hotel = ?, piscine = ?, spa = ?, animaux = ?, wifi = ?, parking = ?
+        WHERE id_hotel = ?    
+        `;
+    await db.execute(sql,[
+      data.name, 
+      data.address, 
+      data.city, 
+      data.country, 
+      data.description,
+      data.piscine ? 1 : 0,
+      data.spa ? 1 : 0,
+      data.animaux ? 1 : 0,
+      data.wifi ? 1 : 0,
+      data.parking ? 1 : 0,
+      id
+    ]);
+
+  };
+
+
 }
 
 module.exports = HotelManager;

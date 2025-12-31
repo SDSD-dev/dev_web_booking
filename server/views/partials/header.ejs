@@ -13,8 +13,12 @@
       <h2><%= subtitle %></h2>
       <nav>
         <a href="/">Acceuil</a>
-        <% if (user) { %>
-        <a href="/profile">Profil</a>
+        <% if (user && user.role === 'administrateur') { %>
+        <a href="/admin/dashboard">Admin</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Déconnexion</a>
+        <% } else if (user) { %>
+
         <a href="/contact">Contact</a>
         <a href="/logout">Déconnexion</a>
         <% } else { %>

@@ -1,0 +1,44 @@
+<h1>Bienvenue Administrateur</h1>
+<p>Ceci est la zone sécurisée.</p>
+<button style="padding: 5px 10px">
+<a href="/profile">Profile</a>
+</button>
+<button style="padding: 5px 10px">
+<a href="/logout">Déconnexion</a>
+</button>
+
+<div style="padding: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Gestion des Hôtels</h1>
+        <a href="/admin/hotel/new" class="btn"> + Ajouter un hôtel</a>
+    </div>
+
+    <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="background: #f4f4f4;">
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% hotels.forEach(hotel => { %>
+                <tr>
+                    <td><%= hotel.id_hotel %></td>
+                    <td><strong><%= hotel.name %></strong></td>
+                    <td><%= hotel.city %></td>
+                    <td>
+                        <a href="/admin/hotel/edit/<%= hotel.id_hotel %>">Modifier</a> | 
+                        <a href="/hotel/<%= hotel.id_hotel %>" target="_blank">Voir</a> | 
+                        <a href="/admin/hotel/delete/<%= hotel.id_hotel %>" 
+                        onclick="return confirm('Attention ! Supprimer cet hôtel supprimera aussi toutes ses chambres et réservations. Continuer ?');"
+                        style="color: red;">
+                        Supprimer
+                        </a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

@@ -29,7 +29,8 @@ exports.viewProfile = async (req, res) => {
       title: "Mon Profil",
       subtitle: "Infos personnelles",
       clientProfil: clientProfile,
-      reservations: reservationsList
+      reservations: reservationsList,
+      user: { role: req.session.role }
     });
   } catch (error) {
     console.error(error);
@@ -111,11 +112,25 @@ exports.login = async (req, res) => {
       });
 
     // 3. Session
+    // ID pour la table clients
     req.session.userId = user.client_id;
-    req.session.userRole = user.role;
+    // ID pour l'administration (table connexions) -> pour la table 'hotel' !
+    req.session.connexionId = user.id_connexion;
+    // Rôle de l'utilisateur
     req.session.isLoggedIn = true;
+    req.session.role = user.role;
 
-    res.redirect("/profile");
+    console.log(`Utilisateur connecté : ${user.email} (Rôle: ${user.role})`)
+
+    if (user.role === 'administrateur') {
+      // Si Admin, direction le Back-Office
+      return res.redirect('/admin/dashboard');
+    } else {
+      // Sinon, direction Profil
+      return res.redirect('/profile');
+    }
+
+    // res.redirect("/profile");
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur serveur");

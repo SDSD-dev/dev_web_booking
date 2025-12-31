@@ -18,7 +18,7 @@ class OrderManager {
                 WHERE lignes_commande.chambre_id = ? 
                 AND commandes.statut_commande != 'annulee'
                 AND (
-                    (commandes.date_sejour_debut < ? AND commandes.date_sejour_fin > ?)
+                    commandes.date_sejour_debut < ? AND commandes.date_sejour_fin > ?
                 )
             `;
             const [rows] = await connection.execute(sqlCheck, [
@@ -109,7 +109,7 @@ class OrderManager {
         SET statut_commande = 'annulée'
         WHERE id_commande = ? AND client_id = ?
         `;
-        const [result] = await db.execute(sql, [orderId, clientd]);
+        const [result] = await db.execute(sql, [orderId, clientId]);
         // On retourne true si une ligne a été modifiée, false sinon (ex: mauvais ID)
         return result.affectedRows > 0;
     };

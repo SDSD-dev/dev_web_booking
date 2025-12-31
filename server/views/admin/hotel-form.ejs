@@ -1,0 +1,41 @@
+<%- include('../partials/header.ejs') %>
+
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1><%= hotel ? 'Modifier l\'hôtel' : 'Ajouter un nouvel hôtel' %></h1>
+    
+    <form action="<%= hotel ? '/admin/hotel/edit/' + hotel.id_hotel : '/admin/hotel/new' %>" method="POST">
+        <label>Nom de l'hôtel :</label>
+        <input type="text" name="name" value="<%= hotel ? hotel.name : '' %>" required style="width: 100%; margin-bottom: 10px;">
+
+        <label>Adresse :</label>
+        <input type="text" name="address" value="<%= hotel ? hotel.address : '' %>" required style="width: 100%; margin-bottom: 10px;">
+
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+                <label>Ville :</label>
+                <input type="text" name="city" value="<%= hotel ? hotel.city : '' %>" required style="width: 100%;">
+            </div>
+            <div style="flex: 1;">
+                <label>Pays :</label>
+                <input type="text" name="country" value="<%= hotel ? hotel.country : '' %>" required style="width: 100%;">
+            </div>
+        </div>
+
+        <label style="display:block; margin-top: 10px;">Description :</label>
+        <textarea name="description" rows="5" style="width: 100%;"><%= hotel ? (hotel.description_hotel || hotel.description) : '' %></textarea>
+
+        <h3>Équipements :</h3>
+        <label><input type="checkbox" name="wifi" <%= (hotel && hotel.wifi) ? 'checked' : '' %> > Wifi </label>
+        <label><input type="checkbox" name="piscine" <%= (hotel && hotel.piscine) ? 'checked' : '' %> > Piscine </label>
+        <label><input type="checkbox" name="spa" <%= (hotel && hotel.spa) ? 'checked' : '' %> > Spa </label>
+        <label><input type="checkbox" name="parking" <%= (hotel && hotel.parking) ? 'checked' : '' %> > Parking </label>
+        <label><input type="checkbox" name="animaux" <%= (hotel && hotel.animaux) ? 'checked' : '' %> > Animaux acceptés </label>
+
+        <br><br>
+        <button type="submit"><%= hotel ? 'Mettre à jour' : 'Créer l\'hôtel' %></button>
+        
+        <a href="/admin/dashboard" style="margin-left: 20px;">Annuler</a>
+    </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>

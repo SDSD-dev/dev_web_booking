@@ -81,12 +81,14 @@ const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile
 app.use("/", contactRoutes); // Pour /contact (GET et POST)
 app.use("/", hotelRoutes); // Pour /search (GET)
 app.use("/", bookingRoutes); // Pour /bookingRoutes (GET)
+app.use("/admin", adminRoutes); // Pour /adminRoutes (GET)
 
 // ****************************************************
 // ****************************************************
