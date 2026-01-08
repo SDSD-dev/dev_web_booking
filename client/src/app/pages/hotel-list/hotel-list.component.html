@@ -1,0 +1,18 @@
+<p>hotel-list works!</p>
+<div style="padding: 20px; font-family: sans-serif">
+  <h1>Liste des Hôtels (Via Angular & Control Flow)</h1>
+
+  @if (hotels$ | async; as hotels) {
+  <div
+    class="hotel-grid"
+    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px"
+  >
+    @for (hotel of hotels; track hotel.id_hotel) {
+    <app-hotel-card [hotel]="hotel"></app-hotel-card>
+    }
+  </div>
+  } @else {
+  <p>Chargement des données API...</p>
+  <p><em>(Assurez-vous d'être connecté sur le serveur Node !)</em></p>
+  }
+</div>

@@ -82,6 +82,11 @@ const contactRoutes = require("./routes/contactRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const hotelApiRoutes = require('./routes/api/hotelRoutes');
+
+// --- ROUTES API (JSON) ---
+// Toutes les routes définies ici seront accessibles via /api/hotels, /api/auth, etc.
+app.use('/api', hotelApiRoutes);
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile
