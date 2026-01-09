@@ -100,7 +100,12 @@ class HotelManager {
   };
   
   static async findAll() {
-    const sql = `SELECT * FROM hotel ORDER BY id_hotel DESC`;
+    // Sélection de tout les hôtels + son images
+    const sql = `SELECT 
+      hotel.*, 
+      (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image
+    FROM hotel 
+    ORDER BY hotel.id_hotel DESC`;
     const [rows] = await db.execute(sql);
     return rows;
   };

@@ -45,39 +45,41 @@ http://www.darkserge.com/wp-content/uploads/2025/12/SDSD-dev-Screeshot-FIGMA-02.
 
 ## 🚀 État d'Avancement
 
-### ✅ Fonctionnalités Implémentées
+### ✅ Back-End & Architecture (Terminé - Bloc 2)
 
-* **Architecture & Données :**
-  * Refonte de l'architecture en **MVC** (Modèle-Vue-Contrôleur) pour séparer la logique métier de l'affichage.
-  * Script SQL de création de tables relationnelles (Clients, Hôtels, Chambres, Réservations, Contact...).
-  * Script `seed.js` pour la génération de données fictives (via `faker`).
+* **Architecture Hybride :** Le serveur Node.js agit comme un serveur MVC classique (pour EJS) ET comme une API REST (pour Angular) simultanément.
+* **Base de Données :** Modèle relationnel complet (MySQL) avec script de `seed` pour données de test.
+* **Logique Métier :**
+    * Algorithme de vérification de disponibilité (gestion des conflits de dates).
+    * Jointures SQL optimisées pour la récupération des images (Cover).
+* **Administration (Back-Office) :** Interface CRUD complète pour gérer les hôtels et services (réservée aux Admins).
+* **Paiement :** Intégration fonctionnelle de **Stripe** (Checkout session & Webhook simulé).
 
-* **Authentification & Utilisateurs :**
-  * Inscription et Connexion sécurisée (hashage des mots de passe).
-  * Gestion de session utilisateur (cookie/session server-side).
-  * Accès au profil personnel protégé par middleware.
+### ✅ Front-End "Server-Side" (EJS - Terminé)
 
-* **Catalogue & Navigation :**
-  * **Moteur de recherche :** Filtrage des hôtels par ville et critères.
-  * **Liste des résultats :** Affichage dynamique des hôtels trouvés depuis la base de données.
-  * **Fiche Détail Hôtel :** Consultation approfondie d'un hôtel avec liste des chambres et équipements associés (données dynamiques).
-  * **Vues Modulaires :** Utilisation de "Partials" EJS (Header/Footer) pour une maintenance simplifiée.
+* **Tunnel de Réservation :** Flux complet fonctionnel (Recherche -> Détail -> Panier -> Paiement -> Confirmation).
+* **Espace Client :** Historique des commandes et possibilité d'annuler une réservation.
+* **Communication :** Formulaire de contact connecté à la BDD.
 
-* **Communication :**
-  * Formulaire de contact fonctionnel avec enregistrement des messages en base de données (Back-end).
+### 🚧 Front-End "SPA" (Angular - En cours - Bloc 3)
 
-### 🚧 En cours de développement
-
-* **Tunnel de Réservation :** Sélection des dates, vérification algorithmique des disponibilités (gestion des conflits de dates).
-* **Validation de Commande :** Création de la réservation en base de données et simulation de paiement / intégration API (ex: Stripe).
+* **Architecture :**
+    * Mise en place d'Angular v20+ avec **Standalone Components**.
+    * Configuration du **Proxy** pour éviter les problèmes CORS avec l'API Node.js.
+    * Structure stricte : Services, Smart Components (Pages) & Dumb Components (UI).
+* **Fonctionnalités implémentées :**
+    * Connexion API REST (`HttpClient`).
+    * Affichage dynamique de la liste des hôtels (Composant `HotelList`).
+    * Cartes Hôtels réutilisables (`HotelCard`) avec gestion des images distantes.
+* **Design :** Intégration HTML/CSS responsive de la page d'accueil.
 
 ### 📅 À venir (Roadmap)
 
-* **Gestion Client :** Interface pour visualiser, modifier ou annuler ses propres réservations.
-* **Back-Office (Admin) :** Interface CRUD complète pour gérer les hôtels, les chambres et les services (accès restreint Admin/Prestataire).
-* **Polissage Front-End (Bloc 1) :** Amélioration UX/UI, intégration CSS avancée (Responsive & Accessibilité ARIA).
-* **Évolution Architecture (Bloc 3) :** Transformation du Back-end en API RESTful et développement d'un client riche (SPA) avec Angular.
-* **DevOps & Qualité :** Mise en place de tests unitaires/intégration et déploiement continu.
+* **Finalisation Angular :**
+    * Portage du Tunnel de réservation (Datepicker & Formulaires Réactifs).
+    * Gestion de l'authentification côté Angular (Session/Cookie).
+* **Polissage UI/UX (Bloc 1) :** Harmonisation du Design System (CSS) entre la version EJS et Angular selon la maquette Figma.
+* **DevOps :** Tests unitaires (Jest/Jasmine) et déploiement CI/CD.
 
 ## ⚙️ Installation
 

@@ -1,0 +1,8 @@
+.card-body { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; /* optionnel mais utile si la carte a une hauteur fixe */ 
+} 
+.card-body button { 
+    margin-top: auto; /* pousse le bouton en bas */ 
+}

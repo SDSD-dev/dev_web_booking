@@ -1,11 +1,10 @@
-<header style="background: #333; color: white; padding: 1rem;">
-  <h1>Mon Hotel App (Angular)</h1>
-</header>
+<div style="display: flex; flex-direction: column; min-height: 100vh;">
+  <app-header></app-header>
 
-<main style="padding: 20px;">
-  <router-outlet></router-outlet>
-</main>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
 
-<footer style="margin-top: 50px; border-top: 1px solid #ccc;">
-  <p>© 2026 Projet Fin d'Étude</p>
-</footer>
+  <app-footer></app-footer>
+</div>
+

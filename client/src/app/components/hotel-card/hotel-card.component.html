@@ -1,11 +1,18 @@
 <div class="card">
-    <div class="card-image" style="background-color: #ddd; height: 150px; display: flex; align-items: center; justify-content: center;">
-        <span>Image Hôtel</span>
-    </div>
-    <div class="card-body" style="padding: 15px;">
+    @if (hotel.cover_image) {
+        <div class="card-image" style="background-color: #ddd; height: 165px; display: flex; align-items: center; justify-content: center;">
+            <img [src]="hotel.cover_image" [alt]="hotel.name" style="max-width: 100%; object-fit: cover;">        
+        </div>
+    } @else {
+    <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #666;">
+        <span>🏠 Pas d'image</span>
+      </div>
+    }
+
+    <div class="card-body" style="padding: 15px; min-height: 150px;">
         <h3 style="margin-top: 0;"> {{ hotel.name }} </h3>
         <p style="color: #666;">📍 {{ hotel.city }} </p>
-        <button style="background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%;">
+        <button>
         Voir les détails
         </button>
     </div>

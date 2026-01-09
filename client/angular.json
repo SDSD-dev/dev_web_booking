@@ -7,7 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": false,
+          "inlineTemplate": false,
+          "inlineStyle": false,
+          "flat": false
+        },
+        "@schematics/angular:service": {
+          "flat": false
         }
       },
       "root": "",

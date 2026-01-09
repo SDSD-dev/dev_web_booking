@@ -1,1 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+main {
+    flex: 1; 
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0;
+    width: 100%;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(250, 250, 238);
+}
+
+nav {
+  background-color: #1b2e49;
+  margin-top: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.5rem;
+}
+
+nav a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+button:hover {
+    background: #2ba0ff;
+    color: white;
+}
+
+form {
+  max-width: 500px;
+  min-height: 1000px;
+  margin: 0 auto;
+}
+
+/* Règle générale pour les labels (sauf checkbox) */
+form label:not(:has(input[type="checkbox"])) {
+  display: block;
+  margin-top: 1rem;
+}
+
+/* Règle spécifique pour le label de la checkbox */
+form label:has(input[type="checkbox"]) {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1rem;
+  white-space: nowrap;
+}
+
+/* Largeur des inputs/textarea */
+form input:not([type="checkbox"]),
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+form textarea {
+  width: 100%;
+  height: 5rem;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+form button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
+}

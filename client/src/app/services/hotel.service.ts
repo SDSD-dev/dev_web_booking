@@ -10,6 +10,8 @@ export interface Hotel {
   address: string;
   city: string;
   description_hotel: string;
+  // ? signifie qu'il peut être null si pas d'image
+  cover_image?: string;
 }
 
 @Injectable({
