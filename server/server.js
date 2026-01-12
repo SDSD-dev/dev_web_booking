@@ -62,6 +62,8 @@ app.use((req, res, next) => {
 
 // Middleware pour parser les données du formulaire ------------------------------------------
 
+// IMPORTANT : Permettre à Express de lire le JSON (Pour Angular)
+app.use(express.json());
 // express.urlencoded(...) : Il permet de parser (analyser) les données envoyées dans le corps d’une requête HTTP POST (souvent via un formulaire).
 // { extended: true } : Indique comment parser les objets imbriqués dans les données du formulaire.
 app.use(express.urlencoded({ extended: true }));
@@ -83,10 +85,12 @@ const hotelRoutes = require("./routes/hotelRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const hotelApiRoutes = require('./routes/api/hotelRoutes');
+const authApiRoutes = require('./routes/api/authRoutes');
 
 // --- ROUTES API (JSON) ---
 // Toutes les routes définies ici seront accessibles via /api/hotels, /api/auth, etc.
 app.use('/api', hotelApiRoutes);
+app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile

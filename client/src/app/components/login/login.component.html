@@ -1,0 +1,22 @@
+<div class="login-container">
+    <h2>Connexion Espace Client</h2>
+    @if (errorMessage) {
+        <div style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+            {{ errorMessage }}
+        </div>
+    }
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div style="margin-bottom: 15px;">
+            <label for="email">Email :</label>
+            <input type="email" id="email" formControlName="email" style="width: 100%; padding: 8px;">   
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" formControlName="password" style="width: 100%; padding: 8px;">
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid">
+            Se connecter
+        </button>
+    </form>
+
+</div>
