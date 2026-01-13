@@ -1,3 +1,4 @@
+// src/app/pages/hotel-list/hotel-list.component.ts
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { HotelService, Hotel } from '../../services/hotel.service';

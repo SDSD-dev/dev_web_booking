@@ -92,13 +92,31 @@ class HotelManager {
     // Récupèrations des infos de l'hôtel + images + note moyenne
     const sql = `SELECT hotel.*,
     (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as note_moyenne,
-    (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as nb_avis
+    (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as nb_avis,
+    (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image
     FROM hotel
     WHERE hotel.id_hotel = ?`;
     const [rows] = await db.execute(sql, [idHotel]);
     return rows[0]; // return un objet unique (indice 0) et non un tableau
   };
   
+  static async getOneWithRooms(id) {
+    // récupération des infos hotêls
+    const hotel = await this.getOneById(id);
+
+    if (!hotel) return null;
+
+    // récupération chambres associés
+    const sqlRooms = "SELECT * FROM chambres WHERE hotel_id = ?";
+    const [chambres] = await db.execute(sqlRooms, [id]);
+
+    // pour le JSON Angular
+    return {
+        hotel: hotel,
+        chambres: chambres
+    };
+  };
+
   static async findAll() {
     // Sélection de tout les hôtels + son images
     const sql = `SELECT 
@@ -155,10 +173,8 @@ class HotelManager {
       data.parking ? 1 : 0,
       id
     ]);
-
   };
-
-
+  
 }
 
 module.exports = HotelManager;

@@ -12,7 +12,7 @@
     <div class="card-body" style="padding: 15px; min-height: 150px;">
         <h3 style="margin-top: 0;"> {{ hotel.name }} </h3>
         <p style="color: #666;">📍 {{ hotel.city }} </p>
-        <button>
+        <button [routerLink]="['/hotel', hotel.id_hotel]">
         Voir les détails
         </button>
     </div>

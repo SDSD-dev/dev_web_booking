@@ -1,4 +1,4 @@
-// src/app/services/hotel.ts
+// src/app/services/hotel.service.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,8 +10,24 @@ export interface Hotel {
   address: string;
   city: string;
   description_hotel: string;
-  // ? signifie qu'il peut être null si pas d'image
-  cover_image?: string;
+  cover_image?: string; // ? signifie qu'il peut être null si pas d'image
+}
+// on definit 'room'
+export interface Room {
+  id_chambre : number;
+  type: string;
+  capacite_max: number;
+  nombre_total_unites: number;
+  prix: number;
+  prix_enfant?: number;
+  description_chambre?: string;
+  reduction_pourcentage?: string;
+  date_fin_promo?: Date;
+}
+// on definit 'HotelDetailResponse'
+export interface HotelDetailResponse {
+  hotel: Hotel;
+  chambres: Room[];
 }
 
 @Injectable({
@@ -23,4 +39,9 @@ export class HotelService {
   getHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>('/api/hotels');
   }
+
+  getHotelById(id: number): Observable<HotelDetailResponse> {
+    return this.http.get<HotelDetailResponse>(`/api/hotels/${id}`);
+  }
+
 }

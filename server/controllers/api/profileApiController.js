@@ -2,6 +2,7 @@
 const UserManager = require("../../models/UserManager");
 
 // GET /api/profile
+// Récupérer les infos du profil utilisateur
 exports.getProfile = async (req, res) => {
     try {
         // L'ID vient de la session (établie au login)
@@ -25,6 +26,7 @@ exports.getProfile = async (req, res) => {
 };
 
 // PUT /api/profile
+// Mettre à jour les infos du profil utilisateur
 exports.updateProfile = async (req, res) => {
     try {
         const userId = req.session.userId;

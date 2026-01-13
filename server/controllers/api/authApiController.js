@@ -53,6 +53,7 @@ exports.login = async (req, res) => {
     }
 }
 
+// API pour la déconnexion
 exports.logout = async (req, res) => {
     // Détruire la session côté serveur
     req.session.destroy((err) => {
@@ -66,6 +67,7 @@ exports.logout = async (req, res) => {
     });
 }
 
+// API pour vérifier la session (si l'utilisateur est connecté)
 exports.checkSession = async (req, res) => {
     if (req.session.userId && req.session.userInfos) {
         return res.status(200).json({ 
@@ -82,6 +84,7 @@ exports.checkSession = async (req, res) => {
     }
 };
 
+// API pour l'inscription
 exports.register = async (req, res) => {
     try {
         // Data du formulaire Angular
