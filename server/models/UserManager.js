@@ -61,6 +61,28 @@ class UserManager {
       connection.release(); // IMPORTANT : Libérer la connexion
     }
   }
+
+  // Récupérer les infos d'un client par son ID
+    static async getById(id) {
+        const sql = "SELECT * FROM clients WHERE id_client = ?";
+        const [rows] = await db.execute(sql, [id]);
+        return rows[0];
+    }
+
+    // Mettre à jour les infos personnelles
+    static async update(id, data) {
+        const sql = `
+            UPDATE clients SET 
+            nom = ?, prenom = ?, telephone = ?, 
+            rue = ?, code_postal = ?, ville = ?, pays = ?
+            WHERE id_client = ?
+        `;
+        await db.execute(sql, [
+            data.nom, data.prenom, data.telephone,
+            data.rue, data.code_postal, data.ville, data.pays,
+            id
+        ]);
+    }
 }
 
 module.exports = UserManager;

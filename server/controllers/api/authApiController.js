@@ -1,3 +1,4 @@
+// server/controllers/api/authApiController.js
 const UserManager = require("../../models/UserManager");
 const bcrypt = require("bcrypt");
 
@@ -31,6 +32,7 @@ exports.login = async (req, res) => {
         req.session.userId = user.client_id;
         req.session.role = user.role;
         req.session.isLoggedIn = true;
+        req.session.userInfos = { email: user.email, nom: user.nom };
 
         // sécurité pour être sûr que la session est sauvée avant de répondre
         req.session.save(err => {
@@ -48,5 +50,77 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.error(error)
         res.status(500).json({message : "Erreur serveur" })
+    }
+}
+
+exports.logout = async (req, res) => {
+    // Détruire la session côté serveur
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({message : "Erreur lors de la déconnexion" })
+        }
+        // Suppression du cookie côté client
+        res.clearCookie('connect.sid') // 'connect.sid' nom par défaut du cookie Express
+        // Répondre que c'est ok
+        res.status(200).json({ message: "Déconnexion réussie" })
+    });
+}
+
+exports.checkSession = async (req, res) => {
+    if (req.session.userId && req.session.userInfos) {
+        return res.status(200).json({ 
+            isAuthenticated: true, 
+            user: { 
+                role: req.session.role,
+                email: req.session.userInfos.email,
+                nom: req.session.userInfos.nom
+            } 
+        });
+    } else {
+        // Pas de session
+        return res.status(401).json({ isAuthenticated: false });
+    }
+};
+
+exports.register = async (req, res) => {
+    try {
+        // Data du formulaire Angular
+        const { nom, prenom, email, password, telephone } = req.body;
+
+        const existingUser = await UserManager.findByEmail(email);
+        // Vérifier si l'utilisateur existe déjà
+        if (existingUser) {
+            return res.status(409).json({ message : "Cet email est déjà utilisé."});
+        }
+
+        // Hacher le mot de passe
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
+        // Créer l'utilisateur via le Manager
+        const clientData = {
+            nom: nom,
+            prenom: prenom,
+            email: email, 
+            telephone: telephone || null, // Si pas envoyé, on met null
+            rue: null,         
+            code_postal: null,
+            ville: null,
+            pays: null
+        };
+        // Données d'authentification
+        const authData = {
+            email: email, // L'email pour la table connexions
+            hash: hashedPassword
+        };  
+
+        // Appel du Manager avec les DEUX arguments
+        await UserManager.create(clientData, authData);
+        // Réponse de succès
+        res.status(201).json({message : "Compte créé avec succès !" });
+
+    } catch (error) {
+        console.error("Erreur inscription API:", error)
+        res.status(500).json ({message : "Erreur lors de l'inscription."});
     }
 }

@@ -4,13 +4,29 @@
     </div>
     <nav>
         <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
-            <li>
+            <!-- <li>
                 <a href="/">Accueil</a>
+            </li> -->
+            <li><a routerLink="/" style="color: white; text-decoration: none;">Accueil</a></li>
+
+            @if (authService.currentUserSig()) {
+            <li><a routerLink="/profile" style="color: white; text-decoration: none;">Profil</a></li>
+            <li style="color: #4cd137;">
+                Bonjour, {{ authService.currentUserSig().nom || authService.currentUserSig().email }}
             </li>
             <li>
-                <a href="/login">Connexion</a>
+                <button (click)="logout()" style="background: none; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+                Déconnexion
+                </button>
             </li>
+            } @else { 
+            <li><a routerLink="/register" style="color: white; text-decoration: none;">Inscription</a></li>
+            <li>
+                <a routerLink="/login" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">
+                Connexion
+                </a>
+            </li>
+            }
         </ul>
     </nav>
 </header>
-

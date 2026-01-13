@@ -1,0 +1,61 @@
+<div class="profile-container" style="max-width: 600px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+  <h2>Mon Profil</h2>
+
+  @if (message) {
+    <div style="background-color: #d1ecf1; color: #0c5460; padding: 10px; margin-bottom: 15px;">
+      {{ message }}
+    </div>
+  }
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+      <div style="flex: 1;">
+        <label>Nom</label>
+        <input type="text" formControlName="nom" style="width: 100%; padding: 8px;">
+      </div>
+      <div style="flex: 1;">
+        <label>Prénom</label>
+        <input type="text" formControlName="prenom" style="width: 100%; padding: 8px;">
+      </div>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <label>Email (Non modifiable)</label>
+      <input type="email" formControlName="email" style="width: 100%; padding: 8px; background: #f0f0f0;">
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <label>Téléphone</label>
+      <input type="text" formControlName="telephone" style="width: 100%; padding: 8px;">
+    </div>
+
+    <hr style="margin: 20px 0;">
+    <h3>Adresse</h3>
+
+    <div style="margin-bottom: 10px;">
+      <label>Rue</label>
+      <input type="text" formControlName="rue" style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+      <div style="flex: 1;">
+        <label>Code Postal</label>
+        <input type="text" formControlName="code_postal" style="width: 100%; padding: 8px;">
+      </div>
+      <div style="flex: 2;">
+        <label>Ville</label>
+        <input type="text" formControlName="ville" style="width: 100%; padding: 8px;">
+      </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label>Pays</label>
+      <input type="text" formControlName="pays" style="width: 100%; padding: 8px;">
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; cursor: pointer;">
+      Enregistrer les modifications
+    </button>
+  </form>
+</div>

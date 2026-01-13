@@ -29,8 +29,8 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login succès:', response);
-          // Redirection vers l'accueil après connexion
-          this.router.navigate(['/']);
+          // Redirection vers le profil après connexion
+          this.router.navigate(['/profile']);
         },
         error: (err) => {
           console.error('Erreur login:', err);

@@ -86,11 +86,13 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const hotelApiRoutes = require('./routes/api/hotelRoutes');
 const authApiRoutes = require('./routes/api/authRoutes');
+const profileApiRoutes = require('./routes/api/profileRoutes');
 
 // --- ROUTES API (JSON) ---
 // Toutes les routes définies ici seront accessibles via /api/hotels, /api/auth, etc.
 app.use('/api', hotelApiRoutes);
 app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
+app.use('/api/profile', profileApiRoutes);
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile

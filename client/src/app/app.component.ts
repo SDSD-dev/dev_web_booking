@@ -1,13 +1,11 @@
 // src/app/app.ts
-import { Component, signal, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
-// Import depuis './services/hotel'
-import { HotelService, Hotel } from './services/hotel.service';
-import { Observable } from 'rxjs';
 // Import Header/Footer
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+// Import AuthService
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +14,14 @@ import { FooterComponent } from './components/footer/footer.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-// export class App {
-//   protected readonly title = signal('client');
-// };
-export class AppComponent {}
+
+export class AppComponent implements OnInit {
+  private authService = inject(AuthService);
+
+  ngOnInit(): void {
+    this.authService.checkAuth().subscribe({
+      next: () => console.log("Session restaurée"),
+      error: () => console.log("Pas de session active") // 401 normal si pas connecté
+    });
+  }
+}
