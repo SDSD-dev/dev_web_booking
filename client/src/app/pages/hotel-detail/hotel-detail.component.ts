@@ -2,12 +2,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // Pour lire l'URL
 import { CommonModule } from '@angular/common'; // Pour le pipe async, json, currency
+import { RouterLink } from "@angular/router";
 import { HotelService, HotelDetailResponse } from '../../services/hotel.service';
 
 @Component({
   selector: 'app-hotel-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './hotel-detail.component.html',
   styleUrl: './hotel-detail.component.scss',
 })
@@ -37,4 +38,5 @@ export class HotelDetailComponent {
       });
     }
   }
+
 }

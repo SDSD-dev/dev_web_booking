@@ -3,11 +3,11 @@ const db = require("../config/db");
 
 class OrderManager {
     static async createOrder(orderData) {
-        // 1. Obtenir une connexion dédiée (pas le pool générique) !!!!
+        // Obtenir une connexion dédiée (pas le pool générique) !!!!
         const connection = await db.getConnection();
 
         try {
-            // 2. Démarrer la transaction
+            // Démarrer la transaction
             await connection.beginTransaction();
 
             // --- VÉRIFICATION Anti-Doublon ---
@@ -31,7 +31,7 @@ class OrderManager {
                 throw new Error("ROOM_ALREADY_BOOKED")
             }                
 
-            // --- A. INSERTION DANS 'COMMANDES' ---
+            // INSERTION DANS 'COMMANDES' 
             const sqlCommande = `
             INSERT INTO commandes (client_id, hotel_id, date_sejour_debut, date_sejour_fin, 
                     nbr_adulte, nbr_enfant, montant_total, statut_commande)
@@ -50,7 +50,7 @@ class OrderManager {
 
             const newOrderId = resultCmd.insertId; // Récupération de l'ID de la commande créée !
 
-            // --- INSERTION DANS 'LIGNES_COMMANDE' ---
+            // NSERTION DANS 'LIGNES_COMMANDE'
             const sqlLigne = `
                 INSERT INTO lignes_commande (commande_id, chambre_id, quantite, 
                     prix_unitaire_facture, nbr_nuits, prix_total_ligne) 
@@ -65,18 +65,18 @@ class OrderManager {
                 orderData.prix_total
             ]);
             
-            // 3. Valider la transaction
+            // Valider la transaction
             await connection.commit();
 
             console.log(`Commande créée avec succès : ID ${newOrderId}`);
             return newOrderId;
         
         } catch (error) {
-            // 4. En cas d'erreur : ANNULER TOUT
+            // En cas d'erreur : ANNULER TOUT
             await connection.rollback();
             throw error;
         } finally {
-            // 5. Libérer la connexion pour les autres
+            // Libérer la connexion pour les autres
             connection.release();
         }
     };

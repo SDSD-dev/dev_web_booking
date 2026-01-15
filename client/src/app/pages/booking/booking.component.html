@@ -1,0 +1,52 @@
+<div class="booking-container" style="max-width: 800px; margin: 30px auto; padding: 20px; display: flex; gap: 30px;">
+  
+  <div style="flex: 1; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+    @if (room) {
+      <h2>Récapitulatif</h2>
+      <h3>{{ room.type_chambre }}</h3>
+
+        <img 
+            [src]="room.image_room" 
+            [alt]="room.type_chambre" 
+            style="width: 380px; height: 220px; object-fit: cover; border-radius: 4px;"
+        >
+
+      <p>{{ room.description_chambre }}</p>
+      <hr>
+      <p>Prix par nuit : <strong>{{ room.prix_base }} €</strong></p>
+    } @else {
+      <p>Chargement de la chambre...</p>
+    }
+  </div>
+
+  <div style="flex: 1;">
+    <h2>Vos Dates</h2>
+    <form [formGroup]="bookingForm" (ngSubmit)="onBook()">
+      
+      <div style="margin-bottom: 15px;">
+        <label>Date de départ</label>
+        <input type="date" formControlName="dateDebut" style="width: 100%; padding: 8px;">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label>Date d'arrivée</label>
+        <input type="date" formControlName="dateFin" style="width: 100%; padding: 8px;">
+      </div>
+
+      @if (numberOfNights > 0) {
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+          <p>Durée : <strong>{{ numberOfNights }} nuits</strong></p>
+          <p style="font-size: 1.2rem;">Total : <strong>{{ totalPrice }} €</strong></p>
+        </div>
+      } @else if (bookingForm.dirty && numberOfNights <= 0) {
+        <p style="color: red;">La date de fin doit être après la date de début.</p>
+      }
+
+      <button type="submit" [disabled]="bookingForm.invalid || numberOfNights <= 0" 
+              style="width: 100%; padding: 12px; background-color: #6c5ce7; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 1rem;">
+        Payer et Réserver
+      </button>
+
+    </form>
+  </div>
+</div>

@@ -15,14 +15,15 @@ export interface Hotel {
 // on definit 'room'
 export interface Room {
   id_chambre : number;
-  type: string;
+  type_chambre: string;
   capacite_max: number;
   nombre_total_unites: number;
-  prix: number;
-  prix_enfant?: number;
+  prix_base: number;
+  prix_enfant_sup?: number;
   description_chambre?: string;
   reduction_pourcentage?: string;
   date_fin_promo?: Date;
+  image_room?: string;
 }
 // on definit 'HotelDetailResponse'
 export interface HotelDetailResponse {

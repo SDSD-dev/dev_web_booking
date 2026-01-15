@@ -39,7 +39,7 @@ app.use(
     secret: process.env.SESSION_SECRET, // Clé secrète pour signer le cookie de session
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Mettre 'true' si passage en HTTPS
+    cookie: { secure: false , sameSite: 'lax' }, // Mettre 'true' si passage en HTTPS
   })
 );
 
@@ -87,12 +87,16 @@ const adminRoutes = require("./routes/adminRoutes");
 const hotelApiRoutes = require('./routes/api/hotelRoutes');
 const authApiRoutes = require('./routes/api/authRoutes');
 const profileApiRoutes = require('./routes/api/profileRoutes');
+const roomApiRoutes = require('./routes/api/roomRoutes');
+const bookingApiRoutes = require('./routes/api/bookingRoutes');
 
 // --- ROUTES API (JSON) ---
 // Toutes les routes définies ici seront accessibles via /api/hotels, /api/auth, etc.
 app.use('/api', hotelApiRoutes);
 app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
 app.use('/api/profile', profileApiRoutes);
+app.use('/api/rooms', roomApiRoutes);
+app.use('/api/booking', bookingApiRoutes)
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile

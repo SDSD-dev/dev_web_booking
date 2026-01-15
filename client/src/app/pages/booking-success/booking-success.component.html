@@ -1,0 +1,32 @@
+<div style="text-align: center; padding: 50px; max-width: 600px; margin: 0 auto;">
+  
+  @if (isLoading) {
+    <h2>Vérification du paiement en cours... ⏳</h2>
+    <p>Ne fermez pas cette page.</p>
+  }
+
+  @if (!isLoading && success) {
+    <div style="color: #27ae60;">
+      <h1 style="font-size: 3rem;">🎉 Merci !</h1>
+      <h2>Votre réservation est confirmée.</h2>
+            
+      <div style="margin-top: 30px;">
+        <a routerLink="/profile" style="background-color: #2c3e50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-right: 10px;">
+          Voir mes réservations
+        </a>
+        <a routerLink="/" style="color: #2c3e50; text-decoration: underline;">
+          Retour à l'accueil
+        </a>
+      </div>
+    </div>
+  }
+
+  @if (!isLoading && errorMessage) {
+    <div style="color: #c0392b;">
+      <h1>Oups ! 😕</h1>
+      <p>{{ errorMessage }}</p>
+      <a routerLink="/" style="color: blue;">Retourner à l'accueil</a>
+    </div>
+  }
+
+</div>

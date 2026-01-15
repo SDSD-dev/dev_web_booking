@@ -22,16 +22,39 @@
       @for (room of hotelData.chambres; track room.id_chambre) {
         <div class="room-card" style="border: 1px solid #ddd; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
           
-          <div>
-            <h3 style="margin: 0;">{{ room.type }}</h3>
-            <p>{{ room.description_chambre }}</p>
+          <div class="room-card" >
+              <div style="display: flex; gap: 15px; align-items: flex-start;">
+              
+              @if (room.image_room) {
+                <img 
+                  [src]="room.image_room" 
+                  [alt]="room.type_chambre" 
+                  style="width: 250px; height: 150px; object-fit: cover; border-radius: 4px;"
+                >
+              } @else {
+                <div style="width: 250px; height: 150px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                  🛏️
+                </div>
+              }
+
+              <div>
+                <h3 style="margin: 0;">{{ room.type_chambre }}</h3>
+                <p>{{ room.description_chambre }}</p>
+                <small>Capacité : {{ room.capacite_max }} pers.</small>
+              </div>
+
+            </div>
+
+            <div style="text-align: right;">
+              </div>
+
           </div>
 
           <div style="text-align: right;">
             <div style="font-size: 1.5rem; font-weight: bold; color: #2c3e50;">
-              {{ room.prix | currency:'EUR' }}
+              {{ room.prix_base | currency:'EUR' }}
             </div>
-            <button style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
+            <button [routerLink]="['/booking', room.id_chambre]" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
               Réserver
             </button>
           </div>
