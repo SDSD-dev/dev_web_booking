@@ -12,6 +12,7 @@
         >
 
       <p>{{ room.description_chambre }}</p>
+      <p>Capacité : {{ room.capacite_max }} pers.</p>
       <hr>
       <p>Prix par nuit : <strong>{{ room.prix_base }} €</strong></p>
     } @else {
@@ -24,16 +25,37 @@
     <form [formGroup]="bookingForm" (ngSubmit)="onBook()">
       
       <div style="margin-bottom: 15px;">
-        <label>Date de départ</label>
+        <label>Date d'arrivée</label>
         <input type="date" formControlName="dateDebut" style="width: 100%; padding: 8px;">
       </div>
 
       <div style="margin-bottom: 15px;">
-        <label>Date d'arrivée</label>
+        <label>Date de départ</label>
         <input type="date" formControlName="dateFin" style="width: 100%; padding: 8px;">
       </div>
 
-      @if (numberOfNights > 0) {
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+  
+        <div style="flex: 1;">
+          <label>Adultes</label>
+          <input type="number" formControlName="adults" min="1" style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="flex: 1;">
+          <label>Enfants</label>
+          <input type="number" formControlName="children" min="0" style="width: 100%; padding: 8px;">
+        </div>
+
+      </div>
+
+      @if (isCapacityExceeded && room) {
+        <div style="background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #ef9a9a;">
+          🚨 <strong>Attention :</strong> Cette chambre ne peut accueillir que {{ room.capacite_max }} personnes maximum.
+          <br>Veuillez réduire le nombre de voyageurs ou choisir une autre chambre.
+        </div>
+      }
+
+      @if (numberOfNights > 0 && !isCapacityExceeded) {
         <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
           <p>Durée : <strong>{{ numberOfNights }} nuits</strong></p>
           <p style="font-size: 1.2rem;">Total : <strong>{{ totalPrice }} €</strong></p>

@@ -10,7 +10,7 @@ class OrderManager {
             // Démarrer la transaction
             await connection.beginTransaction();
 
-            // --- VÉRIFICATION Anti-Doublon ---
+            // VÉRIFICATION Anti-Doublon
             const sqlCheck = `
                 SELECT COUNT(*) as count 
                 FROM lignes_commande
@@ -43,8 +43,8 @@ class OrderManager {
                 orderData.hotel_id,
                 orderData.date_debut,
                 orderData.date_fin,
-                1,
-                0,
+                orderData.nbr_adulte || 1,
+                orderData.nbr_enfant || 0,
                 orderData.prix_total
             ]);
 

@@ -1,5 +1,5 @@
-<div class="profile-container" style="max-width: 600px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-  <h2>Mon Profil</h2>
+<div class="profile-container" style="max-width: 800px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+<h2 style="text-align: center;">Mon Profil</h2>
 
   @if (message) {
     <div style="background-color: #d1ecf1; color: #0c5460; padding: 10px; margin-bottom: 15px;">
@@ -58,4 +58,66 @@
       Enregistrer les modifications
     </button>
   </form>
+
+<hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+<div class="bookings-section">
+  <h2>Mes Réservations</h2>
+
+  @if (loadingBookings) {
+    <p>Chargement de l'historique...</p>
+  } @else if (bookings.length === 0) {
+    <p>Vous n'avez pas encore effectué de réservation.</p>
+    <a routerLink="/" style="color: #007bff;">Découvrir nos hôtels</a>
+  } @else {
+    
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+          <tr style="background-color: #f8f9fa; text-align: left;">
+            <th style="padding: 12px; border-bottom: 2px solid #ddd;">Hôtel</th>
+            <th style="padding: 12px; border-bottom: 2px solid #ddd;">Dates</th>
+            <th style="padding: 12px; border-bottom: 2px solid #ddd;">Prix</th>
+            <th style="padding: 12px; border-bottom: 2px solid #ddd;">Statut</th>
+            <th style="padding: 12px; border-bottom: 2px solid #ddd;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (booking of bookings; track booking.id_commande) {
+            <tr style="border-bottom: 1px solid #eee;">
+              
+              <td style="padding: 12px;">
+                <strong>{{ booking.hotel_name }}</strong><br>
+                <small style="color: #666;">{{ booking.hotel_city }}</small>
+              </td>
+
+              <td style="padding: 12px;">
+                Du {{ booking.date_sejour_debut | date:'dd/MM/yyyy' }}<br>
+                au {{ booking.date_sejour_fin | date:'dd/MM/yyyy' }}
+              </td>
+
+              <td style="padding: 12px; font-weight: bold;">
+                {{ booking.montant_total | currency:'EUR' }}
+              </td>
+
+              <td style="padding: 12px;">
+                <span [style.color]="getStatusColor(booking.statut_commande)" style="font-weight: bold; text-transform: capitalize;">
+                  {{ booking.statut_commande }}
+                </span>
+              </td>
+
+              <td style="padding: 12px;">
+                <a [routerLink]="['/hotel', booking.id_hotel]" style="color: #007bff; text-decoration: none; font-size: 0.9rem;">
+                  Voir l'hôtel
+                </a>
+              </td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
 </div>

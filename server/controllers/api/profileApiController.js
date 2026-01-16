@@ -1,5 +1,6 @@
 // server/controllers/api/profileApiController.js
 const UserManager = require("../../models/UserManager");
+const OrderManager = require("../../models/OrderManager")
 
 // GET /api/profile
 // Récupérer les infos du profil utilisateur
@@ -39,5 +40,23 @@ exports.updateProfile = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Erreur mise à jour" });
+    }
+};
+
+exports.getBookings = async (req, res) => {
+    try {        
+        const userId = req.session.userId;
+
+        if (!userId) {
+            return res.status(401).json({ message: "Non connecté" });
+        }
+
+        const history = await OrderManager.getHistoryByClientId(userId);
+
+        res.json(history); 
+
+    } catch (error) {
+        console.error();
+        res.status(500).json({});
     }
 };

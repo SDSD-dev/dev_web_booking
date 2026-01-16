@@ -3,12 +3,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { inject, OnInit } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
+import { RouterLink } from '@angular/router';
+import { DatePipe, CurrencyPipe } from '@angular/common';
+import { UserService, BookingHistory } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -29,15 +31,18 @@ export class ProfileComponent implements OnInit {
 
   message: string = '';
 
+  // Nouvelle variable pour stocker la liste
+  bookings: BookingHistory[] = [];
+  loadingBookings = true;
+
   ngOnInit() {
-    // 1. Charger les infos existantes
+    // Charger le profil
     this.userService.getProfile().subscribe({
-      next: (data) => {
-        // 2. Remplir le formulaire
-        this.profileForm.patchValue(data);
-      },
+      next: (data) => this.profileForm.patchValue(data),
       error: (err) => console.error("Erreur chargement profil", err)
     });
+    // Charger l'Historique
+    this.loadHistory();
   }
 
   onSubmit() {
@@ -49,4 +54,30 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
+  loadHistory() {
+    this.userService.getBookings().subscribe({
+      next: (data) => {
+        this.bookings = data;
+        this.loadingBookings = false;
+      },
+    error: (err) => {
+      console.error("Erreur historique", err);
+      this.loadingBookings = false;
+      }
+    });
+  }
+
+  // Méthode pour colorer le statut
+  getStatusColor(status: string): string {
+    switch(status) {
+      case 'confirmee': return '#27ae60'; // Vert
+      case 'annulee': return '#c0392b';   // Rouge
+      case 'en_attente': return '#f39c12'; // Orange
+      default: return '#7f8c8d';
+    }
+  }
+  
 }
+
+

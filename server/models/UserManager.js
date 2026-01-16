@@ -28,7 +28,7 @@ class UserManager {
     try {
       await connection.beginTransaction();
 
-      // 1. Insert Client
+      // Insert Client
       const [clientResult] = await connection.execute(
         `INSERT INTO clients (nom, prenom, email, telephone, rue, code_postal, ville, pays) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -45,7 +45,7 @@ class UserManager {
       );
       const newClientId = clientResult.insertId;
 
-      // 2. Insert Connexion
+      // Insert Connexion
       await connection.execute(
         `INSERT INTO connexions (email, mot_de_passe_hash, role, client_id) 
                  VALUES (?, ?, ?, ?)`,
@@ -63,26 +63,26 @@ class UserManager {
   }
 
   // Récupérer les infos d'un client par son ID
-    static async getById(id) {
-        const sql = "SELECT * FROM clients WHERE id_client = ?";
-        const [rows] = await db.execute(sql, [id]);
-        return rows[0];
-    }
+  static async getById(id) {
+      const sql = "SELECT * FROM clients WHERE id_client = ?";
+      const [rows] = await db.execute(sql, [id]);
+      return rows[0];
+  }
 
-    // Mettre à jour les infos personnelles
-    static async update(id, data) {
-        const sql = `
-            UPDATE clients SET 
-            nom = ?, prenom = ?, telephone = ?, 
-            rue = ?, code_postal = ?, ville = ?, pays = ?
-            WHERE id_client = ?
-        `;
-        await db.execute(sql, [
-            data.nom, data.prenom, data.telephone,
-            data.rue, data.code_postal, data.ville, data.pays,
-            id
-        ]);
-    }
+  // Mettre à jour les infos personnelles
+  static async update(id, data) {
+      const sql = `
+          UPDATE clients SET 
+          nom = ?, prenom = ?, telephone = ?, 
+          rue = ?, code_postal = ?, ville = ?, pays = ?
+          WHERE id_client = ?
+      `;
+      await db.execute(sql, [
+          data.nom, data.prenom, data.telephone,
+          data.rue, data.code_postal, data.ville, data.pays,
+          id
+      ]);
+  }
 }
 
 module.exports = UserManager;

@@ -7,7 +7,7 @@ const OrderManager = require("../../models/OrderManager.js");
 exports.createCheckoutSession = async (req, res) => {
     try {
         // Récupération de données envoyé par Angular
-        const { roomId, dates, total } = req.body;
+        const { roomId, dates, total, travelers } = req.body;
         const userId = req.session.userId; // l'utilisateur connecté
 
         if (!userId) {
@@ -50,7 +50,9 @@ exports.createCheckoutSession = async (req, res) => {
                 room_id: roomId,
                 date_debut: dates.dateDebut,
                 date_fin: dates.dateFin,
-                total_price: total
+                total_price: total,
+                nbr_adulte: travelers.adults,
+                nbr_enfant: travelers.children
             }
         });
 
@@ -121,7 +123,9 @@ exports.confirmPayment = async (req, res) => {
             date_fin: date_fin,
             prix_total: total_price,
             prix_unitaire: prix_unitaire,
-            nbr_nuits: nbr_nuits
+            nbr_nuits: nbr_nuits,
+            nbr_adulte: Number(nbr_adulte),
+            nbr_enfant: Number(nbr_enfant)
         });
 
         console.log("🎉 Commande créée avec ID:", newOrderId); // pour debug
