@@ -16,7 +16,7 @@ class OrderManager {
                 FROM lignes_commande
                 JOIN commandes ON lignes_commande.commande_id = commandes.id_commande
                 WHERE lignes_commande.chambre_id = ? 
-                AND commandes.statut_commande != 'annulee'
+                AND commandes.statut_commande != 'annulée'
                 AND (
                     commandes.date_sejour_debut < ? AND commandes.date_sejour_fin > ?
                 )
@@ -35,7 +35,7 @@ class OrderManager {
             const sqlCommande = `
             INSERT INTO commandes (client_id, hotel_id, date_sejour_debut, date_sejour_fin, 
                     nbr_adulte, nbr_enfant, montant_total, statut_commande)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmee')
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmée')
             `;
             // On met 1 adulte 0 enfant si non précisé,
             const [resultCmd] = await connection.execute(sqlCommande, [

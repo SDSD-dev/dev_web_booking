@@ -72,12 +72,31 @@ export class ProfileComponent implements OnInit {
   getStatusColor(status: string): string {
     switch(status) {
       case 'confirmee': return '#27ae60'; // Vert
-      case 'annulee': return '#c0392b';   // Rouge
+      case 'confirmée': return '#27ae60'; // Vert
+      case 'annulée': return '#c0392b';   // Rouge
       case 'en_attente': return '#f39c12'; // Orange
       default: return '#7f8c8d';
     }
   }
   
+  onCancelOrder(orderId: number) {
+    // Sécurité -> confirme
+    if (confirm("Êtes-vous sûr de vouloir annuler cette réservation ?")) {
+      // Appel API
+      this.userService.cancelBooking(orderId).subscribe({
+        next: () => {
+          // recharge la liste pour mettre à jour l'affichage
+          this.loadHistory();
+        },
+        error: (err) => {
+          console.error("Erreur annulation", err);
+          alert("Impossible d'annuler cette commande.");
+        }
+      });
+
+    }
+  }
+
 }
 
 

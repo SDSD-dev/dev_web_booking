@@ -9,5 +9,6 @@ router.get('/', checkAuth, profileController.getProfile);
 router.put('/', checkAuth, profileController.updateProfile);
 // GET /api/profile/bookings
 router.get('/bookings', checkAuth, profileController.getBookings);
+router.put('/bookings/:id/cancel', checkAuth, profileController.cancelBooking);
 
 module.exports = router;

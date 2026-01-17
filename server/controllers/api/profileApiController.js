@@ -60,3 +60,26 @@ exports.getBookings = async (req, res) => {
         res.status(500).json({});
     }
 };
+
+exports.cancelBooking = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        const orderId = req.params.id;
+
+        if (!userId) {
+            return res.status(401).json({ message: "Non connecté" });
+        };
+
+        const cancelSucess = await OrderManager.cancelOrder(orderId, userId);
+
+        if (cancelSucess) {
+            res.json({ message: "Commande annulée avec succès" });
+        } else {
+            res.status(404).json({ message: "Commande introuvable ou impossible à annuler" });
+        }
+    } catch (error) {
+        console.error("Erreur annulation:", error);
+        res.status(500).json({message : "Erreur serveur" });
+    }
+    
+};

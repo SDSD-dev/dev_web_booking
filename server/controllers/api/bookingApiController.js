@@ -89,7 +89,7 @@ exports.confirmPayment = async (req, res) => {
         // console.log("✅ Paiement Stripe OK. Metadata:", session.metadata); // pour debug
 
         // Récupération des données Stripe
-        const { user_id, room_id, date_debut, date_fin, total_price } = session.metadata;
+        const { user_id, room_id, date_debut, date_fin, total_price, nbr_adulte, nbr_enfant } = session.metadata;
 
         // PRÉPARATION DES DONNÉES pour OrderManager -> il faut hotel_id, prix unitaire et nbr de nuits
         // Récupération de l'ID

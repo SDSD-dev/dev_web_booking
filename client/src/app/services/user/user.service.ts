@@ -34,4 +34,8 @@ export class UserService {
   getBookings(): Observable<BookingHistory[]> {
     return this.http.get<BookingHistory[]>(`${this.apiUrl}/bookings`);
   }
+
+  cancelBooking(orderId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/bookings/${orderId}/cancel`, {})
+  }
 }

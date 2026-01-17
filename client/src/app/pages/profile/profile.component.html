@@ -112,6 +112,20 @@
                 </a>
               </td>
 
+              <td style="padding: 12px;">
+                  <a [routerLink]="['/hotel', booking.id_hotel]" style="color: #007bff; text-decoration: none; font-size: 0.9rem; margin-right: 10px;">
+                  Voir l'hôtel
+                </a>
+
+                @if (booking.statut_commande !== 'annulée') {
+                  <button 
+                    (click)="onCancelOrder(booking.id_commande)"
+                    style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    Annuler
+                  </button>
+                }
+            </td>
+
             </tr>
           }
         </tbody>
