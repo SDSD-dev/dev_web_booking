@@ -84,19 +84,12 @@ const contactRoutes = require("./routes/contactRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+// Import routes API
 const hotelApiRoutes = require('./routes/api/hotelRoutes');
 const authApiRoutes = require('./routes/api/authRoutes');
 const profileApiRoutes = require('./routes/api/profileRoutes');
 const roomApiRoutes = require('./routes/api/roomRoutes');
 const bookingApiRoutes = require('./routes/api/bookingRoutes');
-
-// --- ROUTES API (JSON) ---
-// Toutes les routes définies ici seront accessibles via /api/hotels, /api/auth, etc.
-app.use('/api', hotelApiRoutes);
-app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
-app.use('/api/profile', profileApiRoutes);
-app.use('/api/rooms', roomApiRoutes);
-app.use('/api/booking', bookingApiRoutes)
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile
@@ -104,6 +97,13 @@ app.use("/", contactRoutes); // Pour /contact (GET et POST)
 app.use("/", hotelRoutes); // Pour /search (GET)
 app.use("/", bookingRoutes); // Pour /bookingRoutes (GET)
 app.use("/admin", adminRoutes); // Pour /adminRoutes (GET)
+
+// --- ROUTES API (JSON) ---
+app.use('/api', hotelApiRoutes); // Pour /api/hotels et /api/hotels/:id
+app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
+app.use('/api/profile', profileApiRoutes); // Pour /api/profile
+app.use('/api/rooms', roomApiRoutes); // Pour /api/rooms
+app.use('/api/booking', bookingApiRoutes); // Pour /api/booking
 
 // ****************************************************
 // ****************************************************

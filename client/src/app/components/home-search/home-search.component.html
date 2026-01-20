@@ -1,0 +1,55 @@
+<div>
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      
+      <select name="lieu" id="lieu" required formControlName="city" style="padding: 8px;">
+          <option value="">--Veuillez choisir une ville (obligatoire)--</option>
+          <option value="Paris">Paris</option>
+          <option value="Lyon">Lyon</option>
+          <option value="Lille">Lille</option>
+          <option value="Bordeaux">Bordeaux</option>
+          <option value="Marseille">Marseille</option>
+          <option value="Lourdes">Lourdes</option>
+      </select>
+    
+      <input type="date" formControlName="dateDebut" style="padding: 8px;">
+      <input type="date" formControlName="dateFin" style="padding: 8px;">
+          
+      <p>Adultes</p><input type="number" formControlName="adults" min="1" placeholder="Adultes" style="width: 60px; padding: 1px;">
+      <p>Enfants</p><input type="number" formControlName="children" min="0" placeholder="Enfants" style="width: 60px; padding: 8px;">
+
+      <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+          <input type="checkbox" formControlName="piscine"> 🏊 Piscine
+          </label>
+
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="checkbox" formControlName="spa"> 🧖‍♀️ Spa
+          </label>
+
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="checkbox" formControlName="animaux"> 🐶 Animaux
+          </label>
+
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="checkbox" formControlName="parking"> 🚗 Parking
+          </label>
+
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="checkbox" formControlName="wifi"> 📶 WiFi
+          </label>
+        </div>
+        
+      </div>
+
+
+      <button type="submit" style="background: #007bff; color: white; border: none; padding: 8px 16px; cursor: pointer;">
+        Rechercher
+      </button>
+    </div>
+  </form>
+</div>

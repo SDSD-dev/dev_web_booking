@@ -3,9 +3,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Room } from '../../services/hotel.service';
+import { Room, HotelService } from '../../services/hotel.service';
 import { RoomService } from '../../services/room/room.service';
 import { BookingService } from '../../services/booking/booking.service';
+
 
 
 @Component({
@@ -20,12 +21,13 @@ export class BookingComponent implements OnInit {
   private roomService = inject(RoomService);
   private fb = inject(FormBuilder);
   private bookingService = inject(BookingService);
+  private hotelService = inject(HotelService);
 
   room: Room | null = null;
   bookingForm: FormGroup = this.fb.group({
     dateDebut: ['', Validators.required],
     dateFin: ['', Validators.required],
-    adults: [2, [Validators.required, Validators.min(1)]],
+    adults: [1, [Validators.required, Validators.min(1)]],
     children: [0, [Validators.required, Validators.min(0)]]
   });
   totalPrice: number = 0;
@@ -33,15 +35,34 @@ export class BookingComponent implements OnInit {
   isCapacityExceeded: boolean = false;
 
   ngOnInit() {
+    // Récupération de la recherche
+    const savedCriteria = this.hotelService.lastSearchCriteria;
+    
+    // Pour remplir le formulaire avec les valeurs mémorisés
+    if (savedCriteria) {
+      this.bookingForm.patchValue({
+        dateDebut: savedCriteria.dateDebut,
+        dateFin: savedCriteria.dateFin,
+        adults: savedCriteria.adults || 1,
+        children: savedCriteria.children || 0, 
+      });
+    }
+
+    // Chargement de la chambre
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
     if (id) {
       this.roomService.getRoomById(id).subscribe({
-        next: (data) => this.room = data,
-        error: (err) => console.error
-      })
-    };
-    // Calcul du prix en temps réel quand les dates changent
-    this.bookingForm.valueChanges.subscribe(() => this.calculeTotal())
+        next: (data) => {
+          this.room = data;
+
+          // Pour forcer le calcule du total tout de suite avec les dates
+          this.calculeTotal();
+        },
+        error: (err) => console.error("Erreur chargement chambre", err)
+      });
+    }
+
   };
 
   calculeTotal() {
