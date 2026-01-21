@@ -90,6 +90,7 @@ const authApiRoutes = require('./routes/api/authRoutes');
 const profileApiRoutes = require('./routes/api/profileRoutes');
 const roomApiRoutes = require('./routes/api/roomRoutes');
 const bookingApiRoutes = require('./routes/api/bookingRoutes');
+const contactApiController = require('./routes/api/contactRoutes')
 
 // --- UTILISATION DES ROUTES ---
 app.use("/", authRoutes); // Pour login, register, profile
@@ -104,6 +105,7 @@ app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
 app.use('/api/profile', profileApiRoutes); // Pour /api/profile
 app.use('/api/rooms', roomApiRoutes); // Pour /api/rooms
 app.use('/api/booking', bookingApiRoutes); // Pour /api/booking
+app.use('/api/contact', contactApiController);
 
 // ****************************************************
 // ****************************************************

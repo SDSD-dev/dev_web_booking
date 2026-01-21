@@ -8,11 +8,13 @@ import { authGuard } from './guards/auth-guard';
 import { HotelDetailComponent } from './pages/hotel-detail/hotel-detail.component';
 import { BookingComponent } from './pages/booking/booking.component';
 import { BookingSuccessComponent } from './pages/booking-success/booking-success.component';
+import { ContactComponent } from './pages/contact/contact.component';
  
 export const routes: Routes = [
   // Route par défaut (la racine '')
   { path: '', component: HotelListComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'contact', component: ContactComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] }, //  authGuard -> il faut resté connecté pour affiché le profil
   { path: 'hotel/:id', component: HotelDetailComponent },

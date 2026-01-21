@@ -1,0 +1,24 @@
+<section>
+    @if (contactMessage) {
+    <div style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 10px;">{{ contactMessage }}</div>
+    }
+
+    <form  [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <h2>Formulaire de contact</h2>
+        <label for="nom">Nom (obligatoire) :</label>
+        <input type="text" id="nom" formControlName="nom" />
+        <label for="nom">Prenom (obligatoire) :</label>
+        <input type="text" id="prenom" formControlName="prenom" />
+        <label for="email">Email (obligatoire) :</label>
+        <input type="email" id="email" formControlName="email" />
+        <label for="phone">Téléphone :</label>
+        <input type="tel" id="phone" formControlName="phone"/>
+        <label for="message">Message (obligatoire) :</label>
+        <textarea id="message" formControlName="message" rows="5"></textarea>
+        <label
+        ><input type="checkbox" formControlName="consent_public" /> Je
+        consens à la publication de mon message.</label
+        >
+        <div><button type="submit" [disabled]="contactForm.invalid">Envoyer</button></div>
+    </form>
+</section>
