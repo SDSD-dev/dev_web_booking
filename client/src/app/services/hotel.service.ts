@@ -37,7 +37,7 @@ export interface HotelDetailResponse {
 })
 export class HotelService {
   private http = inject(HttpClient);
-  // private apiUrl = '/api/hotels/';
+  private apiUrl = '/api/hotels';
 
   lastSearchCriteria: any = null;
 
@@ -68,7 +68,22 @@ export class HotelService {
     if (criteria.parking) params = params.set('parking', 'true');
 
     return this.http.get<Hotel[]>('/api/hotels/search', { params: params })
+  };
+
+  createHotel(data: any): Observable<any> {
+    // return this.http.post(this.apiUrl, data);
+    return this.http.post('/api/hotels', data);
   }
+
+  updateHotel(id: number, data: any): Observable<any> {
+    // return this.http.put(`${this.apiUrl}/${id}`,data);
+    return this.http.put(`/api/hotels/${id}`, data);
+  }
+
+  deleteHotel(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
 }
 
 

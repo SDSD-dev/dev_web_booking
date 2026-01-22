@@ -1,0 +1,42 @@
+<div class="container" style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Administration Hôtels</h1>
+    <a routerLink="/admin/hotel/new" style="background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+      + Ajouter un hôtel
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <p>Chargement des données...</p>
+  } @else {
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+      <thead style="background-color: #34495e; color: white;">
+        <tr>
+          <th style="padding: 12px; text-align: left;">ID</th>
+          <th style="padding: 12px; text-align: left;">Nom</th>
+          <th style="padding: 12px; text-align: left;">Ville</th>
+          <th style="padding: 12px; text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (hotel of hotels; track hotel.id_hotel) {
+          <tr style="border-bottom: 1px solid #ddd; background: white;">
+            <td style="padding: 12px;">#{{ hotel.id_hotel }}</td>
+            <td style="padding: 12px; font-weight: bold;">{{ hotel.name }}</td>
+            <td style="padding: 12px;">{{ hotel.city }}</td>
+            <td style="padding: 12px;">
+              <button [routerLink]="['/admin/hotel/edit', hotel.id_hotel]" style="margin-right: 10px; color: #ebf5fc; text-decoration: none; border: 1px solid #2980b9; padding: 5px 10px; border-radius: 4px;">
+                ✏️ Éditer
+              </button>
+              
+              <button (click)="deleteHotel(hotel.id_hotel)" style="background: none; border: 1px solid #c0392b; color: #c0392b; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                🗑️ Supprimer
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

@@ -1,0 +1,71 @@
+<div class="container" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+    <h2>{{ isEditMode ? 'Modifier l\'hôtel' : 'Ajouter un nouvel hôtel' }}</h2>
+
+    @if (errorMessage) {
+        <div style="background: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+            {{ errorMessage }}
+        </div>
+    }
+
+    <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+            <label>Nom de l'hôtel *</label>
+            <input type="text" formControlName="name" style="width: 100%; padding: 8px;">
+
+        </div>
+        <div>
+            <label>Adresse *</label>
+            <input type="text" formControlName="address" style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+                <label>Ville *</label>
+                <input type="text" formControlName="city" style="width: 100%; padding: 8px;">
+            </div>
+            <div style="flex: 1;">
+                <label>Pays *</label>
+                <input type="text" formControlName="country" style="width: 100%; padding: 8px;">
+            </div>
+        </div>
+
+        <div>
+            <label>Description *</label>
+            <textarea formControlName="description" rows="5" style="width: 100%; padding: 8px;"></textarea>
+        </div>
+
+        <fieldset style="border: 1px solid #eee; padding: 10px; border-radius: 4px;">
+            <legend style="font-size: 0.9rem; font-weight: bold; color: #555;">Équipements</legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <label><input type="checkbox" formControlName="piscine"> Piscine</label>
+                <label><input type="checkbox" formControlName="spa"> Spa</label>
+                <label><input type="checkbox" formControlName="animaux"> Animaux acceptés</label>
+                <label><input type="checkbox" formControlName="wifi"> WiFi Gratuit</label>
+                <label><input type="checkbox" formControlName="parking"> Parking</label>
+            </div>
+        </fieldset>
+
+        
+        <div>
+        @if (!isEditMode) {
+            <label>Image de couverture (Optionnel)</label>
+            <input type="text" formControlName="imageUrl" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 8px;">
+            <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                Astuce : Copiez l'adresse d'une image.
+            </p>
+        } @else {   
+            <p></p>
+        }
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <a routerLink="/admin" style="text-decoration: none; color: #666; padding: 10px;">Annuler</a>
+            
+            <button type="submit" [disabled]="hotelForm.invalid" 
+                    style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+                {{ isEditMode ? 'Enregistrer les modifications' : 'Créer l\'hôtel' }}
+            </button>
+        </div>
+        
+    </form>
+</div>

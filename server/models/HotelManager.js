@@ -24,12 +24,12 @@ class HotelManager {
         WHERE C.date_sejour_debut <= ? AND C.date_sejour_fin >= ? AND C.statut_commande != 'annulée'
       )`;
 
-    // 2. INJECTION DES DATES (fournies par le contrôleur)
+    // INJECTION DES DATES (fournies par le contrôleur)
     // Attention à l'ordre inversé pour la logique de chevauchement
     params.push(dateFin);
     params.push(dateDebut);
 
-    // 3. CONSTRUCTION DYNAMIQUE DU SQL
+    // CONSTRUCTION DYNAMIQUE DU SQL
     // Filtre Lieu
     if (lieu) {
       sql += ` AND (T1.city LIKE ? OR T1.country LIKE ?)`;
@@ -51,7 +51,7 @@ class HotelManager {
 
 
 
-    // 4. EXÉCUTION
+    // EXÉCUTION
     // On utilise db.execute directement (pas besoin de getConnection/release avec mysql2 pool simple)
     try {
       const [rows] = await db.execute(sql, params);
@@ -178,6 +178,10 @@ class HotelManager {
     ]);
   };
   
+  static async addImage(hotelId, url) {
+    const sql = "INSERT INTO hotel_images (hotel_id, url_image) VALUES (?,?)";
+    await db.execute(sql, [hotelId, url])
+  };
+  
 }
-
 module.exports = HotelManager;

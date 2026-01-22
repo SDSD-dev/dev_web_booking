@@ -3,6 +3,13 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from'@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+export interface User {
+  email: string;
+  nom: string;
+  role: string; // <--- C'est le plus important pour le Guard
+  prenom?: string; // le ? veut dire optionnel
+  id?: number;
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +19,7 @@ export class AuthService {
   private apiUrl = '/api/auth'; // Grâce au proxy !
 
   // Signal pour stocker l'utilisateur connecté
-  currentUserSig = signal<any>(null);
+  currentUserSig = signal<User | null>(null); // User | null soit c'est User soit c'est null
 
   login(credentials: any): Observable<any> {
     // On envoie email + password au serveur

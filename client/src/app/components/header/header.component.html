@@ -1,6 +1,6 @@
 <header>
     <div style="font-size: 1.5rem; font-weight: bold;">
-        🏨 HotelApp
+        HotelApp
     </div>
     <nav>
         <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
@@ -11,10 +11,21 @@
 
             <li><a routerLink="/contact" style="color: white; text-decoration: none;">Contact</a></li>
 
-            @if (authService.currentUserSig()) {
+            @if (authService.currentUserSig()?.role === 'administrateur') {
             <li><a routerLink="/profile" style="color: white; text-decoration: none;">Profil</a></li>
+            <li><a routerLink="/admin" style="color: white; text-decoration: none;">Admin</a></li>
             <li style="color: #4cd137;">
-                Bonjour, {{ authService.currentUserSig().nom || authService.currentUserSig().email }}
+                Bonjour, {{ authService.currentUserSig()?.nom || authService.currentUserSig()?.email }}
+            </li>
+            <li>
+                <button (click)="logout()" style="background: none; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+                Déconnexion
+                </button>
+            </li>
+            } @else if (authService.currentUserSig()) {
+            <li><a routerLink="/profile" style="color: white; text-decoration: none;">Profil</a></li>            
+            <li style="color: #4cd137;">
+                Bonjour, {{ authService.currentUserSig()?.nom || authService.currentUserSig()?.email }}
             </li>
             <li>
                 <button (click)="logout()" style="background: none; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer; border-radius: 4px;">

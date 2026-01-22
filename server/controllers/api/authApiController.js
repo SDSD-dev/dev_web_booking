@@ -8,10 +8,11 @@ exports.login = async (req, res) => {
         console.log("Tentative de connexion API reçue");
         console.log("Headers:", req.headers['content-type']);
         // console.log("Body reçu:", req.body);
-        //
+
+        // Récupération des données du formulaire
         const {email, password } = req.body;
 
-        //
+        // Recherche de l'utilisateur par email
         const user = await UserManager.findByEmail(email);
 
         if (!user) {
@@ -22,7 +23,7 @@ exports.login = async (req, res) => {
         //Vérification du mot de passe
         const match = await bcrypt.compare(password, user.mot_de_passe_hash);
 
-        //
+        // Mot de passe incorrect
         if (!match) {
             return res.status(401).json({message: "Email ou mot de passe incorrect."})
         };
@@ -32,7 +33,11 @@ exports.login = async (req, res) => {
         req.session.userId = user.client_id;
         req.session.role = user.role;
         req.session.isLoggedIn = true;
-        req.session.userInfos = { email: user.email, nom: user.nom };
+        req.session.userInfos = { 
+            email: user.email,
+            nom: user.nom,
+            role: user.role 
+        };
 
         // sécurité pour être sûr que la session est sauvée avant de répondre
         req.session.save(err => {

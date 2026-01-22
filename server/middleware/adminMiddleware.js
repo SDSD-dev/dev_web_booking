@@ -2,24 +2,35 @@
 
 // Middleware pour vérifier si l'utilisateur est un administrateur
 const checkAdmin = (req, res, next) => {
-    // 1. Vérification si l'utilisateur est connecté (Sécurité de base)
+    // Rendre compatible adminMiddleware avec Angular et le projet full Node.js
+    // est-ce que l'URL commence par '/api' OU si le client demande du JSON ?
+    const isApi = req.path.startsWith('/api') || req.headers.accept?.includes('application/json')
+
+    // Cas 1 -> Utilisateur non connecté
     if (!req.session || !req.session.userId) {
-        return res.redirect("/login");
-    }
-    // 2. Vérification du role (Sécurité Admin)
-    if (req.session.role === 'administrateur') {
-        // autorisation Admin
+        if (isApi) {
+            // Pour Angular : Erreur 401 (Non autorisé)
+            return res.status(401).json({ message : "Non connecté. Session expirée ou inexistante."});
+        } else {
+            // Pour EJS : Redirection vers le Login
+            return res.redirect("/login");
+        }
+    };
+
+    // Cas -> Utilisateur connecté mais pas Admin
+    if (req.session.role === 'administrateur' || req.session.role === 'admin') {
         next();
     } else {
-        // C'est un client normal qui essaie d'entrer dans la zone admin
-        // On le renvoie gentiment (ou brutalement avec une 403)
-        console.log(`Tentative d'intrusion admin par l'utilisateur ${req.session.userId}`);
-        res.redirect('/profile');
-        // res.status(403).render('error', {
-        //     title: "Accès Refusé",
-        //     subtitle: "Vous n'avez pas les droits d'administrateur."
-        // });
-    }
+        console.log(`Tentative d'intrusion admin par user ${req.session.userId}`);
+        if (isApi) {
+            // Pour Angular : Erreur 403 (Interdit)
+            return res.status(403).json({ message: "Accès refusé : Droits administrateur requis." });
+        } else {
+            // Pour EJS : Redirection vers le profil
+            return res.redirect('/profile');
+        }
+
+    };
 }; 
 
 module.exports = checkAdmin;

@@ -74,3 +74,55 @@ exports.searchHotels = async (req,res) => {
         res.status(500).json({ message: "Erreur lors de la recherche" });
     }
 };
+
+exports.createHotel = async (req, res) => {
+    try {
+        const hotelData = { 
+            ...req.body,
+            user_id: req.session.userId // Récupérer l'ID utilisateur depuis la session
+         };
+        
+        const newId = await HotelManager.create(hotelData);
+
+        // pour ajouter une image
+        if (req.body.imageUrl) {
+            await HotelManager.addImage(newId, req.body.imageUrl);
+        }
+         
+        res.json({ success: true, id: newId, message: "Hôtel créé avec succès" });
+    } catch (error) {
+        console.log('Données reçues :', req.body);
+        console.error(error);
+        res.status(500).json({message : "Erreur création hôtel"});
+    }
+};
+
+exports.updateHotel = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        await HotelManager.update(id, req.body);
+
+        res.json({ success: true, message: "Hôtel mis à jour" });
+
+    } catch (error) {
+        console.log('Données reçues :', req.body);
+        console.error(error);
+        res.status(500).json({message : "Erreur mise à jour hôtel"})
+    }
+};
+
+exports.deleteHotel = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        await HotelManager.delete(id)
+
+        res.json({ success: true, message: "Hôtel supprimé" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur suppression hôtel" });
+    }
+
+    
+};
