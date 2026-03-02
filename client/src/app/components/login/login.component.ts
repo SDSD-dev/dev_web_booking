@@ -1,3 +1,4 @@
+// client/src/app/components/login/login.component.ts
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service'
@@ -24,6 +25,7 @@ export class LoginComponent {
 
   errorMessage: string = '';
 
+  // Soumission du formulaire
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({

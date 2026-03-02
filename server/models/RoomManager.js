@@ -22,7 +22,7 @@ class RoomManager {
   }
 
   static async getById(id) {
-    // const sql = 'SELECT * FROM chambres WHERE id_chambre = ?';
+    // Récupérer une chambre par son ID
     const sql = `SELECT chambres.*,
         (SELECT url_image FROM chambre_images WHERE chambre_id = chambres.id_chambre LIMIT 1) as image_room
         FROM chambres 

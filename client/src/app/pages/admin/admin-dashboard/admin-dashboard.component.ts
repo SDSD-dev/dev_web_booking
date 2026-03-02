@@ -17,11 +17,12 @@ export class AdminDashboardComponent implements OnInit {
   hotels: Hotel[] = [];
   isLoading = true;
 
+  // Chargement des hôtels au démarrage
   ngOnInit() { 
-    // charge la liste
     this.loadHotels();    
   };
 
+  // Fonction pour charger la liste des hôtels
   loadHotels() {
     this.hotelService.getHotels().subscribe({
       next: (data) => {
@@ -32,6 +33,7 @@ export class AdminDashboardComponent implements OnInit {
     })
   };
 
+  // Fonction pour supprimer un hôtel
   deleteHotel(id: number) {
     if(confirm("Êtes-vous sûr de vouloir supprimer cet hôtel ? Cette action est irréversible.")) {
       this.hotelService.deleteHotel(id).subscribe({

@@ -1,3 +1,4 @@
+// client/src/app/components/header/header.component.ts
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';

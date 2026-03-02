@@ -17,6 +17,7 @@ export class HomeSearchComponent {
   // Envoie les résultats au parent (HotelListComponent)
   @Output() searchResults = new EventEmitter<any[]>();
 
+  // Définition du formulaire de recherche
   searchForm: FormGroup = this.fb.group({
     city: [''],
     dateDebut: [''],
@@ -30,6 +31,7 @@ export class HomeSearchComponent {
     parking: [false],
   });
 
+  // Soumission du formulaire
   onSearch() {
     const criteria = this.searchForm.value;
 

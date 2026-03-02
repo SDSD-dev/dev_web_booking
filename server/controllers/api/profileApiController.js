@@ -43,6 +43,8 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
+// GET /api/profile/bookings
+// Récupérer l'historique des réservations de l'utilisateur
 exports.getBookings = async (req, res) => {
     try {        
         const userId = req.session.userId;
@@ -61,6 +63,8 @@ exports.getBookings = async (req, res) => {
     }
 };
 
+// DELETE /api/profile/bookings/:id
+// Annuler une réservation
 exports.cancelBooking = async (req, res) => {
     try {
         const userId = req.session.userId;

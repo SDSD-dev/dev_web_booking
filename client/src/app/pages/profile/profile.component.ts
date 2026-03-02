@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DatePipe, CurrencyPipe } from '@angular/common';
 import { UserService, BookingHistory } from '../../services/user/user.service';
 
 @Component({
@@ -35,6 +34,7 @@ export class ProfileComponent implements OnInit {
   bookings: BookingHistory[] = [];
   loadingBookings = true;
 
+  // Méthode d'initialisation
   ngOnInit() {
     // Charger le profil
     this.userService.getProfile().subscribe({
@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit {
     this.loadHistory();
   }
 
+  // Méthode pour soumettre le formulaire
   onSubmit() {
     if (this.profileForm.valid) {
       // On envoie les données (getRawValue inclut même les champs disabled comme email)
@@ -55,6 +56,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  // Méthode pour charger l'historique des commandes
   loadHistory() {
     this.userService.getBookings().subscribe({
       next: (data) => {
@@ -79,6 +81,7 @@ export class ProfileComponent implements OnInit {
     }
   }
   
+  // Méthode pour annuler une réservation
   onCancelOrder(orderId: number) {
     // Sécurité -> confirme
     if (confirm("Êtes-vous sûr de vouloir annuler cette réservation ?")) {

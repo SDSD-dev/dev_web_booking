@@ -16,7 +16,6 @@ router.post('/book/validate', checkAuth, bookingController.validateBooking);
 
 // URL appelée par Stripe quand payé (Enregistre en BDD)
 router.get('/booking/success', checkAuth, bookingController.finalizeBooking);
-
 router.get('/booking/cancel', checkAuth, bookingController.cancelPayment);
 router.post('/booking/cancel/:id', checkAuth, bookingController.cancelBooking);
 

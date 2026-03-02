@@ -7,7 +7,4 @@ const hotelController = require('../controllers/hotelController');
 router.get('/search', hotelController.viewSearch);
 router.get('/hotel/:id', hotelController.viewHotelDetails);
 
-// POST : Traiter le formulaire
-
-
 module.exports = router;

@@ -29,6 +29,7 @@ exports.getHotelDetail = async (req, res) => {
     }
 };
 
+// API pour rechercher des hôtels selon des critères
 exports.searchHotels = async (req,res) => {
     try {
         const { city, dateDebut, dateFin, adults, children, piscine, spa, animaux, wifi, parking } = req.query;
@@ -75,6 +76,7 @@ exports.searchHotels = async (req,res) => {
     }
 };
 
+// API pour créer un nouvel hôtel
 exports.createHotel = async (req, res) => {
     try {
         const hotelData = { 
@@ -97,6 +99,7 @@ exports.createHotel = async (req, res) => {
     }
 };
 
+// API pour mettre à jour un hôtel
 exports.updateHotel = async (req, res) => {
     try {
         const id = req.params.id;
@@ -112,6 +115,7 @@ exports.updateHotel = async (req, res) => {
     }
 };
 
+// API pour supprimer un hôtel
 exports.deleteHotel = async (req, res) => {
     try {
         const id = req.params.id;

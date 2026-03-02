@@ -2,6 +2,7 @@
 const db = require("../config/db");
 
 class ContactManager {
+    // Créer un nouveau message de contact
     static async createMessage(contactData) {
     
     // Enregistrer dans la base

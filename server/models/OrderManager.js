@@ -2,6 +2,7 @@
 const db = require("../config/db");
 
 class OrderManager {
+    // Créer une nouvelle commande (réservation)
     static async createOrder(orderData) {
         // Obtenir une connexion dédiée (pas le pool générique) !!!!
         const connection = await db.getConnection();
@@ -80,6 +81,8 @@ class OrderManager {
             connection.release();
         }
     };
+    
+    // Récupérer l'historique des commandes d'un client
     static async getHistoryByClientId(clientId) {
         const sql = `
         SELECT

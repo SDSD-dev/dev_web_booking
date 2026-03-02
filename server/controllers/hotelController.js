@@ -101,6 +101,7 @@ exports.viewSearch = async (req, res) => {
   };
 };
 
+// VUE : DÉTAILS D'UN HÔTEL
 exports.viewHotelDetails = async (req, res) => {
     try {
         const idHotel = req.params.id;

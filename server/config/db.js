@@ -1,6 +1,6 @@
 // configuration de la base de donnée -> server/config/db.js
 require("dotenv").config(); // charge les variables du .env
-const mysql = require("mysql2");
+const mysql = require("mysql2"); // Version promise pour async/await
 
 // création du pool -> pour faire du multi-connection simultannée
 const pool = mysql.createPool({

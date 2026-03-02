@@ -8,7 +8,7 @@ const checkAdmin = require('../../middleware/adminMiddleware');
 // GET : Récupérer la liste des hôtels (API)
 router.get('/hotels', checkAuth, hotelApiController.getHotels);
 
-// GET : resultât de recherche
+// GET : résultât de recherche
 router.get('/hotels/search', hotelApiController.searchHotels); // comme c'est public pas de checkAuth
 
 // GET : Récupérer le détail d'un hôtel avec ses chambres (API)

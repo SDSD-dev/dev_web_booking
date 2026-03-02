@@ -1,42 +1,19 @@
 // Importation des modules -------------------------------------------------------
-// Using CommonJS require (Node.js default)
-const http = require("http");
 require("dotenv").config();
 const express = require("express");
-const fs = require("node:fs");
 const path = require("path");
-const mysql = require("mysql2/promise"); // Version promise pour async/await
+const db = require("./config/db"); // Importation de la configuration de la BD
 // express-session pour la gestion des sessions utilisateur
 const session = require("express-session");
-const { subtle } = require("node:crypto");
+
 
 // création de la constante app -> express() est une fonction
 const app = express();
 
-// Initialisation de votre serveur Express
-// const port = process.env.SERVER_PORT || 3000;
-
-// --- Fonction de connexion à MySQL -------------------------------------------------------
-const DB_HOST = process.env.DB_HOST;
-const DB_NAME = process.env.DB_NAME;
-
-console.log(
-  `Tentative de connexion à la base de données: ${DB_NAME} sur l'hôte ${DB_HOST}`
-);
-
-async function getConnection() {
-  return await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
-}
-
 // Configuration de la session (La mémoire du serveur)
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Clé secrète pour signer le cookie de session
+    secret: process.env.SESSION_SECRET, // Clé secrète pour signer la session
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false , sameSite: 'lax' }, // Mettre 'true' si passage en HTTPS
@@ -112,8 +89,7 @@ app.use('/api/contact', contactApiController);
 
 // --- Route principale pour la Home Page -------------------------------------------------------
 app.get("/", async (req, res) => {
-  let connection;
-  let hotels = [];
+
   // 1. Initialiser les données pour garantir que la variable existe toujours
   let viewData = {
     title: "Bienvenue sur notre site de réservation ! - Work in progress",
@@ -126,36 +102,23 @@ app.get("/", async (req, res) => {
   };
 
   try {
-    // 1. Établir la connexion
-    connection = await getConnection();
+    
+    // TEST : Exécuter la requête SQL -> Nous sélectionnons le nom et la ville des 4 premiers hôtels.
+    const [rows] = await db.query("SELECT name, city FROM hotel LIMIT 4");
+    
+    viewData.hotelsList = rows; // Les résultats sont dans 'rows'
 
-    // 2. Exécuter la requête SQL
-    // Nous sélectionnons le nom et la ville des 3 premiers hôtels.
-    const [rows] = await connection.execute(
-      "SELECT name, city FROM hotel LIMIT 4"
-    );
-    hotels = rows; // Les résultats sont dans 'rows'
-
-    console.log(`Données récupérées: ${hotels.length} hôtels trouvés.`);
-    console.log(hotels);
+    console.log(`Données récupérées: ${rows.length} hôtels trouvés.`);
 
     // 3. Rendre la vue EJS avec les données
     viewData.hotelsList = rows;
-
-    console.log(
-      `Données récupérées: ${viewData.hotelsList.length} hôtels trouvés.`
-    );
+   
   } catch (error) {
     console.error("Erreur lors de la récupération des données:", error);
     viewData.pageTitle = "Erreur de Base de Données";
     // Si ça plante ici, hotelsList reste [] (tableau vide), ce qui est correct.
-  } finally {
-    // 4. Fermer la connexion pour libérer les ressources
-    if (connection) {
-      await connection.end();
-    }
-    res.render("index", viewData);
-  }
+  } 
+  res.render("index", viewData);
 });
 
 

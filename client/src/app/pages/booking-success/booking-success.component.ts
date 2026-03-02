@@ -19,6 +19,7 @@ export class BookingSuccessComponent implements OnInit {
   success = false;
   errorMessage = '';
 
+  // Initialisation du composant
   ngOnInit() {
     // 1. On récupère le session_id dans l'URL (?session_id=...)
     const sessionId = this.route.snapshot.queryParamMap.get('session_id');

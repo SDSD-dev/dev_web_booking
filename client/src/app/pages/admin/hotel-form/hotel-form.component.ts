@@ -18,6 +18,7 @@ export class HotelFormComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
+  // Définition du formulaire
   hotelForm: FormGroup = this.fb.group ({
     name: ['', Validators.required],
     address: ['', Validators.required],
@@ -36,6 +37,7 @@ export class HotelFormComponent {
   hotelId: number | null = null;
   errorMessage = '';
 
+  // Initialisation du composant
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id')
 
@@ -46,6 +48,7 @@ export class HotelFormComponent {
     }
   };
 
+  // Chargement des données de l'hôtel en mode édition
   loadHotelData(id: number) {
     this.hotelService.getHotelById(id).subscribe ({
       next: (data: any) => {
@@ -71,20 +74,21 @@ export class HotelFormComponent {
     })
   };
 
-onSubmit() {
-    if (this.hotelForm.invalid) return;
+  // Soumission du formulaire
+  onSubmit() {
+      if (this.hotelForm.invalid) return;
 
-    const formData = this.hotelForm.value;
+      const formData = this.hotelForm.value;
 
-    if (this.isEditMode && this.hotelId) {
-      // MODE UPDATE
-      this.hotelService.updateHotel(this.hotelId, formData).subscribe({
-        next: () => this.router.navigate(['/admin']),
-        error: (err) => {
-            console.error(err);
-            this.errorMessage = "Erreur lors de la modification.";
-        }
-      });
+      if (this.isEditMode && this.hotelId) {
+        // MODE UPDATE
+        this.hotelService.updateHotel(this.hotelId, formData).subscribe({
+          next: () => this.router.navigate(['/admin']),
+          error: (err) => {
+              console.error(err);
+              this.errorMessage = "Erreur lors de la modification.";
+          }
+        });
     } else {
       // MODE CREATE
       this.hotelService.createHotel(formData).subscribe({

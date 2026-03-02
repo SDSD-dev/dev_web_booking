@@ -1,7 +1,7 @@
 // server/controllers/adminController.js
 const HotelManager = require("../models/HotelManager");
 
-// 1. DASHBOARD (Liste des hôtels)
+// DASHBOARD (Liste des hôtels)
 exports.viewDashboard = async (req, res) => {
     try {
         const hotels = await HotelManager.findAll()
@@ -16,7 +16,7 @@ exports.viewDashboard = async (req, res) => {
     }
 }
 
-// 2. FORMULAIRE DE CRÉATION
+// FORMULAIRE DE CRÉATION
 exports.viewAddHotel = async (req, res) => {
     res.render("admin/hotel-form", {
         title: "Ajouter un hôtel",
@@ -25,7 +25,7 @@ exports.viewAddHotel = async (req, res) => {
     });
 }
 
-// 3. ACTION DE CRÉATION (POST)
+// ACTION DE CRÉATION (POST)
 exports.createHotel =  async (req, res) => {
     try {
         const { name, address, city, country, description, piscine, spa, animaux, wifi, parking } = req.body;
@@ -40,7 +40,7 @@ exports.createHotel =  async (req, res) => {
     }
 }
 
-// 4. ACTION : SUPPRIMER
+// ACTION : SUPPRIMER
 exports.deleteHotel = async (req, res) => {
     try {
         await HotelManager.delete(req.params.id);
@@ -51,7 +51,7 @@ exports.deleteHotel = async (req, res) => {
     }
 };
 
-// 5. VUE : FORMULAIRE EN MODE ÉDITION
+// VUE : FORMULAIRE EN MODE ÉDITION
 exports.viewEditHotel = async (req, res) => {
     try {
         const hotel = await HotelManager.getOneById(req.params.id);
@@ -69,7 +69,7 @@ exports.viewEditHotel = async (req, res) => {
     }
 };
 
-// 6. ACTION : SAUVEGARDER LA MODIFICATION
+// ACTION : SAUVEGARDER LA MODIFICATION
 exports.updateHotel = async (req, res) => {
     try {
         const idHotel = req.params.id; 

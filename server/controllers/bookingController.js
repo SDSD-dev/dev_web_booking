@@ -18,16 +18,13 @@ exports.viewBookingRecap = async (req, res) => {
     }
 
     // 2. Récupérer les infos OFFICIELLES de la chambre (Sécurité prix)
-    // On réutilise votre méthode existante, mais il faudra peut-être une méthode getOneRoomById
-    // Pour l'instant, supposons qu'on filtre les résultats ou qu'on crée getOneById dans RoomManager
-    // Astuce : Créez une méthode static async getOneById(id) dans RoomManager !
     const chambre = await RoomManager.getOneById(roomId);
 
     if (!chambre) {
       return res.status(404).send("Chambre introuvable");
     }
 
-    // 3. --- LOGIQUE MÉTIER (Calculs) ---
+    // 3. --- LOGIQUE MÉTIER ---
     const start = new Date(date_debut);
     const end = new Date(date_fin);
     // Calcul différence en jours
@@ -217,6 +214,6 @@ exports.cancelBooking = async (req, res) => {
     } catch (error) {
       console.error("Erreur annulation :", error);
       res.status(500).send("Erreur lors de l'annulation."); 
-      } 
+    } 
 };
 

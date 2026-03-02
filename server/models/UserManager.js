@@ -78,8 +78,13 @@ class UserManager {
           WHERE id_client = ?
       `;
       await db.execute(sql, [
-          data.nom, data.prenom, data.telephone,
-          data.rue, data.code_postal, data.ville, data.pays,
+          data.nom, 
+          data.prenom, 
+          data.telephone,
+          data.rue, 
+          data.code_postal, 
+          data.ville, 
+          data.pays,
           id
       ]);
   }

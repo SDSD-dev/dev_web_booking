@@ -1,6 +1,7 @@
 // server/controllers/api/contactApiController.js
 const ContactManager = require('../../models/ContactManager');
 
+// API pour gérer les messages de contact
 exports.contact = async (req, res) => {
     try {
         // Récupérer les données du formulaire

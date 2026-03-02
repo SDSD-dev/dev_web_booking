@@ -1,8 +1,6 @@
 // src/app/pages/hotel-list/hotel-list.component.ts
 import { Component, OnInit, inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { HotelService, Hotel } from '../../services/hotel.service';
-import { Observable } from 'rxjs';
 import { HotelCardComponent } from '../../components/hotel-card/hotel-card.component';
 import { HomeSearchComponent } from '../../components/home-search/home-search.component';
 
@@ -21,11 +19,13 @@ export class HotelListComponent implements OnInit {
   hotels: Hotel[] = [];
   loading = true;
 
+  // Méthode d'initialisation
   ngOnInit() {
     // Charge tous les hôtels au démarrage
     this.loadAllHotels();
   };
   
+  // Méthode pour charger tous les hôtels
   loadAllHotels() {
     this.hotelService.getHotels().subscribe({
       next: (data) => {

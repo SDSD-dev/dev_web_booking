@@ -1,6 +1,7 @@
 // server/controllers/api/roomApiController.js
 const RoomManager = require("../../models/RoomManager.js");
 
+// Récupération des infos d'une chambre par ID
 exports.getRoom = async (req, res) => {
     try {
         const id = req.params.id;

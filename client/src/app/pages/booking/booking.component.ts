@@ -102,11 +102,6 @@ export class BookingComponent implements OnInit {
 
   onBook() {
     if (this.bookingForm.valid && !this.isCapacityExceeded) {
-      // console.log("Prêt à envoyer vers Stripe :", {
-      //   room: this.room?.id_chambre,
-      //   dates: this.bookingForm.value,
-      //   total: this.totalPrice
-      // });
 
       const bookingData = {
         roomId: this.room?.id_chambre,

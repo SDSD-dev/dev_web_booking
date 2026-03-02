@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const RoomManager = require("../../models/RoomManager.js");
 const OrderManager = require("../../models/OrderManager.js");
 
+// Création de la session de paiement Stripe
 exports.createCheckoutSession = async (req, res) => {
     try {
         // Récupération de données envoyé par Angular
@@ -21,8 +22,8 @@ exports.createCheckoutSession = async (req, res) => {
         }; 
 
         // Pour le retour vers Angular et pas vers Node.js
-        // TODO: Mettre cette URL dans le fichier .env pour la production
-        const DOMAIN = 'http://localhost:4200';
+        // const DOMAIN = 'http://localhost:4200';
+        const DOMAIN_ANGULAR = `${process.env.DOMAIN_ANGULAR}`;
 
         const customerEmail = req.session.userInfos ? req.session.userInfos.email : undefined;
 
@@ -42,8 +43,8 @@ exports.createCheckoutSession = async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: `${DOMAIN}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${DOMAIN}/booking/cancel`,
+            success_url: `${DOMAIN_ANGULAR}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${DOMAIN_ANGULAR}/profile`,
             customer_email: customerEmail, 
             metadata: {
                 user_id: userId,
@@ -66,15 +67,13 @@ exports.createCheckoutSession = async (req, res) => {
     }
 };
 
+// Confirmation du paiement et création de la réservation
 exports.confirmPayment = async (req, res) => {
-
-    // console.log("🔔 DÉBUT CONFIRMATION PAIEMENT");  // pour debug
 
     try {
         const { sessionId } = req.body;
 
         if (!sessionId) {
-            //  console.log("❌ Pas de Session ID reçu");
              return res.status(400).json({ message: "Session ID manquant" });
         }
 
@@ -82,12 +81,9 @@ exports.confirmPayment = async (req, res) => {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
         if (session.payment_status !== 'paid') {
-            // console.log("❌ Paiement Stripe non 'paid'");
             return res.status(400).json({ message: "Paiement non validé." });
         }
         
-        // console.log("✅ Paiement Stripe OK. Metadata:", session.metadata); // pour debug
-
         // Récupération des données Stripe
         const { user_id, room_id, date_debut, date_fin, total_price, nbr_adulte, nbr_enfant } = session.metadata;
 
@@ -107,14 +103,7 @@ exports.confirmPayment = async (req, res) => {
         // Calculer prix unitaire (Moyenne)
         const prix_unitaire = Number(total_price) / nbr_nuits;
 
-        console.log("📝 Préparation création commande...", {
-            client: user_id,
-            hotel: room.hotel_id,
-            nuits: nbr_nuits,
-            total: total_price
-        }); // Pour debug
-
-        // méthode OrderManager.createOrder
+        // Enregistrer la commande en base via la méthode OrderManager.createOrder
         const newOrderId = await OrderManager.createOrder({
             client_id: user_id,
             hotel_id: room.hotel_id, // Récupéré via RoomManager
@@ -127,8 +116,6 @@ exports.confirmPayment = async (req, res) => {
             nbr_adulte: Number(nbr_adulte),
             nbr_enfant: Number(nbr_enfant)
         });
-
-        console.log("🎉 Commande créée avec ID:", newOrderId); // pour debug
 
         res.json({ success: true, reservationId: newOrderId });
 

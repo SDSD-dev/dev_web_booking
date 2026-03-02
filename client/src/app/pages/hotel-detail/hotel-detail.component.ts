@@ -20,6 +20,7 @@ export class HotelDetailComponent {
   hotelData: HotelDetailResponse | null = null;
   loading = true;
 
+  // Initialisation du composant
   ngOnInit() {
     // Récupération de l'ID dans l'URL avec 'snapshot'
     const id = Number(this.route.snapshot.paramMap.get('id'));

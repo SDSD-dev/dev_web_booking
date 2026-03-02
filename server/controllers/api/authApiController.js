@@ -28,8 +28,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({message: "Email ou mot de passe incorrect."})
         };
 
-        // !!!!!!!!!! Création de session
-        // cookie automatiquement partagé avec Angular avec le cookie
+        // !!!!!!!!!! Création de session -> cookie automatiquement partagé avec Angular
         req.session.userId = user.client_id;
         req.session.role = user.role;
         req.session.isLoggedIn = true;

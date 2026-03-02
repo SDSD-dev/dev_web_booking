@@ -2,6 +2,7 @@
 const db = require("../config/db");
 
 class HotelManager {
+  // Recherche d'hôtels selon des critères
   static async getHotelSearch(hotelSearchParams) {
     const { lieu, dateDebut, dateFin, capacite, options } = hotelSearchParams;
 
@@ -88,6 +89,7 @@ class HotelManager {
 
   };
 
+  // Récupérer un hôtel par son ID
   static async getOneById(idHotel) {
     // Récupèrations des infos de l'hôtel + images + note moyenne
     const sql = `SELECT hotel.*,
@@ -100,6 +102,7 @@ class HotelManager {
     return rows[0]; // return un objet unique (indice 0) et non un tableau
   };
   
+  // Récupérer un hôtel avec ses chambres
   static async getOneWithRooms(id) {
     // récupération des infos hotêls
     const hotel = await this.getOneById(id);
@@ -120,6 +123,7 @@ class HotelManager {
     };
   };
 
+  // Récupérer tous les hôtels (avec image de couverture)
   static async findAll() {
     // Sélection de tout les hôtels + son images
     const sql = `SELECT 
@@ -131,6 +135,7 @@ class HotelManager {
     return rows;
   };
 
+  // Créer un nouvel hôtel
   static async create(data) {
     const sql = `
             INSERT INTO hotel (
@@ -153,11 +158,13 @@ class HotelManager {
     return result.insertId;
   };
 
+  // Supprimer un hôtel
   static async delete(id) {
     const sql = `DELETE FROM hotel WHERE id_hotel = ?`;
     await db.execute(sql, [id])
   };
 
+  // Mettre à jour un hôtel
   static async update(id, data) {
     const sql = `UPDATE hotel SET 
         name = ?, address = ?, city = ?, country = ?, description_hotel = ?, piscine = ?, spa = ?, animaux = ?, wifi = ?, parking = ?
@@ -178,6 +185,7 @@ class HotelManager {
     ]);
   };
   
+  // Ajouter une image à un hôtel
   static async addImage(hotelId, url) {
     const sql = "INSERT INTO hotel_images (hotel_id, url_image) VALUES (?,?)";
     await db.execute(sql, [hotelId, url])
