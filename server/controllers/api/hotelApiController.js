@@ -50,7 +50,7 @@ exports.searchHotels = async (req,res) => {
             },            
         };
 
-        console.log("Recherche avec :", searchParams); // Debug
+        // console.log("Recherche avec :", searchParams); // Debug
 
         const rawHotels = await HotelManager.getHotelSearch(searchParams);
 

@@ -2,10 +2,10 @@
 const HotelManager = require("../models/HotelManager");
 const RoomManager = require("../models/RoomManager");
 
-// --- GESTION DE L'AFFICHAGE DES PAGES (GET) ---
+// VUE : FORMULAIRE DE RECHERCHE
 exports.viewSearch = async (req, res) => {
   try {
-    // 2. Récupérer les données BRUTES du formulaire
+    // Récupérer les données BRUTES du formulaire
     const {
       lieu,
       date_debut,
@@ -22,7 +22,7 @@ exports.viewSearch = async (req, res) => {
     let viewSearch = {
     title: "Résultats de Recherche",
     subtitle: "Résultats des hôtels disponibles",
-    // 2. Initialiser searchList
+    // Initialiser searchList
     searchList: [],
     // searchParams: {} // Pour garder le témoin de recherche
     searchParams: {
@@ -59,7 +59,7 @@ exports.viewSearch = async (req, res) => {
     }
 
 
-    // C'est cet objet 'hotelSearchParams' qui est passé au Manager (HotelManager)
+    // hotelSearchParams' est passé au Manager (HotelManager)
     const hotelSearchParams = {
       lieu: lieu, // Peut être undefined
       dateDebut: start, // A une valeur sûre
@@ -106,7 +106,7 @@ exports.viewHotelDetails = async (req, res) => {
     try {
         const idHotel = req.params.id;
         
-        // 1. RÉCUPÉRER LES PARAMÈTRES DE RECHERCHE (Le témoin)
+        // RÉCUPÉRER LES PARAMÈTRES DE RECHERCHE (Le témoin)
         const { date_debut, date_fin, adultes, enfants } = req.query;
 
         const hotel = await HotelManager.getOneById(idHotel);
@@ -119,7 +119,7 @@ exports.viewHotelDetails = async (req, res) => {
             subtitle: "Chambres Disponibles",
             hotel: hotel,
             chambres: chambres,
-            // 2. TRANSMETTRE LE TÉMOIN À LA VUE
+            // TRANSMETTRE LE TÉMOIN À LA VUE
             searchParams: {
                 date_debut,
                 date_fin,

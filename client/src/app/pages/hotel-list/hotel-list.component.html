@@ -1,15 +1,14 @@
 <div class="container">
   
-  <app-home-search (searchResults)="updateList($event)"></app-home-search>
+  <app-home-search (searchCriteria)="handleSearch($event)"></app-home-search>
 
   <div style="padding: 20px; font-family: sans-serif">
-  <h1>Liste des Hôtels (Via Angular & Control Flow)</h1>
 
   @if (!loading) {
-  <div
-      class="hotel-grid"
-      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px"
-    >
+
+
+
+  <div>
       @for (hotel of hotels; track hotel.id_hotel) {
       <app-hotel-card [hotel]="hotel"></app-hotel-card>
       }
@@ -20,8 +19,51 @@
     }
   </div>
 
+  <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-6 px-4 rounded-lg shadow-lg">
+  Nos Hôtels d'Exception
+  </h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-6 max-w-7xl mx-auto">
+  
+  <div class="flex flex-col my-4 bg-[#1D283D] rounded-xl min-h-[350px] shadow-2md hover:shadow-2xl duration-300 overflow-hidden border border-slate-600 hover:-translate-y-1 transition-all shadow-md">
+    <img class="w-full h-48 object-cover" src="img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Image">
+    <div class="flex flex-col flex-1 justify-between p-6">
+      <h3 class="text-xl font-bold text-slate-200 mb-2">Le Kiehn - Larson Resort</h3>
+      <h5 class="text-gray-500 text-sm mb-4">En centre-ville de Bordeaux</h5>
+      <p class="text-gray-300 text-sm">Vito benevolentia truculenter crapula cetera brevis calcar clamo. Angelus temptatio suadeo astrum vestrum teres copia bis arcus deleniti tametsi harum. Aegre conatus deprecator tribuo repudiandae perspiciatis.</p>
+      <span class="text-gray-300 text-base mt-4">Prix à partir de <span class="font-bold text-blue-500">155,79 €</span> par nuit</span>
+      <a href="http://localhost:4200/hotel/447" class="mt-6 px-8 py-2 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">
+          Réserver
+      </a>
+    </div>    
+  </div>
+
+  <div class="flex flex-col my-4 bg-[#1D283D] rounded-xl min-h-[350px] shadow-2md hover:shadow-2xl duration-300 overflow-hidden border border-slate-600 hover:-translate-y-1 transition-all shadow-md">
+    <img class="w-full h-48 object-cover" src="img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Image">
+    <div class="flex flex-col flex-1 justify-between p-6">
+      <h3 class="text-xl font-bold text-slate-200 mb-2">Le Kutch LLC Lodge</h3>
+      <h5 class="text-gray-500 text-sm mb-4">En centre-ville de Lourdes</h5>
+      <p class="text-gray-300 text-sm">Tardus soluta comburo spargo depulso. Neque suscipio desparatus vociferor. Strenuus ipsum caput avaritia adstringo cohaero in arma tenuis atqui. Solitudo denego ab averto vapulus vulgivagus coadunatio bellicus sunt utrimque. Sequi totidem cerno alo ars blanditiis suscipit ratione.</p>
+      <span class="text-gray-300 text-base mt-4">Prix à partir de <span class="font-bold text-blue-500">73,48 €</span> par nuit</span>
+      <a href="http://localhost:4200/hotel/438" class="mt-6 px-8 py-2 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">
+          Réserver
+      </a>
+    </div>    
+  </div>
+
+  <div class="flex flex-col my-4 bg-[#1D283D] rounded-xl min-h-[350px] shadow-2md hover:shadow-2xl duration-300 overflow-hidden border border-slate-600 hover:-translate-y-1 transition-all shadow-md">
+    <img class="w-full h-48 object-cover" src="img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Image">
+    <div class="flex flex-col flex-1 justify-between p-6">
+      <h3 class="text-xl font-bold text-slate-200 mb-2">Le Volkman and Schuppe Lodge</h3>
+      <h5 class="text-gray-500 text-sm mb-4">En centre-ville de Paris</h5>
+      <p class="text-gray-300 text-sm">Uter cicuta atrocitas circumvenio surculus defungo illo damno. Calamitas temeritas aqua vomito ventosus territo versus bene tunc. Crinis carmen cribro arcus deleniti tametsi harum. Aegre conatus deprecator tribuo repudiandae perspiciatis toties talus porro. Usus armarium alter accedo celo audio repudiandae.</p>
+      <span class="text-gray-300 text-base mt-4">Prix à partir de <span class="font-bold text-blue-500">228,11 €</span> par nuit</span>
+      <a href="http://localhost:4200/hotel/441" class="mt-6 px-8 py-2 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">
+          Réserver
+      </a>
+    </div>    
+  </div>
+
 </div>
-
-
 
 

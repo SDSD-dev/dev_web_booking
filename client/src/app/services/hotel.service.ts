@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// on definit 'hotel'
+// on définit 'hotel'
 export interface Hotel {
   id_hotel: number;
   name: string;
@@ -12,6 +12,14 @@ export interface Hotel {
   city: string;
   description_hotel: string;
   cover_image?: string; // ? signifie qu'il peut être null si pas d'image
+  prix_base?: number; // Le prix minimum trouvé
+  average_rating?: number | string; // La note SQL (souvent renvoyée en string par le driver MySQL)
+  review_count?: number; // Nombre d'avis
+  piscine?: number;
+  spa?: number;
+  animaux?: number;
+  wifi?: number;
+  parking?: number;
 }
 // on definit 'room'
 export interface Room {

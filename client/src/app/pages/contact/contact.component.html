@@ -3,22 +3,24 @@
     <div style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 10px;">{{ contactMessage }}</div>
     }
 
-    <form  [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-        <h2>Formulaire de contact</h2>
-        <label for="nom">Nom (obligatoire) :</label>
-        <input type="text" id="nom" formControlName="nom" />
-        <label for="nom">Prenom (obligatoire) :</label>
-        <input type="text" id="prenom" formControlName="prenom" />
-        <label for="email">Email (obligatoire) :</label>
-        <input type="email" id="email" formControlName="email" />
-        <label for="phone">Téléphone :</label>
-        <input type="tel" id="phone" formControlName="phone"/>
-        <label for="message">Message (obligatoire) :</label>
-        <textarea id="message" formControlName="message" rows="5"></textarea>
-        <label
-        ><input type="checkbox" formControlName="consent_public" /> Je
-        consens à la publication de mon message.</label
-        >
-        <div><button type="submit" [disabled]="contactForm.invalid">Envoyer</button></div>
-    </form>
+    <div  class="max-w-xl mx-auto mt-12 mb-20 p-8 bg-[#1D283D] border border-slate-700 rounded-xl shadow-2xl w-full">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+            <h2 class="text-2xl font-bold text-slate-100 text-center mb-6">Formulaire de contact</h2>
+            <label for="nom" class="text-sm font-medium text-slate-300 mb-1">Nom (obligatoire) :</label>
+            <input type="text" id="nom" formControlName="nom" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none"/>
+            <label for="prenom" class="text-sm font-medium text-slate-300 mb-1">Prenom (obligatoire) :</label>
+            <input type="text" id="prenom" formControlName="prenom" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none"/>
+            <label for="email" class="text-sm font-medium text-slate-300 mb-1">Email (obligatoire) :</label>
+            <input type="email" id="email" formControlName="email" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none"/>
+            <label for="phone" class="text-sm font-medium text-slate-300 mb-1">Téléphone :</label>
+            <input type="tel" id="phone" formControlName="phone" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none"/>
+            <label for="message" class="text-sm font-medium text-slate-300 mb-1">Message (obligatoire) :</label>
+            <textarea id="message" formControlName="message" rows="5" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none"></textarea>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 font-medium hover:text-white transition-colors">
+                <input type="checkbox" formControlName="consent_public" class="w-4 h-4 accent-[#18191C] bg-slate-800 border-slate-600 rounded" alt="Checkbox Parking"> Je consens à la publication de mon message.
+            </label>
+            <div><button type="submit" [disabled]="contactForm.invalid" class="w-full mt-4 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#005ab9]">Envoyer</button></div>
+        </form>
+    </div>
+
 </section>

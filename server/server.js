@@ -48,6 +48,9 @@ app.use(express.urlencoded({ extended: true }));
 // Chemin pour les fichiers statiques
 app.use(express.static(path.join(__dirname, "../server/public")));
 
+// Permet d'accéder aux fichiers statiques via /public (ex: /public/css/style.css)
+app.use('/public', express.static('public'));
+
 // Configurer EJS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -90,14 +93,14 @@ app.use('/api/contact', contactApiController);
 // --- Route principale pour la Home Page -------------------------------------------------------
 app.get("/", async (req, res) => {
 
-  // 1. Initialiser les données pour garantir que la variable existe toujours
+  // Initialiser les données pour garantir que la variable existe toujours
   let viewData = {
-    title: "Bienvenue sur notre site de réservation ! - Work in progress",
+    title: "Bienvenue sur notre site de réservation !",
     subtitle: "Accueil",
     content:
       "Ceci est un contenu dynamique provenant d'un objet, avec la key 'content'.",
     imageName: "2025-11-21-1019_0_Original_resultat.jpg",
-    // 2. Initialiser hotelsList pour garantir qu'elle existe toujours
+    // Initialiser hotelsList pour garantir qu'elle existe toujours
     hotelsList: [],
   };
 
@@ -108,9 +111,9 @@ app.get("/", async (req, res) => {
     
     viewData.hotelsList = rows; // Les résultats sont dans 'rows'
 
-    console.log(`Données récupérées: ${rows.length} hôtels trouvés.`);
+    // console.log(`Données récupérées: ${rows.length} hôtels trouvés.`);
 
-    // 3. Rendre la vue EJS avec les données
+    // Rendre la vue EJS avec les données
     viewData.hotelsList = rows;
    
   } catch (error) {

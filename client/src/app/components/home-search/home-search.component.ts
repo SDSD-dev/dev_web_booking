@@ -12,10 +12,11 @@ import { HotelService } from '../../services/hotel.service';
 })
 export class HomeSearchComponent {
   private fb = inject(FormBuilder);
-  private hotelService = inject(HotelService);
+  // private hotelService = inject(HotelService);
 
   // Envoie les résultats au parent (HotelListComponent)
-  @Output() searchResults = new EventEmitter<any[]>();
+  // @Output() searchResults = new EventEmitter<any[]>();
+  @Output() searchCriteria = new EventEmitter<any>();
 
   // Définition du formulaire de recherche
   searchForm: FormGroup = this.fb.group({
@@ -35,12 +36,25 @@ export class HomeSearchComponent {
   onSearch() {
     const criteria = this.searchForm.value;
 
-    this.hotelService.searchHotels(criteria).subscribe({
-      next: (hotels) => {
-        // resultat pour le parent
-        this.searchResults.emit(hotels);
-      },
-      error: (err) => console.error(err)
-    });
-  }  
+    this.searchCriteria.emit(criteria);
+
+  }
+  
+  // Carrousel d'images
+  images = [
+    'img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg',
+    'img_hotels/2025-11-21-1019_0_Original_resultat.jpg',
+    'img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg'
+  ];
+  
+  currentIndex = 0;
+
+  next() {
+    this.currentIndex = (this.currentIndex === this.images.length - 1) ? 0 : this.currentIndex + 1;
+  }
+
+  prev() {
+    this.currentIndex = (this.currentIndex === 0) ? this.images.length - 1 : this.currentIndex - 1;
+  }
+  
 }

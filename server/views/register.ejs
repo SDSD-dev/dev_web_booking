@@ -1,33 +1,31 @@
 <%- include('partials/header.ejs') %>
 <main>
-  <section>
-    <form action="/register" method="POST" novalidate>
-      <h2>Formulaire d'inscription</h2>
+  <section class="form-group">
+    <form action="/register" method="POST" class="compact-search-form" novalidate>
+      <h3>Formulaire d'inscription</h3>
       <label for="nom">Nom (obligatoire) :</label>
-      <input type="text" id="nom" name="nom" required />
-      <label for="nom">Prenom (obligatoire) :</label>
-      <input type="text" id="prenom" name="prenom" required />
+      <input type="text" id="nom" name="nom" class="rounded-input" required />
+      <label for="prenom">Prénom (obligatoire) :</label>
+      <input type="text" id="prenom" name="prenom" class="rounded-input" required />
       <label for="email">Email (obligatoire) :</label>
-      <input type="email" id="email" name="email" required />
+      <input type="email" id="email" name="email" class="rounded-input" required />
       <label for="telephone">Téléphone :</label>
-      <input type="tel" id="telephone" name="telephone" required />
+      <input type="tel" id="telephone" name="telephone" class="rounded-input" required />
 
       <label for="email">Rue :</label>
-      <input type="text" id="rue" name="rue" required />
+      <input type="text" id="rue" name="rue" class="rounded-input" required />
       <label for="email">Code Postal :</label>
-      <input type="text" id="code_postal" name="code_postal" required />
+      <input type="text" id="code_postal" name="code_postal" class="rounded-input" required />
       <label for="email">Ville :</label>
-      <input type="text" id="ville" name="ville" required />
+      <input type="text" id="ville" name="ville" class="rounded-input" required />
       <label for="email">Pays :</label>
-      <input type="text" id="pays" name="pays" required />
+      <input type="text" id="pays" name="pays" class="rounded-input" required />
+      
+      <label>Mot de passe :</label>
+      <input type="password" name="mot_de_passe" class="rounded-input" required /></label>
+      <br>
 
-      <hr />
-      <label
-        >Mot de passe :
-        <input type="password" name="mot_de_passe" required /></label
-      ><br />
-
-      <button type="submit">S'inscrire</button>
+      <button type="submit" class="btn-primary rounded-btn">S'inscrire</button>
     </form>
   </section>
 </main>

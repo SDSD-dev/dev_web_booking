@@ -1,3 +1,4 @@
+// seed.js
 const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
@@ -247,7 +248,7 @@ async function seedDatabase() {
 
   // --- ÉTAPE 1 : VIDER LES TABLES (Ordre : ENFANT -> PARENT) ---
 
-  // 1. Tables dépendantes d'autres tables (le plus bas niveau)
+  // Tables dépendantes d'autres tables (le plus bas niveau)
   await connection.execute("DELETE FROM lignes_commande");
   await connection.execute("DELETE FROM chambre_images"); // <-- NOUVEL ORDRE (avant chambres)
   await connection.execute("DELETE FROM hotel_images"); // <-- NOUVEL ORDRE (avant hotel)
@@ -255,12 +256,12 @@ async function seedDatabase() {
   await connection.execute("DELETE FROM connexions");
   await connection.execute("DELETE FROM contact"); // Autonome, mais bonne pratique de le vider tôt
 
-  // 2. Tables parentes (qui sont référencées par les tables vidées ci-dessus)
+  // Tables parentes (qui sont référencées par les tables vidées ci-dessus)
   await connection.execute("DELETE FROM commandes");
   await connection.execute("DELETE FROM chambres");
   await connection.execute("DELETE FROM clients");
 
-  // 3. Tables racines (qui ne dépendent de rien d'autre)
+  // Tables racines (qui ne dépendent de rien d'autre)
   await connection.execute("DELETE FROM hotel");
 
   console.log("Tables vidées avec succès.");
@@ -316,13 +317,13 @@ async function seedDatabase() {
   }
   console.log(`   [+] Images d'hôtels insérées.`);
 
-  // 2.2 Insertion des Clients et Connexions
+  // Insertion des Clients et Connexions
   const clientIds = [];
   for (let i = 0; i < 30; i++) {
     const clientData = createRandomClient(); // cf fonction plus haut -> Récupère mot_de_passe_simple et role
     const connexionData = createRandomConnexions(); // cf fonction plus haut -> Récupère mot_de_passe_simple et role
 
-    // 1. Insertion du Client (Parent)
+    // Insertion du Client (Parent)
     const [clientResult] = await connection.execute(
       "INSERT INTO clients (nom, prenom, telephone, email, pays, ville, code_postal, rue) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -339,7 +340,7 @@ async function seedDatabase() {
     const newClientId = clientResult.insertId;
     clientIds.push(newClientId);
 
-    // 2. Hachage du mot de passe
+    // Hachage du mot de passe
     const hashedPassword = await bcrypt.hash(
       connexionData.mot_de_passe_simple,
       SALT_ROUNDS
@@ -347,7 +348,7 @@ async function seedDatabase() {
 
     // --- ÉTAPE 3 : INSERTION DES ENFANTS (Avec Clés Étrangères) ---
 
-    // 3. Insertion de la Connexion (Enfant, utilise l'ID du Client)
+    // Insertion de la Connexion (Enfant, utilise l'ID du Client)
     await connection.execute(
       "INSERT INTO connexions (email, mot_de_passe_hash, role, client_id) VALUES (?, ?, ?, ?)",
       [clientData.email, hashedPassword, connexionData.role, newClientId] // Réutilise le même email et le newClientId
@@ -453,7 +454,7 @@ async function seedDatabase() {
 
   console.log(`\n   [+] Récupération de la carte des chambres par hôtel...`);
 
-  // 1. On récupère toutes les chambres existantes avec leur hotel_id
+  // On récupère toutes les chambres existantes avec leur hotel_id
   // Permet de savoir quelles chambres sont disponibles pour quel hôtel
   const [allRooms] = await connection.execute("SELECT id_chambre, hotel_id FROM chambres");
   

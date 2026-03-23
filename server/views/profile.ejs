@@ -1,31 +1,26 @@
 <%- include('partials/header.ejs') %>
-<section>
-  <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
-  <ul>
-    <h1>Bienvenue, <%= clientProfil.prenom %> <%= clientProfil.nom %> (<%= user.role %>)</h1>
-    <p>Email : <%= clientProfil.email %></p>
-    <p>Adresse : <%= clientProfil.rue %>, <%= clientProfil.ville %></p>
-  </ul>
-  <hr />
-  <p>
-    La création d'un client (register.ejs + login.ejs + profil.ejs avec une
-    session) est fonctionnelle.
-  </p>
-  <button style="padding: 5px 10px">
-    <a href="/logout">Déconnexion</a>
-  </button>
-</section>
-<hr>
+<main>
+  <div class="container admin-dashboard">
+
+  <div style="background-color: #f0f0f0; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+      <ul>
+        <h1>Bienvenue, <%= clientProfil.prenom %> <%= clientProfil.nom %> (<%= user.role %>)</h1>
+        <p>Email : <%= clientProfil.email %></p>
+        <p>Adresse : <%= clientProfil.rue %>, <%= clientProfil.ville %></p>
+      </ul>
+  </div>
+
+
 <!-- Section des réservations -->
-<h2>Mes Réservations</h2>
-<section>
+<h3>Mes Réservations</h3>
+<section class="table-wrapper">
   <% if (reservations && reservations.length > 0) { %>
-        <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+        <table  class="admin-table">
             <thead>
                 <tr>
                     <th>Hôtel</th>
                     <th>Dates</th>
-                    <th>Prix</th>
+                    <th>Prix le plus bas</th>
                     <th>Statut</th>
                     <th>Action</th>
                 </tr>
@@ -48,19 +43,26 @@
                             </span>
                         </td>
                         <td>
-                            <a href="/hotel/<%= resa.id_hotel %>">Revoir l'hôtel</a>
-                            <br>
+                        <div class="action-buttons">
+                          <a href="/hotel/<%= resa.id_hotel %>" target="_blank" class="btn-action btn-view" title="Voir l'hôtel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                Voir
+                            </a>
+                            
                             <% 
-                            // On peut annuler que si le séjour n'est pas passé ET si ce n'est pas déjà annulé
                             const today = new Date();
                             const dateSejour = new Date(resa.date_sejour_debut);
                             if (dateSejour > today && resa.statut_commande === 'confirmée') { %>
-                              <form class="form_none" action="/booking/cancel/<%= resa.id_commande %>" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir annuler ce séjour ?');">
-                                <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">
-                                    Annuler
-                                </button>
-                              </form>
+                                
+                                <form action="/booking/cancel/<%= resa.id_commande %>" method="post" class="inline-action-form" onsubmit="return confirm('Êtes-vous sûr de vouloir annuler ce séjour ?');">
+                                    <button type="submit" class="btn-action btn-delete" title="Annuler le séjour">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        Annuler
+                                    </button>
+                                </form>
+
                             <% } %>
+                            </div>       
                         </td>
                     </tr>                    
                 <% }); %>
@@ -73,57 +75,79 @@
     
 </section>
 <hr />
-<!-- Formulaire de recherche d'hôtel -->
+<!-- Formulaire de recherche hôtel -->
 <h2>Rechercher un hôtel</h2>
 <section>
-  <form action="search" method="GET" novalidate>
-    <h2>Formulaire de Recherche</h2>
-    <select name="lieu" id="lieu" required>
-      <option value="">--Veuillez choisir une ville (obligatoire)--</option>
-      <option value="Paris">Paris</option>
-      <option value="Lyon">Lyon</option>
-      <option value="Lille">Lille</option>
-      <option value="Bordeaux">Bordeaux</option>
-      <option value="Marseille">Marseille</option>
-      <option value="Lourdes">Lourdes</option>
-    </select>
-    <label for="date_debut">Date d'arriver (obligatoire) :</label>
-    <input type="date" id="date_debut" name="date_debut" required />
-    <label for="date_fin">Date de départ (obligatoire) :</label>
-    <input type="date" id="date_fin" name="date_fin" required />
-    <label for="adultes">Nombre d'adultes (obligatoire) :</label>
-    <input type="number" id="adultes" name="adultes" required />
-    <label for="enfants">Nombre d'enfants :</label>
-    <input type="number" id="enfants" name="enfants" value="0" />
-    <label>
-      <input type="checkbox" name="animaux" value="true" /> Animaux acceptés </label
-    ><br />
-    <label>
-      <input type="checkbox" name="wifi" value="true" /> Wi-Fi gratuit </label
-    ><br />
-    <label>
-      <input type="checkbox" name="piscine" value="true" /> Piscine </label
-    ><br />
-    <label>
-      <input type="checkbox" name="spa" value="true" /> Spa / Centre de
-      bien-être </label
-    ><br />
-    <div><button type="submit">Envoyer</button></div>
-  </form>
-</section>
-<script>
-  // Script pour gérer les dates dans le formulaire de recherche
-  // Empêche de choisir une date passée
-  // Définit la date minimale pour les deux champs de date
-  const today = new Date().toISOString().split("T")[0];
-  document.getElementById("date_debut").setAttribute("min", today);
-  document.getElementById("date_fin").setAttribute("min", today);
-  const dateDebutInput = document.getElementById("date_debut");
-  const dateFinInput = document.getElementById("date_fin");
+  <form action="search" method="GET" class="compact-search-form" novalidate>
+    
+    <div class="form-grid">
+      
+      <div class="form-group full-width">
+        <label for="Villes">Villes</label>
+        <select name="lieu" id="lieu" class="rounded-input" required>
+          <option value="" disabled selected>-- Choisissez une destination --</option>
+          <option value="Paris">Paris</option>
+          <option value="Lyon">Lyon</option>
+          <option value="Lille">Lille</option>
+          <option value="Bordeaux">Bordeaux</option>
+          <option value="Marseille">Marseille</option>
+          <option value="Lourdes">Lourdes</option>
+        </select>
+      </div>
 
-  dateDebutInput.addEventListener("change", function () {
-    dateFinInput.setAttribute("min", this.value);
-  });
-</script>
+      <div class="form-group">
+        <label for="date_debut">Arrivée</label>
+        <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="date_fin">Départ</label>
+        <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="adultes">Adultes</label>
+        <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="enfants">Enfants</label>
+        <input type="number" id="enfants" name="enfants" value="0" min="0" class="rounded-input">
+      </div>
+
+    </div>
+
+    <div class="form-bottom">
+      
+      <div class="checkbox-group">
+        <label class="custom-checkbox">
+          <input type="checkbox" name="animaux" value="true">
+          <span>Animaux</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="wifi" value="true">
+          <span>Wi-Fi</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="piscine" value="true">
+          <span>Piscine</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="spa" value="true">
+          <span>Spa / Bien-être</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="parking" value="true">
+          <span>Parking</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary">Rechercher</button>
+    
+    </div>
+
+  </form>
+  </div>
+</main>
 
 <%- include('partials/footer.ejs') %>

@@ -8,9 +8,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (authService.currentUserSig()) {
-    return true; // pour autoriser l'accés
+    return true; // pour autoriser l’accès
   } else {
     router.navigate(['/login']);
-    return false; // pour interdire l'accés
+    return false; // pour interdire l’accès
   }    
 };

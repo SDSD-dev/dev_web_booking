@@ -13,7 +13,7 @@ import { HomeSearchComponent } from '../../components/home-search/home-search.co
   styleUrl: './hotel-list.component.scss',
 })
 export class HotelListComponent implements OnInit {
-  // Injectios du service
+  // Injection du service
   private hotelService = inject(HotelService);
 
   hotels: Hotel[] = [];
@@ -38,7 +38,21 @@ export class HotelListComponent implements OnInit {
       }
     });
   };
-
+  
+  // Méthode pour gérer les critères de recherche envoyés par le composant enfant
+  handleSearch(criteria: any) {
+    this.loading = true; // On affiche un loader pendant la recherche
+    this.hotelService.searchHotels(criteria).subscribe({
+      next: (results) => {
+        this.hotels = results; // Met à jour la liste avec les résultats
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error("Erreur de recherche", err);
+        this.loading = false;
+      }
+    });
+  }
   // Récupération des données
   // hotels$: Observable<Hotel[]> = this.hotelService.getHotels();
 

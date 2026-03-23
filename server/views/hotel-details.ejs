@@ -1,30 +1,65 @@
 <%- include('partials/header.ejs') %>
 
-<div class="hotel-header">
-  <h1><%= hotel.name %></h1>
-  <p><strong>Lieu :</strong> <%= hotel.city %> - <%= hotel.country %></p>
-  <p><%= hotel.description_hotel %></p>
-</div>
-<h2>Chambres Disponibles</h2>
-<div class="room-list">
-  <% chambres.forEach(chambre => { %>
-  <div class="room-card">
-    <img
-      src="<%= chambre.image_chambre %>"
-      alt="Image de la chambre"
-      class="room-image"
-    />
-    <div class="room-details">
-      <h5>Type de Chambre: <%= chambre.type_chambre %></h5>
-      <p>Capacité: <%= chambre.capacite_max %> personnes</p>
-      <p>Prix par nuit: <%= chambre.prix_base %> €</p>
-      <p><%= chambre.description_chambre %></p>
-      <a href="/book/room/<%= chambre.id_chambre %>?date_debut=<%= searchParams.date_debut %>&date_fin=<%= searchParams.date_fin %>&adultes=<%= searchParams.adultes %>&enfants=<%= searchParams.enfants %>" class="btn-reserver"
-        >Réserver cette chambre</a
-      >
-      <hr />
+<main class="container">
+  
+  <section class="hotel-hero">
+    <div class="hero-image-wrapper">
+      <img src="<%= hotel.cover_image %>" alt="Image de l'hôtel <%= hotel.name %>">
     </div>
-    <% }) %>
-  </div>
-</div>
+    
+    <div class="hero-content">
+      <h1 class="hotel-title"><%= hotel.name %></h1>
+      <p class="hotel-location">
+        <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <%= hotel.city %> - <%= hotel.country %>
+      </p>
+      <div class="hotel-description">
+        <p><%= hotel.description_hotel %></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rooms-section">
+    <h3 class="section-title">Chambres Disponibles</h3>
+    
+    <div class="room-list-grid">
+      <% chambres.forEach(chambre => { %>
+      
+        <article class="horizontal-room-card">
+          
+          <div class="room-col-image">
+            <img src="<%= chambre.image_chambre %>" alt="Chambre <%= chambre.type_chambre %>">
+          </div>
+          
+          <div class="room-col-info">
+            <h4 class="room-type"><%= chambre.type_chambre %></h4>
+            <p class="room-desc"><%= chambre.description_chambre %></p>
+          </div>
+          
+          <div class="room-col-action">
+            <div class="room-capacity">
+              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              Jusqu'à <strong><%= chambre.capacite_max %> pers.</strong>
+            </div>
+            
+            <div class="room-price-block">
+              <span class="price-label">Prix par nuit</span>
+              <span class="room-price"><%= chambre.prix_base %> €</span>
+            </div>
+            
+            <a href="/book/room/<%= chambre.id_chambre %>?date_debut=<%= searchParams.date_debut %>&date_fin=<%= searchParams.date_fin %>&adultes=<%= searchParams.adultes %>&enfants=<%= searchParams.enfants %>" class="card-button btn-reserver">
+              Réserver
+            </a>
+          </div>
+
+        </article>
+      
+      <% }); %>
+    </div>
+    <br>
+  </section>
+
+</main>
+
 <%- include('partials/footer.ejs') %>
+

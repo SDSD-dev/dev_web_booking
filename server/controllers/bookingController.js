@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // Afficher le récapitulatif de la réservation avant validation
 exports.viewBookingRecap = async (req, res) => {
   try {
-    // 1. Récupérer les infos
+    // --- Récupérer les infos ---
     const roomId = req.params.id; // L'ID dans l'URL (/book/room/42)
     const { date_debut, date_fin } = req.query; // Les dates venant de la recherche
 
@@ -17,14 +17,14 @@ exports.viewBookingRecap = async (req, res) => {
       return res.redirect("/"); // Ou afficher une erreur
     }
 
-    // 2. Récupérer les infos OFFICIELLES de la chambre (Sécurité prix)
+    // --- Récupérer les infos OFFICIELLES de la chambre (Sécurité prix) ---
     const chambre = await RoomManager.getOneById(roomId);
 
     if (!chambre) {
       return res.status(404).send("Chambre introuvable");
     }
 
-    // 3. --- LOGIQUE MÉTIER ---
+    // --- LOGIQUE MÉTIER ---
     const start = new Date(date_debut);
     const end = new Date(date_fin);
     // Calcul différence en jours
@@ -36,7 +36,7 @@ exports.viewBookingRecap = async (req, res) => {
     }
     // Calcul du prix total basé sur le prix BDD
     const prixTotal = chambre.prix_base * nbrNuits;
-    // 4. Préparer l'objet pour la vue (Le "Panier")
+    // --- Préparer l'objet pour la vue (Le "Panier") ---
     const recapCommande = {
       chambre: chambre,
       dates: {
@@ -49,7 +49,7 @@ exports.viewBookingRecap = async (req, res) => {
         total: prixTotal,
       },
     };
-    // 5. Rendre la vue avec les données
+    // --- Rendre la vue avec les données ---
     res.render("booking-recap", {
       title: "Récapitulatif",
       subtitle: "Confirmez votre réservation",
@@ -66,7 +66,7 @@ exports.viewBookingRecap = async (req, res) => {
 // Valider la réservation et lancer le paiement Stripe
 exports.validateBooking = async (req, res) => {
   try {
-    // 1. Récupérer toutes les données du formulaire caché
+    // Récupérer toutes les données du formulaire caché
     const {
       chambre_id,
       hotel_id,
@@ -82,7 +82,7 @@ exports.validateBooking = async (req, res) => {
     // Sécurité basique
     if (!userId) return res.redirect("/login");
 
-    // 2. Créer une session de paiement Stripe
+    // --- Créer une session de paiement Stripe ---
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -119,7 +119,7 @@ exports.validateBooking = async (req, res) => {
       cancel_url: `${process.env.DOMAIN}/booking/cancel`, // Page si annulé
     });
 
-    // 3. Rediriger l'utilisateur vers la page Stripe
+    // --- Rediriger l'utilisateur vers la page Stripe pour le paiement ---
     res.redirect(303, session.url);
 
   } catch (error) {
@@ -137,17 +137,17 @@ exports.finalizeBooking = async (req, res) => {
       return res.redirect("/");
     }
 
-    // 1. Vérifier auprès de Stripe que la session est bien payée
+    // Vérifier auprès de Stripe que la session est bien payée
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== 'paid') {
         return res.send("Le paiement n'a pas été validé.");
     }
 
-    // 2. Récupérer nos infos cachées (Metadata)
+    // Récupérer nos infos cachées (Metadata)
     const data = session.metadata;
 
-    // 3. Construire l'objet pour OrderManager
+    // Construire l'objet pour OrderManager
     const orderData = {
       client_id: data.client_id,
       hotel_id: data.hotel_id,
@@ -158,11 +158,11 @@ exports.finalizeBooking = async (req, res) => {
       prix_unitaire: data.prix_unitaire,
       prix_total: data.prix_total,
     };
-    // 4. Enregistrer en Base de Données
-    // C'est ici que l'anti-doublon d'OrderManager va travailler
+    // Enregistrer en Base de Données
+    // anti-doublon d'OrderManager -> vérifier que la chambre n'est pas déjà réservée pour ces dates
     const orderId = await OrderManager.createOrder(orderData);
 
-    // 5. Afficher la page de succès
+    // Afficher la page de succès
     res.render("booking-success", { orderId: orderId,
       title: "Réservation",
       subtitle: "Bravo ! Commande ${orderId} validée.", });

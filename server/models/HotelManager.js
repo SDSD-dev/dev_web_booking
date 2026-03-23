@@ -10,8 +10,9 @@ class HotelManager {
     const params = [];
 
     let sql = `
-    SELECT 
-        T1.name, T1.city, T2.type_chambre, T2.prix_base, T2.capacite_max, T1.id_hotel,
+      SELECT 
+        T1.*, -- <-- CORRECTION ICI : T1.* récupère toutes les options (piscine, wifi, etc.)
+        T2.type_chambre, T2.prix_base, T2.capacite_max,
         (SELECT url_image FROM hotel_images WHERE hotel_id = T1.id_hotel ORDER BY id_image LIMIT 1) AS main_image_url,
         (SELECT AVG(note) FROM avis WHERE hotel_id = T1.id_hotel) AS average_rating,
         (SELECT COUNT(*) FROM avis WHERE hotel_id = T1.id_hotel) AS review_count
@@ -50,10 +51,11 @@ class HotelManager {
     if (options.wifi) sql += ` AND T1.wifi = TRUE`;
     if (options.parking) sql += ` AND T1.parking = TRUE`;
 
-
+    // Trie des résultats par prix de base croissant (du moins cher au plus cher)
+    sql += ` ORDER BY T2.prix_base ASC`;
 
     // EXÉCUTION
-    // On utilise db.execute directement (pas besoin de getConnection/release avec mysql2 pool simple)
+    // On utilise une Map pour éviter les doublons d'hôtels (un hôtel peut avoir plusieurs types de chambres)
     try {
       const [rows] = await db.execute(sql, params);
     
@@ -62,7 +64,6 @@ class HotelManager {
       rows.forEach(row => {
       // On compte le nombre de types de chambres par hôtel
         if (!hotelsMap.has(row.id_hotel)) {
-          // row.nb_types_chambrs = 1;
 
           // Premier type de chambre pour cet hôtel
           // On crée une copie de l'objet row pour éviter les références partagées
@@ -91,7 +92,7 @@ class HotelManager {
 
   // Récupérer un hôtel par son ID
   static async getOneById(idHotel) {
-    // Récupèrations des infos de l'hôtel + images + note moyenne
+    // Récupérations des infos de l'hôtel + images + note moyenne
     const sql = `SELECT hotel.*,
     (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as note_moyenne,
     (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as nb_avis,
@@ -104,7 +105,7 @@ class HotelManager {
   
   // Récupérer un hôtel avec ses chambres
   static async getOneWithRooms(id) {
-    // récupération des infos hotêls
+    // récupération des infos hotels
     const hotel = await this.getOneById(id);
 
     if (!hotel) return null;
@@ -124,11 +125,13 @@ class HotelManager {
   };
 
   // Récupérer tous les hôtels (avec image de couverture)
-  static async findAll() {
-    // Sélection de tout les hôtels + son images
+static async findAll() {
     const sql = `SELECT 
       hotel.*, 
-      (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image
+      (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image,
+      (SELECT MIN(prix_base) FROM chambres WHERE hotel_id = hotel.id_hotel) as prix_base,
+      (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as average_rating,
+      (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as review_count
     FROM hotel 
     ORDER BY hotel.id_hotel DESC`;
     const [rows] = await db.execute(sql);

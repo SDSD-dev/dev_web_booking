@@ -1,29 +1,79 @@
 <%- include('partials/header.ejs') %>
-    <div class="card">
-        <h2><%= recap.chambre.hotel_name %> - <%= recap.chambre.type_chambre %></h2>
-        <p>Adresse : <%= recap.chambre.address %>, <%= recap.chambre.city %></p>
+
+<main class="checkout-container">
+    <section class="checkout-wrapper">
         
-        <ul>
-            <li>Arrivée : <%= recap.dates.debut %></li>
-            <li>Départ : <%= recap.dates.fin %></li>
-            <li>Durée : <%= recap.dates.nbrNuits %> nuits</li>
-        </ul>
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <h1>Dernière étape !</h1>
+                <p>Vérifiez les détails de votre réservation avant de confirmer.</p>
+            </div>
 
-        <hr>
-        <h3>Total à payer : <%= recap.prix.total %> €</h3>
+            <div class="checkout-body">
+                
+                <div class="summary-section">
+                    <div class="summary-hotel-info">
+                        <h2><%= recap.chambre.hotel_name %></h2>
+                        <span class="room-badge"><%= recap.chambre.type_chambre %></span>
+                    </div>
+                    <p class="summary-address">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <%= recap.chambre.address %>, <%= recap.chambre.city %>
+                    </p>
+                </div>
 
-        <form action="/book/validate" method="POST">
-            <input type="hidden" name="chambre_id" value="<%= recap.chambre.id_chambre %>">
-            <input type="hidden" name="hotel_id" value="<%= recap.chambre.hotel_id %>">
-            <input type="hidden" name="date_debut" value="<%= recap.dates.debut %>">
-            <input type="hidden" name="date_fin" value="<%= recap.dates.fin %>">
-            <input type="hidden" name="nbr_nuits" value="<%= recap.dates.nbrNuits %>">
+                <div class="summary-section dates-grid">
+                    <div class="date-box">
+                        <span class="date-label">Arrivée</span>
+                        <span class="date-value"><%= recap.dates.debut %></span>
+                    </div>
+                    <div class="date-box">
+                        <span class="date-label">Départ</span>
+                        <span class="date-value"><%= recap.dates.fin %></span>
+                    </div>
+                    <div class="date-box highlight-box">
+                        <span class="date-label">Durée</span>
+                        <span class="date-value"><%= recap.dates.nbrNuits %> nuit(s)</span>
+                    </div>
+                </div>
 
-            <input type="hidden" name="prix_unitaire" value="<%= recap.prix.unitaire %>">
-            <input type="hidden" name="prix_total" value="<%= recap.prix.total %>">
-            
-            <button type="submit" class="btn-payer">Confirmer et Payer</button>
-        </form>
-    </div>
+                <div class="summary-section price-section">
+                    <div class="price-row">
+                        <span>Prix par nuit</span>
+                        <span><%= recap.prix.unitaire %> €</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Taxes & Frais</span>
+                        <span>Inclus</span>
+                    </div>
+                    <hr class="price-divider">
+                    <div class="price-row total-row">
+                        <span>Total à payer</span>
+                        <span class="total-price"><%= recap.prix.total %> €</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="checkout-footer">
+                <form action="/book/validate" method="POST" class="checkout-form">
+                    <input type="hidden" name="chambre_id" value="<%= recap.chambre.id_chambre %>">
+                    <input type="hidden" name="hotel_id" value="<%= recap.chambre.hotel_id %>">
+                    <input type="hidden" name="date_debut" value="<%= recap.dates.debut %>">
+                    <input type="hidden" name="date_fin" value="<%= recap.dates.fin %>">
+                    <input type="hidden" name="nbr_nuits" value="<%= recap.dates.nbrNuits %>">
+                    <input type="hidden" name="prix_unitaire" value="<%= recap.prix.unitaire %>">
+                    <input type="hidden" name="prix_total" value="<%= recap.prix.total %>">
+                    
+                    <button type="submit" class="btn-primary btn-pay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        Confirmer et Payer de manière sécurisée
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+    </section>
+</main>
 
 <%- include('partials/footer.ejs') %>

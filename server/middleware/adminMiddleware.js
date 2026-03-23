@@ -3,7 +3,7 @@
 // Middleware pour vérifier si l'utilisateur est un administrateur
 const checkAdmin = (req, res, next) => {
     // Rendre compatible adminMiddleware avec Angular et le projet full Node.js
-    // On verifie si l'URL commence par '/api' OU si le client demande du JSON (Angular)
+    // On vérifie si l'URL commence par '/api' OU si le client demande du JSON (Angular)
     const isApi = req.path.startsWith('/api') || req.headers.accept?.includes('application/json')
 
     // Cas 1 -> Utilisateur non connecté

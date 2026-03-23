@@ -1,44 +1,31 @@
 <%- include('partials/header.ejs') %>
 <main>
-  <section>
-    <h2 style="text-align: center;">Front-end provisoire pour tester Node.js avec EJS et MySQL.</h2>
-    <p>
-      <ul style="margin-left: 25%;">
-        <li>Formulaire de recherche -> fonctionnelle</li>
-        <li>Connexion à la base de données MySQL local -> fonctionnelle</li>
-        <li>Affichage des données des hôtels depuis la BDD -> fonctionnelle</li>
-        <li>Pages de contact et d'inscription -> fonctionnelles</li>
-      </ul>
-    </p>
-  </section>
 
-  <div id="carouselExample" class="carousel slide">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" class="d-block w-100" alt="Hotel Truc">
+  <section class="custom-carousel">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-slide">
+        <img src="img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" alt="Hotel Truc">
       </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_resultat.jpg" class="d-block w-100" alt="Hotel Machin">
+      <div class="carousel-slide">
+        <img src="img_hotels/2025-11-21-1019_0_Original_resultat.jpg" alt="Hotel Machin">
       </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" class="d-block w-100" alt="Hotel Bidule">
+      <div class="carousel-slide">
+        <img src="img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" alt="Hotel Bidule">
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 
-  <section>        
-    <form action="search" method="GET" novalidate>
-      <h2>Formulaire de Recherche</h2>           
-      <select name="lieu" id="lieu" required>
-        <option value="">--Veuillez choisir une ville (obligatoire)--</option>
+    <button id="carousel-prev" class="carousel-btn prev" aria-label="Image précédente">&#10094;</button>
+    <button id="carousel-next" class="carousel-btn next" aria-label="Image suivante">&#10095;</button>
+  </section>
+
+<form action="search" method="GET" class="compact-search-form" novalidate>
+  
+  <div class="form-grid">
+    
+    <div class="form-group full-width">
+      <label for="Villes">Villes</label>
+      <select name="lieu" id="lieu" class="rounded-input" required>
+        <option value="" disabled selected>-- Choisissez une destination --</option>
         <option value="Paris">Paris</option>
         <option value="Lyon">Lyon</option>
         <option value="Lille">Lille</option>
@@ -46,65 +33,111 @@
         <option value="Marseille">Marseille</option>
         <option value="Lourdes">Lourdes</option>
       </select>
-      <label for="date_debut">Date d'arriver (obligatoire) :</label>
-      <input type="date" id="date_debut" name="date_debut" required />
-      <label for="date_fin">Date de départ (obligatoire) :</label>
-      <input type="date" id="date_fin" name="date_fin" required />
-      <label for="adultes">Nombre d'adultes (obligatoire) :</label>
-      <input type="number" id="adultes" name="adultes" required />
-      <label for="enfants">Nombre d'enfants :</label>
-      <input type="number" id="enfants" name="enfants" value="0" />
-      <label>
-        <input type="checkbox" name="animaux" value="true" /> Animaux acceptés </label
-      ><br />
-      <label>
-        <input type="checkbox" name="wifi" value="true" /> Wi-Fi gratuit </label
-      ><br />
-      <label>
-        <input type="checkbox" name="piscine" value="true" /> Piscine </label
-      ><br />
-      <label>
-        <input type="checkbox" name="spa" value="true" /> Spa / Centre de bien-être </label
-      ><br />
-      <div><button type="submit">Envoyer</button></div>
-    </form>
-  </section>
-  <section>
-    <h2>✅ Test de Connexion DB Réussi : Données des Hôtels</h2>
-    <% if (hotelsList && hotelsList.length > 0) { %>
-    <ul>
-      <% hotelsList.forEach(function(hotel) { %>
-      <li><strong><%= hotel.name %></strong>, situé à <%= hotel.city %></li>
-      <% }); %>
-    </ul>
-    <% } else { %>
-    <p style="color: red">
-      Aucun hôtel trouvé ou connexion à la base de données échouée.
-    </p>
-    <% } %>
-    <hr />
-    <p>
-      Ce champ prouve que la liaison Node.js (server.js) <-> MySQL (DB) <-> EJS (index.ejs) est fonctionnelle.
-    </p>
-  </section>
-  <section>
-    <p>Page work in progress pour tester Node.js.</p>
-    <br />
-  </section>
-  <script>
-    // Script pour gérer les dates dans le formulaire de recherche
-    // Empêche de choisir une date passée
-    // Définit la date minimale pour les deux champs de date
-    const today = new Date().toISOString().split("T")[0];
-    document.getElementById("date_debut").setAttribute("min", today);
-    document.getElementById("date_fin").setAttribute("min", today);
-    const dateDebutInput = document.getElementById("date_debut");
-    const dateFinInput = document.getElementById("date_fin");
+    </div>
 
-    dateDebutInput.addEventListener("change", function () {
-      dateFinInput.setAttribute("min", this.value);
-    });
-  </script>
+    <div class="form-group">
+      <label for="date_debut">Arrivée</label>
+      <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="date_fin">Départ</label>
+      <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="adultes">Adultes</label>
+      <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="enfants">Enfants</label>
+      <input type="number" id="enfants" name="enfants" value="0" min="0" class="rounded-input">
+    </div>
+
+  </div>
+
+  <div class="form-bottom">
+    
+    <div class="checkbox-group">
+      <label class="custom-checkbox">
+        <input type="checkbox" name="animaux" value="true">
+        <span>Animaux</span>
+      </label>
+      <label class="custom-checkbox">
+        <input type="checkbox" name="wifi" value="true">
+        <span>Wi-Fi</span>
+      </label>
+      <label class="custom-checkbox">
+        <input type="checkbox" name="piscine" value="true">
+        <span>Piscine</span>
+      </label>
+      <label class="custom-checkbox">
+        <input type="checkbox" name="spa" value="true">
+        <span>Spa / Bien-être</span>
+      </label>
+      <label class="custom-checkbox">
+        <input type="checkbox" name="parking" value="true">
+        <span>Parking</span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-primary">Rechercher</button>
+  
+  </div>
+
+</form>
+
+<h2>Nos Promotions</h2>
+
+<section class="promo-grid">    
+  <div class="card">
+    <div class="card-image">
+      <img src="img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Chambre Deluxe">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Le Kiehn - Larson Resort</h3>
+      <p class="card-subtitle">En centre-ville de Bordeaux</p>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div class="card-footer">
+        <span class="card-price">155,79 €</span>
+        <a class="card-button" href="http://localhost:3000/hotel/447">Réserver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-image">
+      <img src="img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Chambre Deluxe">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Le Kutch LLC Lodge</h3>
+      <p class="card-subtitle">En centre-ville de Lourdes</p>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div class="card-footer">
+        <span class="card-price">73,48 €</span>
+        <a class="card-button" href="http://localhost:3000/hotel/438">Réserver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-image">
+      <img src="img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Chambre Deluxe">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Le Volkman and Schuppe Lodge</h3>
+      <p class="card-subtitle">En centre-ville de Paris</p>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div class="card-footer">
+        <span class="card-price">228,11 €</span>
+        <a class="card-button" href="http://localhost:3000/hotel/441">Réserver</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 </main>
 <%- include('partials/footer.ejs') %>
 

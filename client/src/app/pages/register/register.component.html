@@ -1,52 +1,65 @@
-<div class="register-container" style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-  <h2>Créer un compte</h2>
-
-<div class="register-container" style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-  <h2>Créer un compte</h2>
+<div class="max-w-xl mx-auto mt-12 mb-20 p-8 bg-[#1D283D] border border-slate-700 rounded-xl shadow-2xl w-full">
+  
+  <h2 class="text-2xl font-bold text-slate-100 text-center mb-6">Créer un compte</h2>
 
   @if (errorMessage) {
-    <div style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 10px;">{{ errorMessage }}</div>
+    <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm flex items-center gap-2">
+      <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      {{ errorMessage }}
+    </div>
   }
   @if (successMessage) {
-    <div style="background-color: #e8f5e9; color: #2e7d32; padding: 10px; margin-bottom: 10px;">{{ successMessage }}</div>
+    <div class="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-sm flex items-center gap-2">
+      <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      {{ successMessage }}
+    </div>
   }
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
     
-    <div style="margin-bottom: 10px;">
-      <label>Nom</label>
-      <input type="text" formControlName="nom" style="width: 100%; padding: 8px;">
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex flex-col flex-1">
+        <label for="nom" class="text-sm font-medium text-slate-300 mb-1">Nom</label>
+        <input type="text" id="nom" formControlName="nom" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors" placeholder="Dupont">
+      </div>
+
+      <div class="flex flex-col flex-1">
+        <label for="prenom" class="text-sm font-medium text-slate-300 mb-1">Prénom</label>
+        <input type="text" id="prenom" formControlName="prenom" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors" placeholder="Jean">
+      </div>
     </div>
 
-    <div style="margin-bottom: 10px;">
-      <label>Prénom</label>
-      <input type="text" formControlName="prenom" style="width: 100%; padding: 8px;">
+    <div class="flex flex-col">
+      <label for="telephone" class="text-sm font-medium text-slate-300 mb-1">Téléphone</label>
+      <input type="tel" id="telephone" formControlName="telephone" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors" placeholder="06 12 34 56 78">
     </div>
 
-    <div style="margin-bottom: 10px;">
-      <label>Téléphone</label>
-      <input type="tel" formControlName="telephone" style="width: 100%; padding: 8px;">
+    <div class="flex flex-col">
+      <label for="email" class="text-sm font-medium text-slate-300 mb-1">Email</label>
+      <input type="email" id="email" formControlName="email" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors" placeholder="jean.dupont@exemple.com">
     </div>
 
-    <div style="margin-bottom: 10px;">
-      <label>Email</label>
-      <input type="email" formControlName="email" style="width: 100%; padding: 8px;">
-    </div>
-
-    <div style="margin-bottom: 15px;">
-      <label>Mot de passe</label>
-      <input type="password" formControlName="password" style="width: 100%; padding: 8px;">
-      @if (registerForm.get('password')?.errors?.['minlength']) {
-        <small style="color: red;">6 caractères minimum</small>
+    <div class="flex flex-col">
+      <label for="password" class="text-sm font-medium text-slate-300 mb-1">Mot de passe</label>
+      <input type="password" id="password" formControlName="password" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors" placeholder="••••••••">
+      
+      @if (registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched) {
+        <p class="text-xs text-red-400 mt-2 flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          6 caractères minimum requis.
+        </p>
       }
     </div>
 
-    <button type="submit" [disabled]="registerForm.invalid" style="width: 100%; padding: 10px; background-color: #2c3e50; color: white; border: none; cursor: pointer;">
+    <button type="submit" [disabled]="registerForm.invalid" class="w-full mt-4 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#005ab9]">
       S'inscrire
     </button>
   </form>
 
-  <p style="text-align: center; margin-top: 15px;">
-    Déjà inscrit ? <a routerLink="/login">Se connecter</a>
+  <p class="text-center text-slate-400 mt-6 text-sm">
+    Déjà inscrit ? 
+    <a routerLink="/login" class="text-[#005ab9] hover:text-[#007bff] hover:underline font-medium transition-colors">
+      Se connecter
+    </a>
   </p>
 </div>
