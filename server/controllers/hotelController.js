@@ -1,6 +1,6 @@
 // server/controllers/hotelController.js
 const HotelManager = require("../models/HotelManager");
-const RoomManager = require("../models/RoomManager");
+// const RoomManager = require("../models/RoomManager");
 
 // VUE : FORMULAIRE DE RECHERCHE
 exports.viewSearch = async (req, res) => {
@@ -65,7 +65,6 @@ exports.viewSearch = async (req, res) => {
       dateDebut: start, // A une valeur sûre
       dateFin: end, // A une valeur sûre
       capacite: capaciteTotale, // Est un nombre
-      // On regroupe les options
       options: {
         piscine: piscine, // Sera 'true', 'on' ou undefined
         spa: spa,
@@ -112,13 +111,13 @@ exports.viewHotelDetails = async (req, res) => {
         const hotel = await HotelManager.getOneById(idHotel);
         if (!hotel) return res.status(404).send("Hôtel introuvable");
 
-        const chambres = await RoomManager.getRoomsByHotelId(idHotel);
+        const data = await HotelManager.getOneWithRooms(idHotel, date_debut, date_fin);
 
         res.render("hotel-details", {
-            title: hotel.name,
+            title: data.hotel.name,
             subtitle: "Chambres Disponibles",
-            hotel: hotel,
-            chambres: chambres,
+            hotel: data.hotel,
+            chambres: data.chambres,
             // TRANSMETTRE LE TÉMOIN À LA VUE
             searchParams: {
                 date_debut,

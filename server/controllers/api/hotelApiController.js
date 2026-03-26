@@ -5,7 +5,6 @@ const HotelManager = require("../../models/HotelManager");
 exports.getHotels = async (req, res) => {
     try {
         const hotels = await HotelManager.findAll();
-        // Au lieu de res.render('dashboard', { hotels }), on fait :
         res.json(hotels); 
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -16,7 +15,12 @@ exports.getHotels = async (req, res) => {
 exports.getHotelDetail = async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await HotelManager.getOneWithRooms(id);
+
+        // On récupère les dates envoyées par Angular
+        const { dateDebut, dateFin } = req.query;
+
+        // On passe les dates au Manager
+        const data = await HotelManager.getOneWithRooms(id, dateDebut, dateFin);
         
         if (!data) {
             return res.status(404).json({ message: "Hôtel introuvable" });
@@ -127,6 +131,5 @@ exports.deleteHotel = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Erreur suppression hôtel" });
     }
-
-    
+        
 };

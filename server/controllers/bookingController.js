@@ -36,7 +36,7 @@ exports.viewBookingRecap = async (req, res) => {
     }
     // Calcul du prix total basé sur le prix BDD
     const prixTotal = chambre.prix_base * nbrNuits;
-    // --- Préparer l'objet pour la vue (Le "Panier") ---
+    // --- Préparer l'objet pour la vue ---
     const recapCommande = {
       chambre: chambre,
       dates: {
@@ -54,7 +54,7 @@ exports.viewBookingRecap = async (req, res) => {
       title: "Récapitulatif",
       subtitle: "Confirmez votre réservation",
       recap: recapCommande,
-      // On passe aussi l'utilisateur connecté pour pré-remplir le formulaire si besoin
+      // Passe l'utilisateur connecté pour pré-remplir le formulaire si besoin
       user: req.session.userId,
     });
   } catch (error) {

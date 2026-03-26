@@ -8,7 +8,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // 1 - Cas facile : L'utilisateur est déjà chargé en mémoire (navigation interne)
+  // Si l'utilisateur est déjà chargé en mémoire (navigation interne)
   const user = authService.currentUserSig();
   if (user) {
     if (user.role === 'administrateur' || user.role === 'admin') {
@@ -19,7 +19,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
     }
   }
 
-  // 2 - Cas difficile : Rafraîchissement (F5) ou Accès direct URL
+  // Si il y a un Rafraîchissement (F5) ou Accès direct URL
   // On appelle checkAuth() et on attend la réponse (pipe)
   return authService.checkAuth().pipe(
     map((response: any) => {

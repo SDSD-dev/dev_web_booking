@@ -28,6 +28,8 @@ export class ProfileComponent implements OnInit {
     pays: ['']
   });
 
+  // currentDate: any = new Date();
+
   message: string = '';
 
   // Nouvelle variable pour stocker la liste
@@ -98,6 +100,25 @@ export class ProfileComponent implements OnInit {
       });
 
     }
+  }
+
+  // Méthode pour vérifier si une réservation peut encore être annulée
+  canCancel(booking: BookingHistory): boolean {
+    // Si déjà annulée, on cache le bouton
+    if (booking.statut_commande === 'annulée') {
+      return false;
+    }
+
+    // Récupérations de la date du jour à minuit (pour comparer équitablement)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Conversion de la chaîne de caractères (string) en objet Date
+    const startDate = new Date(booking.date_sejour_debut);
+    startDate.setHours(0, 0, 0, 0);
+
+    // Retourne true si la date de début est supérieure ou égale à aujourd'hui
+    return startDate >= today;
   }
 
 }

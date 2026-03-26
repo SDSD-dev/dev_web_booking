@@ -1,42 +1,74 @@
-<div class="container" style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+<div class="max-w-5xl mx-auto mt-10 mb-20 p-6 md:p-8 bg-[#1D283D] border border-slate-700 rounded-xl shadow-2xl w-full">
   
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h1>Administration Hôtels</h1>
-    <a routerLink="/admin/hotel/new" style="background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
-      + Ajouter un hôtel
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 pb-4 border-b border-slate-700 gap-4">
+    <h2 class="text-3xl font-bold text-slate-100 m-0">Administration Hôtels</h2>
+    
+    <a routerLink="/admin/hotel/new" class="inline-flex items-center gap-2 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold py-2.5 px-5 rounded-lg transition-colors shadow-md">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Ajouter un hôtel
     </a>
   </div>
 
   @if (isLoading) {
-    <p>Chargement des données...</p>
+    <div class="flex items-center justify-center gap-3 text-slate-400 py-10">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#005ab9]"></div>
+      Chargement des données...
+    </div>
   } @else {
-    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
-      <thead style="background-color: #34495e; color: white;">
-        <tr>
-          <th style="padding: 12px; text-align: left;">ID</th>
-          <th style="padding: 12px; text-align: left;">Nom</th>
-          <th style="padding: 12px; text-align: left;">Ville</th>
-          <th style="padding: 12px; text-align: center;">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (hotel of hotels; track hotel.id_hotel) {
-          <tr style="border-bottom: 1px solid #ddd; background: white;">
-            <td style="padding: 12px;">#{{ hotel.id_hotel }}</td>
-            <td style="padding: 12px; font-weight: bold;">{{ hotel.name }}</td>
-            <td style="padding: 12px;">{{ hotel.city }}</td>
-            <td style="padding: 12px;">
-              <button [routerLink]="['/admin/hotel/edit', hotel.id_hotel]" style="margin-right: 10px; color: #ebf5fc; text-decoration: none; border: 1px solid #2980b9; padding: 5px 10px; border-radius: 4px;">
-                ✏️ Éditer
-              </button>
-              
-              <button (click)="deleteHotel(hotel.id_hotel)" style="background: none; border: 1px solid #c0392b; color: #c0392b; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
-                🗑️ Supprimer
-              </button>
-            </td>
+
+    <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-sm">
+      <table class="w-full text-left border-collapse whitespace-nowrap">
+        
+        <thead class="bg-[#18191C] text-slate-300 text-sm uppercase tracking-wider border-b border-slate-700">
+          <tr>
+            <th class="px-6 py-4 font-medium">ID</th>
+            <th class="px-6 py-4 font-medium">Nom</th>
+            <th class="px-6 py-4 font-medium">Ville</th>
+            <th class="px-6 py-4 font-medium text-right">Actions</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        
+        <tbody class="divide-y divide-slate-700/50">
+          @for (hotel of hotels; track hotel.id_hotel) {
+            <tr class="hover:bg-slate-800/30 transition-colors">
+              
+              <td class="px-6 py-4">
+                <span class="px-2.5 py-1 bg-slate-800 text-slate-300 border border-slate-600 rounded-md text-xs font-bold shadow-inner">
+                  #{{ hotel.id_hotel }}
+                </span>
+              </td>
+              
+              <td class="px-6 py-4">
+                <strong class="text-slate-100 block">{{ hotel.name }}</strong>
+              </td>
+              
+              <td class="px-6 py-4">
+                <span class="text-slate-300">{{ hotel.city }}</span>
+              </td>
+              
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-end gap-2">
+                  
+                  <a [routerLink]="['/admin/hotel/edit', hotel.id_hotel]" 
+                     class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#18191C] hover:bg-slate-700 border border-slate-600 text-slate-300 hover:text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Éditer
+                  </a>
+                  
+                  <button (click)="deleteHotel(hotel.id_hotel)" 
+                          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 hover:text-red-300 text-sm font-medium rounded-lg transition-colors shadow-sm cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Supprimer
+                  </button>
+
+                </div>
+              </td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
   }
 </div>

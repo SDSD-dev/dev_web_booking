@@ -9,7 +9,7 @@ exports.viewContact = (req, res) => {
 // --- GESTION DES ACTIONS (POST) ---
 exports.contact = async (req, res) => {
   try {
-    // 1. Récupérer les données du formulaire
+    // Récupérer les données du formulaire
     const { nom, prenom, email, phone, message, consent_public } = req.body;
     const valRgpd = (consent_public === "yes" || consent_public === "on") ? 1 : 0; // Syntaxe "simple" pour écrire des IF/ELSE sur une seule ligne
 

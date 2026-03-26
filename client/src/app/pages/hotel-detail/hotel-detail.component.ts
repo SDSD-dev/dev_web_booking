@@ -12,7 +12,7 @@ import { HotelService, HotelDetailResponse } from '../../services/hotel.service'
   templateUrl: './hotel-detail.component.html',
   styleUrl: './hotel-detail.component.scss',
 })
-export class HotelDetailComponent {
+export class HotelDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private hotelService = inject(HotelService);
 
@@ -25,9 +25,15 @@ export class HotelDetailComponent {
     // Récupération de l'ID dans l'URL avec 'snapshot'
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
+    // On récupère les critères de la dernière recherche en mémoire
+    const criteria = this.hotelService.lastSearchCriteria;
+    
+    // On prépare les dates à envoyer (si elles existent)
+    const dateDebut = criteria?.dateDebut || null;
+    const dateFin = criteria?.dateFin || null;
+
     if (id) {
-      // Appel API
-      this.hotelService.getHotelById(id).subscribe({
+      this.hotelService.getHotelById(id, dateDebut, dateFin).subscribe({
         next: (data) => {
           this.hotelData = data;
           this.loading = false;

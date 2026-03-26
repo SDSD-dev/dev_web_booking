@@ -93,7 +93,7 @@ exports.login = async (req, res) => {
   try {
     const { email, mot_de_passe } = req.body;
 
-    // 1 - Chercher l'user
+    // Chercher l'user
     const user = await UserManager.findByEmail(email);
     if (!user)
       return res.render("login", {
@@ -102,7 +102,7 @@ exports.login = async (req, res) => {
         error: "Email inconnu",
       });
 
-    // 2 - Vérifier mot de passe
+    // Vérifier mot de passe
     const match = await bcrypt.compare(mot_de_passe, user.mot_de_passe_hash);
     if (!match)
       return res.render("login", {
@@ -111,7 +111,7 @@ exports.login = async (req, res) => {
         error: "Mot de passe incorrect",
       });
 
-    // 3 - Session
+    // Session
     // ID pour la table clients
     req.session.userId = user.client_id;
     // ID pour l'administration (table connexions) -> pour la table 'hotel' !
@@ -130,7 +130,6 @@ exports.login = async (req, res) => {
       return res.redirect('/profile');
     }
 
-    // res.redirect("/profile");
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur serveur");

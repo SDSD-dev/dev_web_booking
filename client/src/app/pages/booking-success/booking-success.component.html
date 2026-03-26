@@ -1,31 +1,29 @@
 <div style="text-align: center; padding: 50px; max-width: 600px; margin: 0 auto;">
   
   @if (isLoading) {
-    <h2>Vérification du paiement en cours... ⏳</h2>
-    <p>Ne fermez pas cette page.</p>
+    <h2 class="text-1xl md:text-2xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-10 px-4">Vérification du paiement en cours... </h2>
+    <p class="text-xl md:text-2xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-10 px-4">Ne fermez pas cette page.</p>
   }
 
   @if (!isLoading && success) {
-    <div style="color: #27ae60;">
-      <h1 style="font-size: 3rem;">🎉 Merci !</h1>
-      <h2>Votre réservation est confirmée.</h2>
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-6 px-4 rounded-lg"> Merci !</h1>
+      <h2 class="text-1xl md:text-2xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-10 px-4">Votre réservation est confirmée.</h2>
             
       <div style="margin-top: 30px;">
-        <a routerLink="/profile" style="background-color: #2c3e50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-right: 10px;">
+        <a routerLink="/profile" class="mt-6 px-8 py-3 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">
           Voir mes réservations
         </a>
-        <a routerLink="/" style="color: #2c3e50; text-decoration: underline;">
-          Retour à l'accueil
-        </a>
+        <a routerLink="/" class="mt-6 px-8 py-3 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">Retour à l'accueil</a>
       </div>
     </div>
   }
 
   @if (!isLoading && errorMessage) {
-    <div style="color: #c0392b;">
-      <h1>Oups ! 😕</h1>
-      <p>{{ errorMessage }}</p>
-      <a routerLink="/" style="color: blue;">Retourner à l'accueil</a>
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-6 px-4 rounded-lg">Oups ! </h1>
+      <p class="text-xl md:text-2xl font-bold text-center text-transparent bg-clip-text bg-blue-500 py-10 px-4">{{ errorMessage }}</p>
+      <a routerLink="/" class="mt-6 px-8 py-3 bg-[#005ab9] text-white rounded-lg font-medium hover:bg-[#007bff] transition-colors shadow hover:shadow-lg">Retourner à l'accueil</a>
     </div>
   }
 

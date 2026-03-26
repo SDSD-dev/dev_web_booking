@@ -32,6 +32,7 @@ export class HomeSearchComponent {
     parking: [false],
   });
 
+  
   // Soumission du formulaire
   onSearch() {
     const criteria = this.searchForm.value;
@@ -57,4 +58,16 @@ export class HomeSearchComponent {
     this.currentIndex = (this.currentIndex === 0) ? this.images.length - 1 : this.currentIndex - 1;
   }
   
+  // Obtenir la date du jour au format YYYY-MM-DD (format requis par <input type="date">)
+  get today(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  // Obtenir la date minimum pour le départ
+  get minDepartureDate(): string {
+    // On lit la valeur actuelle du champ "dateDebut"
+    const arrivalDate = this.searchForm.get('dateDebut')?.value;
+    // Si une date d'arrivée est choisie, c'est notre minimum. Sinon, c'est aujourd'hui.
+    return arrivalDate ? arrivalDate : this.today;
+  }
 }

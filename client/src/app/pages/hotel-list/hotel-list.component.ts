@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HotelService, Hotel } from '../../services/hotel.service';
 import { HotelCardComponent } from '../../components/hotel-card/hotel-card.component';
 import { HomeSearchComponent } from '../../components/home-search/home-search.component';
+import { AuthService } from '../../services/auth.service';
 
 // Composant pour afficher la liste des hôtels
 @Component({
@@ -15,6 +16,7 @@ import { HomeSearchComponent } from '../../components/home-search/home-search.co
 export class HotelListComponent implements OnInit {
   // Injection du service
   private hotelService = inject(HotelService);
+  authService = inject(AuthService);
 
   hotels: Hotel[] = [];
   loading = true;

@@ -11,8 +11,7 @@ class HotelManager {
 
     let sql = `
       SELECT 
-        T1.*, -- <-- CORRECTION ICI : T1.* récupère toutes les options (piscine, wifi, etc.)
-        T2.type_chambre, T2.prix_base, T2.capacite_max,
+        T1.*, T2.type_chambre, T2.prix_base, T2.capacite_max,
         (SELECT url_image FROM hotel_images WHERE hotel_id = T1.id_hotel ORDER BY id_image LIMIT 1) AS main_image_url,
         (SELECT AVG(note) FROM avis WHERE hotel_id = T1.id_hotel) AS average_rating,
         (SELECT COUNT(*) FROM avis WHERE hotel_id = T1.id_hotel) AS review_count
@@ -104,25 +103,61 @@ class HotelManager {
   };
   
   // Récupérer un hôtel avec ses chambres
-  static async getOneWithRooms(id) {
-    // récupération des infos hotels
-    const hotel = await this.getOneById(id);
+  static async getOneWithRooms(id, dateDebut = null, dateFin = null) {
+      const hotel = await this.getOneById(id);
 
-    if (!hotel) return null;
+      if (!hotel) return null;
 
-    // récupération chambres associés + images
-    const sqlRooms = `SELECT 	chambres.*, 
-    (SELECT url_image FROM chambre_images WHERE chambre_id = chambres.id_chambre LIMIT 1) as image_room
-    FROM chambres
-    WHERE chambres.hotel_id = ?`;
-    const [chambres] = await db.execute(sqlRooms, [id]);
+      let sqlRooms = `SELECT chambres.*, 
+      (SELECT url_image FROM chambre_images WHERE chambre_id = chambres.id_chambre LIMIT 1) as image_room
+      FROM chambres
+      WHERE chambres.hotel_id = ?`;
 
-    // pour le JSON Angular
-    return {
-        hotel: hotel,
-        chambres: chambres
+      const params = [id];
+
+      // Si on a des dates, on filtre les chambres déjà réservées pour cette période
+      if (dateDebut && dateFin) {
+        sqlRooms += ` AND chambres.id_chambre NOT IN (
+          SELECT LC.chambre_id 
+          FROM lignes_commande AS LC 
+          JOIN commandes AS C ON LC.commande_id = C.id_commande 
+          WHERE C.date_sejour_debut <= ? AND C.date_sejour_fin >= ? AND C.statut_commande != 'annulée'
+        )`;
+        // Attention à l'ordre croisé des dates pour tester le chevauchement
+        params.push(dateFin);
+        params.push(dateDebut);
+      }
+
+      const [chambres] = await db.execute(sqlRooms, params);
+
+      return {
+          hotel: hotel,
+          chambres: chambres
+      };
     };
-  };
+
+
+  // static async getOneWithRooms(id) {
+  //   // récupération des infos hotels
+  //   const hotel = await this.getOneById(id);
+
+  //   if (!hotel) return null;
+
+  //   // récupération chambres associés + images
+  //   const sqlRooms = `SELECT 	chambres.*, 
+  //   (SELECT url_image FROM chambre_images WHERE chambre_id = chambres.id_chambre LIMIT 1) as image_room
+  //   FROM chambres
+  //   WHERE chambres.hotel_id = ?`;
+
+  //   const [chambres] = await db.execute(sqlRooms, [id]);
+
+  //   // pour le JSON Angular
+  //   return {
+  //       hotel: hotel,
+  //       chambres: chambres
+  //   };
+  // };
+
 
   // Récupérer tous les hôtels (avec image de couverture)
 static async findAll() {

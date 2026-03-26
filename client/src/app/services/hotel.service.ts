@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// on définit 'hotel'
+// 'hotel'
 export interface Hotel {
   id_hotel: number;
   name: string;
@@ -21,7 +21,7 @@ export interface Hotel {
   wifi?: number;
   parking?: number;
 }
-// on definit 'room'
+// 'room'
 export interface Room {
   id_chambre : number;
   type_chambre: string;
@@ -34,7 +34,7 @@ export interface Room {
   date_fin_promo?: Date;
   image_room?: string;
 }
-// on definit 'HotelDetailResponse'
+// 'HotelDetailResponse'
 export interface HotelDetailResponse {
   hotel: Hotel;
   chambres: Room[];
@@ -53,8 +53,11 @@ export class HotelService {
     return this.http.get<Hotel[]>('/api/hotels');
   }
 
-  getHotelById(id: number): Observable<HotelDetailResponse> {
-    return this.http.get<HotelDetailResponse>(`/api/hotels/${id}`);
+  getHotelById(id: number, dateDebut?: string | null, dateFin?: string | null): Observable<HotelDetailResponse> {
+    let params = new HttpParams();
+    if (dateDebut) params = params.set('dateDebut', dateDebut);
+    if (dateFin) params = params.set('dateFin', dateFin);
+    return this.http.get<HotelDetailResponse>(`/api/hotels/${id}`, { params: params });
   }
 
   searchHotels(criteria: any): Observable<Hotel[]> {

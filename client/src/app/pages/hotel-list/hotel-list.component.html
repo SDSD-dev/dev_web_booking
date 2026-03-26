@@ -4,10 +4,7 @@
 
   <div style="padding: 20px; font-family: sans-serif">
 
-  @if (!loading) {
-
-
-
+  @if (!loading) {  
   <div>
       @for (hotel of hotels; track hotel.id_hotel) {
       <app-hotel-card [hotel]="hotel"></app-hotel-card>
