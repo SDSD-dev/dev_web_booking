@@ -137,28 +137,6 @@ class HotelManager {
     };
 
 
-  // static async getOneWithRooms(id) {
-  //   // récupération des infos hotels
-  //   const hotel = await this.getOneById(id);
-
-  //   if (!hotel) return null;
-
-  //   // récupération chambres associés + images
-  //   const sqlRooms = `SELECT 	chambres.*, 
-  //   (SELECT url_image FROM chambre_images WHERE chambre_id = chambres.id_chambre LIMIT 1) as image_room
-  //   FROM chambres
-  //   WHERE chambres.hotel_id = ?`;
-
-  //   const [chambres] = await db.execute(sqlRooms, [id]);
-
-  //   // pour le JSON Angular
-  //   return {
-  //       hotel: hotel,
-  //       chambres: chambres
-  //   };
-  // };
-
-
   // Récupérer tous les hôtels (avec image de couverture)
 static async findAll() {
     const sql = `SELECT 

@@ -104,23 +104,6 @@ app.get("/", async (req, res) => {
     hotelsList: [],
   };
 
-  try {
-    
-    // TEST : Exécuter la requête SQL -> Nous sélectionnons le nom et la ville des 4 premiers hôtels.
-    const [rows] = await db.query("SELECT name, city FROM hotel LIMIT 4");
-    
-    viewData.hotelsList = rows; // Les résultats sont dans 'rows'
-
-    // console.log(`Données récupérées: ${rows.length} hôtels trouvés.`);
-
-    // Rendre la vue EJS avec les données
-    viewData.hotelsList = rows;
-   
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données:", error);
-    viewData.pageTitle = "Erreur de Base de Données";
-    // Si ça plante ici, hotelsList reste [] (tableau vide), ce qui est correct.
-  } 
   res.render("index", viewData);
 });
 

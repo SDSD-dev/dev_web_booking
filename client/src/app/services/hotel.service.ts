@@ -82,12 +82,10 @@ export class HotelService {
   };
 
   createHotel(data: any): Observable<any> {
-    // return this.http.post(this.apiUrl, data);
     return this.http.post('/api/hotels', data);
   }
 
   updateHotel(id: number, data: any): Observable<any> {
-    // return this.http.put(`${this.apiUrl}/${id}`,data);
     return this.http.put(`/api/hotels/${id}`, data);
   }
 

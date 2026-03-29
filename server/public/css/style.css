@@ -21,23 +21,10 @@ section {
   margin-bottom: 1rem;
 }
 
-/* form {
-  padding: 20px;
-  max-width: 1000px;
-  background-color: #f4f4f4;
-  margin: 0 auto;
-} */
-
-/* .form_none {
-  padding: 0;
-  margin: 0 auto;
-  background-color: #f4f4f4;
-}  */
-
-/* Nettoie le formulaire pour qu'il ne prenne aucune place visuelle */
+/* Nettoie le formulaire */
 .inline-action-form {
     display: inline-block; /* S'aligne sur la même ligne que les autres éléments */
-    margin: 0 !important; /* Le !important écrase ta règle globale "margin: 0 auto" */
+    margin: 0 !important; /* Le !important écrase la règle globale "margin: 0 auto" */
     padding: 0 !important; /* Écrase le padding de 20px global */
     background: transparent !important; /* Enlève le fond gris global */
     max-width: none !important; /* Enlève la contrainte de largeur */
@@ -76,9 +63,9 @@ h3 {
 /* --- Conteneur Global (Largeur Max) --- */
 /* -------------------------------------- */
 .container {
-  max-width: 1280px; /* Équivalent du max-w-7xl */
+  max-width: 1280px;
   margin: 0 auto; /* Centre le conteneur */
-  padding: 0 2rem; /* Espacement sur les bords */
+  padding: 0 2rem;
   width: 100%;
 }
 /* -------------------------------------- */
@@ -232,34 +219,6 @@ h3 {
 .carousel-btn.next {
   right: 1rem;
 }
-
-
-
-/* -------------------------- */
-/* --- Tableau Responsive --- */
-/* -------------------------- */
-/* .table-container {
-  margin-top: 2.5rem;
-  overflow-x: auto;
-}
-
-.data-table {
-  width: 100%;
-  min-width: 600px;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.data-table th, .data-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.data-table th {
-  background-color: #f8fafc;
-  font-weight: 600;
-} */
-
 
 /* Rendre la nav responsive en CSS classique */
 /* --- Style du bouton Burger (Caché sur PC par défaut) --- */
@@ -604,6 +563,7 @@ h3 {
     letter-spacing: 2px;
     /* Le dégradé remplit en or de 0% jusqu'au x% de la note, puis reste gris clair ensuite */
     background: linear-gradient(90deg, #f59e0b var(--percent), #cbd5e1 var(--percent));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* Permet au dégradé d'apparaître À L'INTÉRIEUR du texte */
 }
