@@ -1,192 +1,107 @@
-<!-- <div class="booking-container" style="max-width: 800px; margin: 30px auto; padding: 20px; display: flex; gap: 30px;">
-  
-  <div style="flex: 1; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
-    @if (room) {
-      <h2>Récapitulatif</h2>
-      <h3>{{ room.type_chambre }}</h3>
-
-        <img 
-            [src]="room.image_room" 
-            [alt]="room.type_chambre" 
-            style="width: 380px; height: 220px; object-fit: cover; border-radius: 4px;"
-        >
-
-      <p>{{ room.description_chambre }}</p>
-      <p>Capacité : {{ room.capacite_max }} pers.</p>
-      <hr>
-      <p>Prix par nuit : <strong>{{ room.prix_base }} €</strong></p>
-    } @else {
-      <p>Chargement de la chambre...</p>
-    }
-  </div>
-
-  <div style="flex: 1;">
-    <h2>Vos Dates</h2>
-    <form [formGroup]="bookingForm" (ngSubmit)="onBook()">
-      
-      <div style="margin-bottom: 15px;">
-        <label>Date d'arrivée</label>
-        <input type="date" formControlName="dateDebut" style="width: 100%; padding: 8px;">
+<main class="checkout-container">
+  <section class="checkout-wrapper">
+    
+    <div class="checkout-card">
+      <div class="checkout-header">
+        <h1>Dernière étape !</h1>
+        <p>Vérifiez les détails de votre réservation avant de confirmer.</p>
       </div>
 
-      <div style="margin-bottom: 15px;">
-        <label>Date de départ</label>
-        <input type="date" formControlName="dateFin" style="width: 100%; padding: 8px;">
-      </div>
-
-      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-  
-        <div style="flex: 1;">
-          <label>Adultes</label>
-          <input type="number" formControlName="adults" min="1" style="width: 100%; padding: 8px;">
-        </div>
-
-        <div style="flex: 1;">
-          <label>Enfants</label>
-          <input type="number" formControlName="children" min="0" style="width: 100%; padding: 8px;">
-        </div>
-
-      </div>
-
-      @if (isCapacityExceeded && room) {
-        <div style="background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #ef9a9a;">
-          🚨 <strong>Attention :</strong> Cette chambre ne peut accueillir que {{ room.capacite_max }} personnes maximum.
-          <br>Veuillez réduire le nombre de voyageurs ou choisir une autre chambre.
-        </div>
-      }
-
-      @if (numberOfNights > 0 && !isCapacityExceeded) {
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-          <p>Durée : <strong>{{ numberOfNights }} nuits</strong></p>
-          <p style="font-size: 1.2rem;">Total : <strong>{{ totalPrice }} €</strong></p>
-        </div>
-      } @else if (bookingForm.dirty && numberOfNights <= 0) {
-        <p style="color: red;">La date de fin doit être après la date de début.</p>
-      }
-
-      <button type="submit" [disabled]="bookingForm.invalid || numberOfNights <= 0" 
-              style="width: 100%; padding: 12px; background-color: #6c5ce7; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 1rem;">
-        Payer et Réserver
-      </button>
-
-    </form>
-  </div>
-</div> -->
-
-<div class="max-w-[1200px] mx-auto p-4 md:p-6 text-slate-300">
-  
-  <div class="flex flex-col lg:flex-row gap-6 md:gap-8">
-
-    <div class="w-full lg:w-1/3 bg-[#1D283D] border border-slate-700 rounded-2xl p-6 shadow-xl h-fit">
-      
-      @if (room) {
-        <h2 class="text-xl font-bold text-slate-100 uppercase tracking-wide mb-4 border-b border-slate-700 pb-2">
-          Récapitulatif
-        </h2>
+      <div class="checkout-body">
         
-        <h3 class="text-lg font-bold text-[#005ab9] mb-4">{{ room.type_chambre }}</h3>
-
-        <div class="relative w-full h-48 rounded-xl overflow-hidden mb-5 border border-slate-700/50 shadow-sm">
-          <img 
-            [src]="room.image_room" 
-            [alt]="room.type_chambre" 
-            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          >
-        </div>
-
-        <p class="text-sm text-slate-400 mb-5 leading-relaxed">{{ room.description_chambre }}</p>
-        
-        <div class="flex items-center gap-2 bg-[#18191C] border border-slate-600 text-slate-300 px-3 py-2 rounded-lg text-sm w-fit mb-5 shadow-inner">
-          <svg class="w-4 h-4 text-[#005ab9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-          Capacité : {{ room.capacite_max }} pers. max
-        </div>
-        
-        <hr class="border-slate-700 my-4">
-        
-        <div class="flex justify-between items-center mt-4">
-          <span class="text-slate-400 text-sm uppercase tracking-wider">Prix par nuit</span>
-          <span class="text-xl font-bold text-slate-100">{{ room.prix_base }} €</span>
-        </div>
-        
-      } @else {
-        <div class="flex flex-col items-center justify-center py-10">
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#005ab9] mb-4"></div>
-          <span class="text-slate-400">Chargement de la chambre...</span>
-        </div>
-      }
-    </div>
-
-
-    <div class="w-full lg:w-2/3 bg-[#1D283D] border border-slate-700 rounded-2xl p-6 md:p-8 shadow-xl">
-      
-      <h2 class="text-2xl font-bold text-slate-100 mb-6">Détails du séjour</h2>
-      
-      <form [formGroup]="bookingForm" (ngSubmit)="onBook()" class="flex flex-col">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-slate-300 mb-1.5">Date d'arrivée</label>
-            <input type="date" formControlName="dateDebut" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors [color-scheme:dark]">
-          </div>
-
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-slate-300 mb-1.5">Date de départ</label>
-            <input type="date" formControlName="dateFin" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors [color-scheme:dark]">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-2 gap-5 mb-8">
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-slate-300 mb-1.5">Adultes</label>
-            <input type="number" formControlName="adults" min="1" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors">
-          </div>
-
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-slate-300 mb-1.5">Enfants</label>
-            <input type="number" formControlName="children" min="0" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors">
-          </div>
-        </div>
-
-        <div class="mb-6">
-          @if (isCapacityExceeded && room) {
-            <div class="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl flex items-start gap-3 shadow-inner">
-              <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              <div>
-                <strong class="block mb-1">Capacité dépassée</strong>
-                <p class="text-sm">Cette chambre ne peut accueillir que {{ room.capacite_max }} personnes maximum. Veuillez réduire le nombre de voyageurs ou choisir une autre chambre.</p>
-              </div>
+        @if (room) {
+          <div class="summary-section">
+            <div class="summary-hotel-info">
+              <h2>{{ room.type_chambre }}</h2>
+              <span class="room-badge">Capacité : {{ room.capacite_max }} pers.</span>
             </div>
-          }
+            
+            <p class="summary-address" style="margin-top: 15px; font-size: 0.9rem; color: #64748b;">
+              {{ room.description_chambre }}
+            </p>
+          </div>
+        } @else {
+          <div class="summary-section" style="text-align: center; color: #94a3b8; padding: 20px 0;">
+            Chargement de la chambre...
+          </div>
+        }
 
-          @if (numberOfNights > 0 && !isCapacityExceeded) {
-            <div class="bg-[#18191C] border border-slate-600 p-5 rounded-xl flex flex-col gap-3 shadow-inner">
-              <div class="flex justify-between items-center text-slate-400">
-                <span>Durée du séjour</span>
-                <strong class="text-slate-200">{{ numberOfNights }} nuit(s)</strong>
-              </div>
-              <hr class="border-slate-700/50 my-1">
-              <div class="flex justify-between items-end">
-                <span class="text-slate-300 font-medium">Total à payer</span>
-                <strong class="text-3xl text-[#005ab9]">{{ totalPrice }} €</strong>
-              </div>
+        <div class="summary-section">
+          <form [formGroup]="bookingForm" class="form-grid" style="margin-bottom: 0;">
+            <div class="form-group">
+              <label for="date_arrivee">Arrivée</label>
+              <input type="date" id="date_arrivee" formControlName="dateDebut" class="rounded-input">
             </div>
+            <div class="form-group">
+              <label for="date_depart">Départ</label>
+              <input type="date" id="date_depart" formControlName="dateFin" class="rounded-input">
+            </div>
+            <div class="form-group">
+              <label for="adultes">Adultes</label>
+              <input type="number" id="adultes" formControlName="adults" min="1" class="rounded-input">
+            </div>
+            <div class="form-group">
+              <label for="enfants">Enfants</label>
+              <input type="number" id="enfants" formControlName="children" min="0" class="rounded-input">
+            </div>
+          </form>
+        </div>
+
+        @if (isCapacityExceeded && room) {
+          <div class="summary-section" role="alert" style="background-color: #fee2e2; border: 1px solid #fca5a5; color: #ef4444; border-radius: 8px; padding: 15px;">
+            <strong style="display: block; margin-bottom: 5px;">🚨 Capacité dépassée</strong>
+            Cette chambre ne peut accueillir que {{ room.capacite_max }} personnes maximum. Veuillez réduire le nombre de voyageurs.
+          </div>
+        }
+
+        <div class="summary-section price-section">
+          @if (numberOfNights > 0 && !isCapacityExceeded && room) {
+            
+            <div class="price-row">
+              <span>Prix par nuit</span>
+              <span>{{ room.prix_base }} €</span>
+            </div>
+            <div class="price-row">
+              <span>Durée du séjour</span>
+              <span>{{ numberOfNights }} nuit(s)</span>
+            </div>
+            <div class="price-row">
+              <span>Taxes & Frais</span>
+              <span>Inclus</span>
+            </div>
+            
+            <hr class="price-divider">
+            
+            <div class="price-row total-row">
+              <span>Total à payer</span>
+              <span class="total-price">{{ totalPrice }} €</span>
+            </div>
+
           } @else if (bookingForm.dirty && numberOfNights <= 0) {
-            <div class="text-sm text-red-400 flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              La date de départ doit être ultérieure à la date d'arrivée.
+            <div style="color: #ef4444; text-align: center; padding: 10px 0; font-weight: bold;">
+              La date de départ doit être après la date d'arrivée.
+            </div>
+          } @else {
+            <div style="color: #94a3b8; text-align: center; padding: 10px 0;">
+              Veuillez sélectionner vos dates pour calculer le prix.
             </div>
           }
         </div>
 
-        <button type="submit" 
-                [disabled]="bookingForm.invalid || numberOfNights <= 0 || isCapacityExceeded" 
-                class="w-full mt-auto bg-[#005ab9] hover:bg-[#007bff] text-white font-bold text-lg py-4 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#005ab9]">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          Payer et Réserver
+      </div>
+
+      <div class="checkout-footer">
+        <button type="button" 
+                (click)="onBook()" 
+                [disabled]="bookingForm.invalid || numberOfNights <= 0 || isCapacityExceeded || !room" 
+                class="btn-primary btn-pay" 
+                style="width: 100%; justify-content: center; display: flex; gap: 10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Confirmer et Payer de manière sécurisée
         </button>
-
-      </form>
+      </div>
+      
     </div>
-
-  </div>
-</div>
+    
+  </section>
+</main>

@@ -1,22 +1,33 @@
-<div  class="max-w-xl mx-auto mt-12 mb-20 p-8 bg-[#1D283D] border border-slate-700 rounded-xl shadow-2xl w-full">
-    <h2 class="text-xl font-medium text-slate-300 mb-1">Connexion Espace Client</h2>
-    @if (errorMessage) {
-        <div style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-            {{ errorMessage }}
+<main>
+  <section class="login-section">
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="compact-search-form" novalidate>
+      
+      <h3>Connexion Espace Client</h3>
+
+      @if (errorMessage) {
+        <div class="error-alert" role="alert" style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ef9a9a;">
+          {{ errorMessage }}
         </div>
-    }
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div style="margin-bottom: 15px;">
-            <label for="email" class="text-sm font-medium text-slate-300 mb-1">Email :</label>
-            <input type="email" id="email" formControlName="email" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none">   
-        </div>
-        <div style="margin-bottom: 15px;">
-            <label for="password" class="text-sm font-medium text-slate-300 mb-1">Mot de passe :</label>
-            <input type="password" id="password" formControlName="password" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white cursor-pointer appearance-none">
-        </div>
-        <button type="submit" [disabled]="loginForm.invalid" class="w-full px-8 py-3 bg-[#007bff] hover:bg-[#005ab9] text-white font-bold rounded-lg transition-all duration-200">
-            Se connecter
+      }
+
+      <div class="form-group full-width">
+        <label for="email">Email : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+        <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="password">Mot de passe : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+        <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="current-password">
+      </div>
+
+      <div class="form-bottom">
+        <button type="submit" class="btn-primary rounded-btn" [disabled]="loginForm.invalid">
+          Se connecter
         </button>
+      </div>
+
     </form>
 
-</div>
+  </section>
+</main>

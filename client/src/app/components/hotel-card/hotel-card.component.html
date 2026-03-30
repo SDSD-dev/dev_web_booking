@@ -1,105 +1,79 @@
-
-<div class="w-full bg-[#1D283D] rounded-2xl shadow-lg border border-slate-700 p-4 flex flex-col mb-6 transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300">
+<article class="horizontal-hotel-card">
   
-  <div class="flex flex-wrap items-center justify-between gap-4 mb-4 px-1">
-    
-    <div class="bg-[#18191C] text-slate-200 px-5 py-2.5 rounded-full text-sm font-semibold border border-slate-600 flex items-center gap-2 shadow-inner">
-      <svg class="w-4 h-4 text-[#005ab9]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      {{ hotel.city }}
-    </div>
-
-    <div class="flex flex-wrap gap-2 text-slate-300">
-      @if (hotel.wifi) { 
-        <span class="bg-[#18191C] border border-slate-600 p-2 rounded-lg shadow-sm" title="WiFi Gratuit">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
-        </span> 
-      }
-      @if (hotel.piscine) { 
-        <span class="bg-[#18191C] border border-slate-600 p-2 rounded-lg shadow-sm" title="Piscine">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 7.2 5 8.5 5c1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1M2 12c.6.5 1.2 1 2.5 1 1.3 0 2.7-2 4-2 1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1M2 18c.6.5 1.2 1 2.5 1 1.3 0 2.7-2 4-2 1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1"/></svg>
-        </span> 
-      }
-      @if (hotel.spa) { 
-        <span class="bg-[#18191C] border border-slate-600 p-2 rounded-lg shadow-sm" title="Spa">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 01-9-9c0-5 3.5-7.5 9-10 5.5 2.5 9 5 9 10a9 9 0 01-9 9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11a4 4 0 100 8 4 4 0 000-8z"/></svg>
-        </span> 
-      }
-      @if (hotel.parking) { 
-        <span class="bg-[#18191C] border border-slate-600 p-2 rounded-lg shadow-sm" title="Parking">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 16V8h4a2 2 0 010 4H9"/></svg>
-        </span> 
-      }
-      @if (hotel.animaux) { 
-        <span class="bg-[#18191C] border border-slate-600 p-2 rounded-lg shadow-sm" title="Animaux acceptés">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17c-2 0-3-1-4-3s-2-2-4-2 1-4 3-4 2 1 3 2 1 1 2 1 1 0 2-1 1-3 3-2 3 4 3 4-3 0-4 2-2 3-4 3z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="12" cy="4" r="1.5" fill="currentColor"/></svg>
-        </span> 
-      }
-    </div>
-    
+  <div class="card-image-side">
+    <img [src]="hotel.cover_image || 'assets/default-hotel.jpg'" [alt]="'Photo de l\'hôtel ' + hotel.name">
   </div>
 
-  <div class="flex flex-col md:flex-row gap-4 flex-grow">
-    
-    <div class="md:w-[55%] h-64 md:h-auto relative overflow-hidden rounded-xl border border-slate-700/50 shadow-sm">
-      <img 
-        [src]="hotel.cover_image || 'assets/default-hotel.jpg'" 
-        [alt]="hotel.name" 
-        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-      >
-    </div>
+  <div class="card-content-side">
 
-    <div class="md:w-[45%] bg-[#18191C] rounded-xl p-6 flex flex-col justify-between border border-slate-700 shadow-sm">
+    <div class="card-header">
+      <div class="header-top-row">
+        <h2 class="hotel-name" [title]="hotel.name"><strong>{{ hotel.name }}</strong></h2>
+      </div>
       
-      <div>
-        <h3 class="text-xl font-bold text-slate-100 line-clamp-2 mb-3" [title]="hotel.name">
-          {{ hotel.name }}
-        </h3>
-
-        <div class="mb-4">
-          @if (hotel.average_rating) {
-            <div class="flex items-center gap-2">
-              
-              <div class="relative inline-block">
-                <div class="flex text-slate-600">
-                  @for (i of [1,2,3,4,5]; track $index) {
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  }
-                </div>
-                <div class="absolute top-0 left-0 overflow-hidden flex text-[#f59e0b] whitespace-nowrap" [style.width.%]="ratingPercentage">
-                  @for (i of [1,2,3,4,5]; track $index) {
-                    <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  }
-                </div>
-              </div>
-
-              <span class="text-slate-300 font-bold text-sm">{{ hotel.average_rating | number:'1.1-1' }}</span>
-              <span class="text-xs text-slate-500">({{ hotel.review_count }} avis)</span>
-            </div>
-          } @else {
-            <span class="text-xs text-slate-400 bg-slate-800 border border-slate-700 px-2 py-1 rounded">Nouveau sur Planet Hotel</span>
-          }
+      <p class="hotel-location">
+        <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 
+        {{ hotel.city }}
+      </p>
+      
+      @if (hotel.average_rating) {
+        <div class="stars-container" [style.--rating]="hotel.average_rating" [attr.aria-label]="'Note de ' + hotel.average_rating + ' sur 5'">
+          <span class="review-count">({{ hotel.review_count }} avis)</span>
         </div>
-
-        <p class="text-sm text-slate-400 line-clamp-3 leading-relaxed">
-          {{ hotel.description_hotel || 'Superbe établissement situé en plein cœur de la ville, idéal pour votre prochain séjour. Profitez de nos installations haut de gamme.' }}
-        </p>
-      </div>
-
-      <div class="flex items-end justify-between mt-6 pt-4 border-t border-slate-700/50">
-        <div>
-          <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">À partir de</p>
-          <p class="text-2xl font-bold text-slate-100">
-            {{ hotel.prix_base ? (hotel.prix_base | currency:'EUR') : 'N/A' }}
-          </p>
-        </div>
-        
-        <a [routerLink]="['/hotel', hotel.id_hotel]" 
-           class="bg-[#005ab9] hover:bg-[#007bff] text-white font-medium py-2.5 px-6 rounded-lg transition-colors shadow-md flex items-center gap-2">
-          Réserver
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-        </a>
-      </div>
-
+      } @else {
+        <span class="new-hotel-badge" style="display: inline-block; font-size: 0.8rem; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; margin-top: 5px;">Nouveau</span>
+      }
     </div>
+
+    <div style="margin-bottom: 15px; color: #555; font-size: 0.95rem;">
+      <p>{{ hotel.description_hotel || 'Superbe établissement situé en plein cœur de la ville, idéal pour votre prochain séjour.' }}</p>
+    </div>
+
+    <div class="amenities-row">
+      @if (hotel.wifi) {
+        <span class="amenity-badge" title="Wi-Fi Gratuit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" /></svg>
+        </span>
+      }
+      
+      @if (hotel.piscine) {
+        <span class="amenity-badge" title="Piscine">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 7.2 5 8.5 5c1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1M2 12c.6.5 1.2 1 2.5 1 1.3 0 2.7-2 4-2 1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1M2 18c.6.5 1.2 1 2.5 1 1.3 0 2.7-2 4-2 1.3 0 2.7 2 4 2s2.7-2 4-2c1.3 0 2.7 2 4 2 1.3 0 1.9-.5 2.5-1"/></svg>  
+        </span>
+      }
+
+      @if (hotel.spa) {
+        <span class="amenity-badge" title="Spa">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 01-9-9c0-5 3.5-7.5 9-10 5.5 2.5 9 5 9 10a9 9 0 01-9 9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </span>
+      }
+
+      @if (hotel.parking) {
+        <span class="amenity-badge" title="Parking">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 16V8h4a2 2 0 010 4H9"/></svg>
+        </span>
+      }
+
+      @if (hotel.animaux) {
+        <span class="amenity-badge" title="Animaux acceptés">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/><path d="M12 12.5c-1.5 0-2.5 1-2.5 2.5s1 2.5 2.5 2.5 2.5-1 2.5-2.5-1-2.5-2.5-2.5z"/><path d="M7.5 8.5A1.5 1.5 0 1 0 6 7a1.5 1.5 0 0 0 1.5 1.5z"/><path d="M16.5 8.5A1.5 1.5 0 1 0 18 7a1.5 1.5 0 0 0-1.5 1.5z"/></svg>
+        </span>
+      }
+    </div>
+
+    <div class="card-footer">
+      <div class="price-group">
+        <span class="price-label">À partir de</span>
+        <span class="card-price">{{ hotel.prix_base ? (hotel.prix_base | currency:'EUR') : 'N/A' }}</span>
+      </div>
+      
+      <a [routerLink]="['/hotel', hotel.id_hotel]" 
+         class="card-button btn-voir" 
+         [attr.aria-label]="'Réserver l\'hôtel ' + hotel.name">
+        Réserver
+      </a>
+    </div>
+
   </div>
-</div>
+
+</article>

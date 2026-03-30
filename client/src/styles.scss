@@ -1,100 +1,1515 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* --- Variables et Reset basique --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
 
 main {
-    flex: 1; 
-    padding: 20px;
+  background-color: #e9e6df;
+  padding: 1rem;
+  min-height: 80vh;
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+/* Nettoie le formulaire */
+.inline-action-form {
+    display: inline-block; /* S'aligne sur la même ligne que les autres éléments */
+    margin: 0 !important; /* Le !important écrase la règle globale "margin: 0 auto" */
+    padding: 0 !important; /* Écrase le padding de 20px global */
+    background: transparent !important; /* Enlève le fond gris global */
+    max-width: none !important; /* Enlève la contrainte de largeur */
+    width: auto;
+}
+
+h2 {
+  margin: 1rem 0rem;
+  color: #334155;
+  text-align: center;
+  font-size: 3rem;
+}
+
+h3 {
+  margin: 1rem 0rem;
+  color: #334155;
+  font-size: 2rem;
+}
+
+/* Déclaration de la police */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/assets/fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* classe utilitaire d'écrasement de la font */
+.dyslexic-mode, 
+.dyslexic-mode * {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+/* -------------------------------------- */
+/* --- Conteneur Global (Largeur Max) --- */
+/* -------------------------------------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto; /* Centre le conteneur */
+  padding: 0 2rem;
+  width: 100%;
+}
+/* -------------------------------------- */
+
+/* --- Ligne du Haut (Logo & Boutons) --- */
+.top-bar {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 0;
+  background-color: white;
+}
+
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo à gauche, boutons à droite */
+}
+
+/* Style des liens-boutons */
+.btn-primary {
+  display: inline-block; /* <a> respecte le padding/margin comme un bouton */
+  font-size: 1rem;
+  padding: 0.5rem 1.25rem;
+  margin-top: 1rem;
+  background-color: #357e7a;
+  color: white;
+  text-decoration: none; /* Enlève le soulignement des liens */
+  border: none;
+  border-radius: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #5fc8c3;
+}
+
+/* --- Ajustements Logo --- */
+.main-logo {
+  max-height: 60px; /* Taille par défaut sur PC */
+  width: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* --- bouton d'accessibilité --- */
+.btn-accessibility {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+  border: 1px solid #94a3b8;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s;
+}
+
+/* Gestion du texte du bouton selon l'écran */
+.btn-text-short {
+  display: none; /* Caché sur PC */
+}
+
+/* --- Ligne du Bas (Menu avec fond) --- */
+.bottom-nav {
+  /* background-color: #bcada6; */
+  background-color: #70625c;
+  padding: 0.5rem 0;
+}
+
+.bottom-nav-inner {
+  display: flex;
+  justify-content: center; /* Centre parfaitement tous les liens ! */
+  align-items: center;
+  gap: 8rem; /* Espace régulier entre chaque lien */
+  text-decoration: none;
+}
+
+.bottom-nav a {
+  color: white; /* Couleur du texte de la nav */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.bottom-nav a:hover {
+  text-decoration: underline;
+}
+
+
+
+/* ------------------------ */
+/* --- Carrousel        --- */
+/* ------------------------ */
+.custom-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto;
+  overflow: hidden; /* cache ce qui dépasse */
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out; 
+}
+
+.carousel-slide {
+  min-width: 100%; /* une slide prend 100% de la largeur de la fenêtre */
+  flex-shrink: 0;  /* Empêche les slides de s'écraser entre eux */
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover; /* L'image remplit l'espace sans se déformer */
+  object-position: bottom center; /* pour afficher toujours le centre bas */
+  max-height: 600px; /* Hauteur max optionnelle */
+}
+
+/* --- Boutons du Carrousel --- */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #334155;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.carousel-btn:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.carousel-btn.prev {
+  left: 1rem;
+}
+
+.carousel-btn.next {
+  right: 1rem;
+}
+
+/* Rendre la nav responsive en CSS classique */
+/* --- Style du bouton Burger (Caché sur PC par défaut) --- */
+.burger-menu {
+  display: none; 
+  background: none;
+  border: none;
+  color: #334155;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.burger-menu .icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------- */
+/* --- Style du formulaire de recherche --- */
+/* --- Conteneur du formulaire          --- */
+.compact-search-form {
+  background-color: #f4f4f4;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 1.2rem; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Grille CSS pour les champs --- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes sur PC */
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.full-width {
+  grid-column: span 4; /* Le sélecteur de ville prend toute la ligne */
+}
+
+/* --- Labels --- */
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.4rem;
+  margin-left: 0.5rem; /* Aligne le label avec le bord arrondi de l'input */
+}
+
+/* --- Inputs ultra ronds --- */
+.rounded-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid #afbecf;
+  border-radius: 1.5rem;
+  background-color: white;
+  color: #334155;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  /* transition: border-color 0.2s, box-shadow 0.2s; */
+}
+
+.rounded-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* --- Zone basse (Filtres et Bouton) --- */
+.form-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.2rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap; /* Sécurité si l'écran est petit */
+  gap: 0.5rem;
+}
+
+/* --- Checkboxes --- */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  color: #475569;
+  font-weight: 500;
+  font-size: 0.9rem;
+
+}
+
+.custom-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #2563eb; /* Colore la case à cocher nativement ! */
+}
+
+
+/* ----------------------------------------- */
+/* --- Grid pour les cartes de Promotion --- */
+.promo-grid {
+    display: grid;
+    /* - auto-fit : le nombre de colonnes s'adapte à la largeur disponible.
+       - minmax(300px, 1fr) : la carte fait minimum 300px. S'il y a de la place, elle s'étire (1fr).
+       S'il n'y a pas 300px elle passe à la ligne ! */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; /* Gère l'espace entre les cartes */
     max-width: 1200px;
+    margin: 2rem auto; /* Centre la grille sur la page */
+    padding: 0 1rem;
+}
+
+/* --- Carte de Promotion pour la homepage --- */
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* les cartes d'une même ligne ont la même hauteur */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #f4f4f4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-image img {
+    width: 100%; /* Oblige l'image à remplir toute la largeur de la carte */
+    height: 250px;
+    object-position: bottom center;
+    object-fit: cover;
+    display: block; /* Enlève le petit espace vide sous l'image */
+}
+
+.card-content {
+    padding: 20px;
+    flex: 1; /* Pousse le footer tout en bas si la carte est plus grande */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+.card-subtitle {
+    margin: 0 0 10px 0;
+    color: #666;
+}
+
+.card-text {
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.card-price {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.card-button {
+    padding: 8px 16px;
+    background-color: #357e7a;
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.card-button:hover {
+    background-color: #5fc8c3;
+}
+/* --- FIN Carte de Promotion pour la homepage --- */
+
+
+/* -------------------------------------------------- */
+/* --- Conteneur global des résultats (recherche) --- */
+/* -------------------------------------------------- */
+.results-header {
+    margin: 2rem 0;
+}
+
+/* --- LE CONTENEUR GRID (Max 2 par ligne) --- */
+.search-results-grid {
+    display: grid;
+    gap: 2rem; /* Espace entre les cartes */
+    padding: 1rem 0;
+    max-width: 1200px;
+    margin: 0 auto; /* Centre la grille */
+}
+
+/* --- LA CARTE HORIZONTALE --- */
+.horizontal-hotel-card {
+    display: flex; /* Flexbox pour l'alignement horizontal image/texte */
+    background: #f4f4f4;
+    border-radius: 8px;
+    margin: 2rem 0; 
+    overflow: hidden; /* Pour que les bords arrondis s'appliquent aussi à l'image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Idem ombre promo */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.horizontal-hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Côté Gauche : Image --- */
+.card-image-side {
+    flex: 0 0 55%; /* L'image prend 55% */
+    min-height: 250px;
+}
+
+.card-image-side img {
+    width: 100%;
+    height: 100%;
+    object-position: bottom center;
+    object-fit: cover; /* L'image remplit l'espace sans déformer */
+    display: block; /* Enlève le petit espace sous l'image */
+}
+
+/* --- Côté Droit : Contenu --- */
+.card-content-side {
+    flex: 1; /* Contenu prend les 45% restants */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pousse le footer vers le bas */
+}
+
+.hotel-name {
+    margin: 0 0 5px 0;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.hotel-location {
+    margin: 5px 0 5px 0;
+    color: #666;
+    font-size: 1rem;
+}
+
+.hotel-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #444;
+}
+
+.hotel-details-list li {
+    margin-bottom: 5px;
+}
+
+/* --- Footer de la carte --- */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Aligne le bouton avec le bas du prix */
+    margin-top: auto;
+    border-top: 1px solid #e2e8f0; /* Petite ligne séparatrice douce */
+    padding-top: 15px;
+}
+
+.price-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.card-price {
+    font-weight: bold;
+    font-size: 1.4rem; /* Un peu plus grand pour le prix */
+    color: #333;
+}
+
+/* --- Bouton (Reprise exacte du bouton promo) --- */
+.card-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #357e7a; /* Ton code couleur original */
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 1.5rem; /* Idem arrondi bouton */
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.card-button:hover {
+    background-color: #5fc8c3; /* Ton hover original */
+}
+
+/* --- L'astuce des étoiles (CSS Variables) --- */
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.stars-container {
+    /* On calcule le pourcentage de remplissage (ex: 3.5 / 5 = 70%) */
+    --percent: calc(var(--rating) / 5 * 100%);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* On génère les 5 étoiles en texte brut via le CSS */
+.stars-container::before {
+    content: '★★★★★';
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    /* Le dégradé remplit en or de 0% jusqu'au x% de la note, puis reste gris clair ensuite */
+    background: linear-gradient(90deg, #f59e0b var(--percent), #cbd5e1 var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Permet au dégradé d'apparaître À L'INTÉRIEUR du texte */
+}
+
+.review-count {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* --- Typographie et Icônes de base --- */
+.inline-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+/* --- La ligne des équipements (Amenities) --- */
+.amenities-row {
+    display: flex;
+    gap: 12px; /* Espace entre chaque icône */
+    margin-top: auto; /* Pousse les icônes vers le bas si la description est courte */
+    margin-bottom: 20px; /* Espace avant la ligne du prix */
+}
+
+.amenity-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #e2e8f0; /* Fond gris très clair */
+    color: #475569; /* Gris foncé pour l'icône */
+    border-radius: 8px; /* Petit carré arrondi */
+    transition: background-color 0.2s, color 0.2s;
+    cursor: help; /* Affiche un point d'interrogation au survol (utile pour le "title") */
+}
+
+.amenity-badge svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Petit effet au survol */
+.amenity-badge:hover {
+    background-color: #357e7a; /* Ton vert signature */
+    color: white;
+}
+
+/* --- RESPONSIVE MOBILE (< 1024px) --- */
+@media (max-width: 1024px) {
+    
+    .horizontal-hotel-card {
+        flex-direction: column; /* La carte passe en vertical */
+    }
+
+    .card-image-side {
+        flex: 0 0 250px; /* Hauteur fixe pour l'image sur mobile */
+        width: 100%;
+    }    
+
+}
+/* -------------------------------------- */
+
+
+/* -------------------------------------- */
+/* --- EN-TÊTE DE L'HÔTEL (HERO)      --- */
+/* -------------------------------------- */
+
+.hotel-hero {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin: 2rem 0 3rem 0; /* Espace en haut et en bas */
+}
+
+.hero-image-wrapper img {
+    width: 100%;
+    height: 350px;
+    object-position: bottom center;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-content {
+    padding: 2rem;
+}
+
+.hotel-title {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.hotel-description {
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    color: #555;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+}
+
+/* -------------------------------------- */
+/* ---    LISTE DES CHAMBRES          --- */
+/* -------------------------------------- */
+
+.section-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #357e7a; /* Petit accent visuel sympa */
+    padding-left: 10px;
+}
+
+.room-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espace vertical entre chaque carte chambre */
+    margin-bottom: 4rem;
+}
+
+/* --- LA CARTE CHAMBRE (3 Zones) --- */
+.horizontal-room-card {
+    display: flex;
+    background: #f4f4f4;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.horizontal-room-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ZONE 1 : Image (Gauche) */
+.room-col-image {
+    flex: 0 0 30%; /* Prend exactement 30% de l'espace */
+    min-width: 250px;
+}
+
+.room-col-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    object-position: bottom center;
+    object-fit: cover;
+    display: block;
+}
+
+/* ZONE 2 : Informations (Centre) */
+.room-col-info {
+    flex: 1; /* Prend tout l'espace disponible au centre */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.room-type {
+    font-size: 1.3rem;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.room-desc {
+    color: #555;
+    line-height: 1.5;
     margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ZONE 3 : Action et Prix (Droite) */
+.room-col-action {
+    flex: 0 0 250px; /* Largeur fixe de 250px pour la colonne de droite */
+    background: #ffffff; /* Fond blanc pour contraster avec le gris de la carte */
+    border-left: 1px dashed #cbd5e1; /* Séparateur visuel */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centre les éléments horizontalement */
+    text-align: center;
+}
+
+.room-capacity {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.room-price-block {
+    margin-bottom: 1.5rem;
+}
+
+.price-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.room-price {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 4px;
+}
+
+.btn-reserver {
+    width: 100%; /* Le bouton prend toute la largeur de sa colonne */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* -------------------------------------- */
+/* --- RESPONSIVE MOBILE (< 900px)    --- */
+/* -------------------------------------- */
+
+@media (max-width: 900px) {
+    /* La carte passe d'une ligne (3 colonnes) à une colonne (3 lignes) */
+    .horizontal-room-card {
+        flex-direction: column; 
+    }
+
+    .room-col-image {
+        flex: none; /* Désactive la largeur fixe */
+        height: 250px;
+    }
+
+    .room-col-action {
+        flex: none;
+        border-left: none; /* Enlève la ligne verticale */
+        border-top: 1px dashed #cbd5e1; /* Ajoute une ligne horizontale à la place */
+        background: transparent; /* Sur mobile, on remet le fond gris pour unifier */
+    }
+}
+/* -------------------------------------- */
+
+/* ========================================= */
+/* --- PAGE ADMINISTRATION                 --- */
+/* ========================================= */
+
+.admin-dashboard {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+/* --- En-tête --- */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Sécurité pour mobile */
+    gap: 1rem;
+}
+
+.admin-titles h1 {
+    margin: 0 0 5px 0;
+    color: #1e293b;
+}
+
+.admin-subtitle {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* --- Le Conteneur du Tableau --- */
+.table-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombre douce comme tes cards */
+    overflow-x: auto; /* Permet le scroll horizontal sur mobile UNIQUEMENT pour le tableau */
+    border: 1px solid #e2e8f0;
+}
+
+/* --- Le Tableau --- */
+.admin-table {
+    width: 100%;
+    min-width: 800px; /* Force une largeur min pour ne pas écraser les boutons sur mobile */
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table thead tr {
+    background-color: #f8fafc;
+}
+
+.admin-table th {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Effet au survol d'une ligne */
+.admin-table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Style de la colonne ID */
+.col-id {
+    width: 60px;
+}
+
+.badge-id {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ========================================= */
+/* --- BOUTONS D'ACTION DU TABLEAU       --- */
+/* ========================================= */
+
+.col-actions {
+    text-align: right; /* Aligne l'en-tête "Actions" à droite */
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start; /* Aligne les boutons à droite */
+    align-items: center;
+    gap: 0.5rem; /* Espace entre les boutons */
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+button.btn-action {
+    font-family: inherit;
+    cursor: pointer;      /* Assure l'apparition de la main au survol */
+    outline: none;        /* Enlève le contour bleu au clic sur certains navigateurs */
+    padding: 9px;
+}
+
+.btn-action svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Variante : Éditer (Gris bleuté) */
+.btn-edit {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.btn-edit:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+/* Variante : Voir (Vert) */
+.btn-view {
+    background-color: rgba(53, 126, 122, 0.1); /* Ton vert en version très transparente */
+    color: #357e7a;
+    border: 1px solid rgba(53, 126, 122, 0.3);
+}
+.btn-view:hover {
+    background-color: rgba(53, 126, 122, 0.2);
+}
+
+/* Variante : Supprimer (Rouge danger) */
+.btn-delete {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+.btn-delete:hover {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+
+
+
+/* --- Masquer les éléments mobiles sur PC --- */
+@media (min-width: 769px) {
+  .mobile-separator, 
+  .mobile-auth-btn {
+    display: none !important;
+  }
+}
+
+/* --- Responsive : Mode Mobile --- */
+@media (max-width: 768px) {
+  /* réduit le logo */
+  .main-logo {
+    max-height: 40px; 
+  }
+
+  /* ajuste le bouton accessibilité */
+  .btn-accessibility {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  /* change les textes du bouton accessibilité */
+  .btn-text-full {
+    display: none;
+  }
+  .btn-text-short {
+    display: inline;
+  }
+
+  /* affiche le burger */
+  .burger-menu {
+    display: block;
+  }
+
+  /* cache les gros boutons de la barre du haut s'il n'y a plus de place */
+  .desktop-only {
+    display: none;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: row; /* Force l'alignement à l'horizontale */
+    align-items: center;
+    flex-wrap: nowrap; /* Interdit formellement le passage à la ligne */
+    gap: 0.5rem; /* Petit espace entre le bouton Dyslexie et Connexion/Burger */
+  }
+
+  /* transforme la bande grise en menu déroulant */
+  .bottom-nav {
+    display: none; /* Caché par défaut */
+    position: absolute; /* Sort du flux normal pour passer par-dessus le reste du site */
+    width: 100%;
+    z-index: 50;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Petite ombre pour détacher le menu */
+  }
+
+  /* Cette classe sera ajoutée par Javascript lors du clic ! */
+  .bottom-nav.is-open {
+    display: block;
+  }
+
+  /* empile les liens verticalement */
+  .bottom-nav-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les liens horizontalement */
+    padding: 1rem 0;
+    gap: 1.5rem; /* Plus d'espace pour de gros doigts sur tactile */
+  }
+
+  .bottom-nav a {
+    font-size: 1.1rem; /* Un peu plus grand sur mobile */
+    padding: 0.5rem; /* Zone cliquable élargie */
+  }
+
+  /* Style des boutons d'auth dans le menu déroulant */
+  .mobile-separator {
+    width: 80%;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 0.5rem 0;
+  }
+
+  .mobile-auth-btn {
+    width: 80%; /* Le bouton prend presque toute la largeur du menu */
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .compact-search-form {
+    padding: 1.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr; /* Tout passe sur 1 seule colonne */
+    gap: 1rem;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  .form-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkbox-group {
+    justify-content: center;
+  }
+
+}
+
+
+/* ========================================= */
+/* --- PAGE RÉCAPITULATIF (CHECKOUT)     --- */
+/* ========================================= */
+
+.checkout-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem 5rem 1rem;
+}
+
+.checkout-wrapper {
+    width: 100%;
+    max-width: 600px; /* On limite la largeur pour la lisibilité */
+}
+
+.checkout-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+/* --- En-tête --- */
+.checkout-header {
+    background: #70625c; /* Ton bleu nuit signature */
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.checkout-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+    color: white;
+}
+
+.checkout-header p {
+    margin: 0;
+    color: #ceddf0;
+    font-size: 0.95rem;
+}
+
+/* --- Corps du reçu --- */
+.checkout-body {
+    padding: 2rem;
+}
+
+.summary-section {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.summary-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* 1. Bloc Hôtel */
+.summary-hotel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.summary-hotel-info h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #1e293b;
+}
+
+.room-badge {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.summary-address {
+    color: #64748b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+}
+
+.summary-address svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 2. Bloc Dates (Grille) */
+.dates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    text-align: center;
+}
+
+.date-box {
+    background: #f8fafc;
+    padding: 1rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.highlight-box {
+    background: rgba(53, 126, 122, 0.05);
+    border-color: rgba(53, 126, 122, 0.2);
+}
+
+.date-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.date-value {
+    display: block;
+    font-weight: bold;
+    color: #1e293b;
+    font-size: 1rem;
+}
+
+/* 3. Bloc Prix */
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #475569;
+}
+
+.price-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 15px 0;
+}
+
+.total-row {
+    margin-top: 15px;
+    align-items: center;
+}
+
+.total-row span:first-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.total-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #357e7a;
+}
+
+/* --- Pied et Formulaire --- */
+.checkout-footer {
+    background: #f8fafc;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* On nettoie le formulaire pour éviter les vieux styles globaux */
+.checkout-form {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    max-width: 100% !important;
+}
+
+.btn-pay {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    background-color: #357e7a;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-pay:hover {
+    background-color: #5fc8c3;
+}
+
+.btn-pay:active {
+    transform: scale(0.98); /* Petit effet d'enfoncement au clic */
+}
+
+.btn-pay svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* --- Responsive Mobile --- */
+@media (max-width: 600px) {
+    .dates-grid {
+        grid-template-columns: 1fr; /* Les dates s'empilent sur mobile */
+    }
+    
+    .summary-hotel-info {
+        flex-direction: column;
+        align-items: flex-start; /* Aligne à gauche sur mobile */
+        gap: 10px;
+    }
+}
+
+
+
+/* ========================================= */
+/* --- FOOTER PRINCIPAL                  --- */
+/* ========================================= */
+
+.site-footer {
+    background-color: #ffffff;
+    color: #686868;
+    padding-top: 4rem;
+    margin-top: auto; /* Pousse le footer tout en bas de la page si le contenu est court */
+}
+
+/* --- La Grille 4 Zones --- */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales par défaut */
+    gap: 3rem 2rem; /* Espace vertical et horizontal entre les colonnes */
+    padding-bottom: 3rem;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+    color: #9a9a9a;
+    font-size: 1.1rem;
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase; /* Majuscules pour les titres de section */
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.footer-text {
+    margin: 0 0 0.8rem 0;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.footer-icon {
+    width: 18px;
+    height: 18px;
+    color: #5fc8c3;
+    flex-shrink: 0;
+}
+
+/* --- Liens (Zone 2) --- */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #857d73;
+    text-decoration: none;
+    transition: color 0.2s, padding-left 0.2s;
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: #5fc8c3;
+    padding-left: 5px; /* Petit effet de translation */
+}
+
+/* --- Icônes Réseaux Sociaux (Zone 3) --- */
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement transparent */
+    color: #535353;
+    border-radius: 50%; /* Boutons ronds */
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-link:hover {
+    background-color: #357e7a;
+    transform: translateY(-3px); /* Soulève l'icône */
+}
+
+/* --- Newsletter (Zone 4) --- */
+.newsletter-form {
+    width: 100%;
+    margin-top: 10px !important; /* Force l'espacement avec reset */
+}
+
+.newsletter-input-group {
+    display: flex;
     width: 100%;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    // background-color: #141c2b;
-    // background-color: #212E46;
+.newsletter-input {
+    flex: 1; /* Prend tout l'espace disponible */
+    padding: 10px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px 0 0 4px; /* Arrondi à gauche seulement */
+    outline: none;
+    font-size: 0.9rem;
+    color: #334155;
+    border-radius: 1.5rem 0 0 1.5rem;
 }
 
-// nav {
-//   background-color: #1b2e49;
-//   margin-top: 12px;
-//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//   padding: 0.5rem;
-// }
+.newsletter-btn {
+    background-color: #357e7a;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 0 4px 4px 0; /* Arrondi à droite seulement */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 1.5rem 1.5rem 0;
+}
 
-// nav a {
-//   color: white;
-//   margin: 0 1rem;
-//   text-decoration: none;
-// }
+.newsletter-btn svg {
+    width: 20px;
+    height: 20px;
+}
 
-// nav a:hover {
-//   text-decoration: underline;
-// }
+.newsletter-btn:hover {
+    background-color: #5fc8c3;
+}
 
-// button {
-//     background: #007bff;
-//     color: white;
-//     border: none;
-//     padding: 8px 15px;
-//     border-radius: 4px;
-//     cursor: pointer;
+/* --- Bandeau Copyright (Tout en bas) --- */
+.footer-bottom {
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(124, 124, 124, 0.5);
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* ========================================= */
+/* --- RESPONSIVE MOBILE & TABLETTE      --- */
+/* ========================================= */
+
+@media (max-width: 1024px) {
+    /* Sur tablette : 2 colonnes (2 lignes de 2) */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    /* Sur smartphone : 1 seule colonne */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem; /* Ajoute un peu plus d'espace vertical entre les blocs */
+    }
+    
+    .footer-col {
+        align-items: center; /* Centre le contenu sur mobile */
+        text-align: center;
+    }
+
+    .footer-text {
+        justify-content: center; /* Centre les icônes de contact avec le texte */
+    }
+
+    .footer-links a:hover {
+        padding-left: 0; /* Désactive la translation qui rend bizarre au centre */
+    }
+}
+
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+// main {
+//     flex: 1; 
+//     padding: 20px;
+//     max-width: 1200px;
+//     margin: 0;
 //     width: 100%;
 // }
-// button:hover {
-//     background: #2ba0ff;
-//     color: white;
+
+// body, html {
+//     margin: 0;
+//     padding: 0;
+//     height: 100%;
+//     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 // }
 
-// form {
-//   border: #1b2e49;
-//   max-width: 800px;
-//   // min-height: 1000px;
-//   margin: 0 auto;
-// }
-
-/* Règle générale pour les labels (sauf checkbox) */
-// form label:not(:has(input[type="checkbox"])) {
-//   display: block;
-//   margin-top: 1rem;
-// }
-
-// /* Règle spécifique pour le label de la checkbox */
-// form label:has(input[type="checkbox"]) {
-//   display: inline-flex;
-//   align-items: center;
-//   margin-top: 1rem;
-//   white-space: nowrap;
-// }
-
-/* Largeur des inputs/textarea */
-// form input:not([type="checkbox"]),
-// form textarea {
-//   width: 100%;
-//   padding: 0.5rem;
-//   margin-top: 0.25rem;
-// }
-
-// form textarea {
-//   width: 100%;
-//   height: 5rem;
-//   padding: 0.5rem;
-//   margin-top: 0.25rem;
-// }
-
-// form button {
-//   background-color: #4caf50;
-//   color: white;
-//   border: none;
-//   padding: 0.5rem 1rem;
-//   margin-top: 1rem;
-//   cursor: pointer;
-// }
-
-// form button:hover {
-//   background-color: #45a049;
-// }

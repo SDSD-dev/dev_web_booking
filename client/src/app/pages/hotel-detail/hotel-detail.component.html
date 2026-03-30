@@ -1,85 +1,90 @@
-<div class="max-w-[1000px] mx-auto p-4 md:p-6 text-slate-300">
+<main class="container">
   
   @if (loading) {
-    <div class="flex flex-col items-center justify-center py-20">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#005ab9] mb-4"></div>
-      <span class="text-slate-400">Chargement de l'hôtel...</span>
+    <div style="text-align: center; padding: 5rem 0; color: #64748b;">
+      <p style="font-size: 1.2rem; font-weight: bold;">Chargement de l'hôtel...</p>
     </div>
   } @else if (hotelData) {
     
-    <div class="mb-10">
+    <section class="hotel-hero" aria-label="Présentation de l'hôtel">
+      
       @if (hotelData.hotel.cover_image) {
-        <div class="relative w-full h-64 md:h-[400px] rounded-2xl overflow-hidden shadow-lg border border-slate-700 mb-6">
-          <img [src]="hotelData.hotel.cover_image" class="w-full h-full object-cover" [alt]="hotelData.hotel.name">
+        <div class="hero-image-wrapper">
+          <img [src]="hotelData.hotel.cover_image" [alt]="'Photo de couverture de l\'hôtel ' + hotelData.hotel.name">
         </div>
       }
       
-      <h1 class="text-3xl md:text-4xl font-bold text-slate-100 mb-2">{{ hotelData.hotel.name }}</h1>
-      
-      <div class="flex items-center gap-2 text-slate-400 mb-4">
-        <svg class="w-5 h-5 text-[#005ab9]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        <span class="font-medium">{{ hotelData.hotel.city }}</span>
+      <div class="hero-content">
+        <h1 class="hotel-title">{{ hotelData.hotel.name }}</h1>
+        <p class="hotel-location">
+          <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          {{ hotelData.hotel.city }} 
+        </p>
+        <div class="hotel-description">
+          <p>{{ hotelData.hotel.description_hotel }}</p>
+        </div>
       </div>
+
+    </section>
+
+    <section class="rooms-section" aria-label="Liste des chambres disponibles">
+      <h3 class="section-title">Chambres Disponibles</h3>
       
-      <p class="text-slate-400 leading-relaxed">{{ hotelData.hotel.description_hotel }}</p>
-    </div>
-
-    <hr class="border-slate-700 my-8">
-
-    <h2 class="text-2xl font-bold text-slate-100 mb-6">Nos Chambres Disponibles</h2>
-    
-    <div class="flex flex-col gap-6">
-      @for (room of hotelData.chambres; track room.id_chambre) {
+      <div class="room-list-grid">
         
-        <div class="bg-[#1D283D] border border-slate-700 rounded-2xl p-4 md:p-5 flex flex-col md:flex-row gap-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
+        @for (room of hotelData.chambres; track room.id_chambre) {
           
-          <div class="w-full md:w-64 h-48 md:h-auto shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50">
-            @if (room.image_room) {
-              <img [src]="room.image_room" [alt]="room.type_chambre" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-            } @else {
-              <div class="w-full h-full bg-[#18191C] flex items-center justify-center text-slate-500">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-              </div>
-            }
-          </div>
-
-          <div class="flex-grow flex flex-col justify-center">
-            <h3 class="text-xl font-bold text-slate-100 mb-2">{{ room.type_chambre }}</h3>
-            <p class="text-sm text-slate-400 line-clamp-2 mb-4">{{ room.description_chambre }}</p>
+          <article class="horizontal-room-card">
             
-            <div class="mt-auto">
-              <span class="inline-flex items-center gap-1.5 bg-[#18191C] border border-slate-600 text-slate-300 px-3 py-1.5 rounded-lg text-sm font-medium shadow-inner w-fit">
-                <svg class="w-4 h-4 text-[#005ab9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                Capacité : {{ room.capacite_max }} pers.
-              </span>
+            <div class="room-col-image">
+              @if (room.image_room) {
+                <img [src]="room.image_room" [alt]="'Photo de la chambre ' + room.type_chambre">
+              } @else {
+                <div style="width: 100%; height: 100%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                  <svg style="width: 40px; height: 40px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
+              }
             </div>
-          </div>
-
-          <div class="md:w-48 shrink-0 flex flex-col items-start md:items-end justify-center border-t md:border-t-0 md:border-l border-slate-700/50 pt-4 md:pt-0 md:pl-5 mt-2 md:mt-0">
-            <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Prix par nuit</p>
-            <div class="text-2xl font-bold text-slate-100 mb-4">
-              {{ room.prix_base | currency:'EUR' }}
+            
+            <div class="room-col-info">
+              <h4 class="room-type">{{ room.type_chambre }}</h4>
+              <p class="room-desc">{{ room.description_chambre }}</p>
             </div>
-            <button [routerLink]="['/booking', room.id_chambre]" class="w-full bg-[#005ab9] hover:bg-[#007bff] text-white font-medium py-2.5 px-4 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2">
-              Réserver
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+            
+            <div class="room-col-action">
+              
+              <div class="room-capacity">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Jusqu'à <strong>{{ room.capacite_max }} pers.</strong>
+              </div>
+              
+              <div class="room-price-block">
+                <span class="price-label">Prix par nuit</span>
+                <span class="room-price">{{ room.prix_base | currency:'EUR' }}</span>
+              </div>
+              
+              <a [routerLink]="['/booking', room.id_chambre]" class="card-button btn-reserver" [attr.aria-label]="'Réserver la chambre ' + room.type_chambre">
+                Réserver
+              </a>
+              
+            </div>
+
+          </article>
+
+        } @empty {
+          <div style="text-align: center; padding: 3rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; grid-column: 1 / -1;">
+            <p style="color: #64748b; font-size: 1.1rem; margin: 0;">Aucune chambre disponible pour cet hôtel actuellement.</p>
           </div>
-
-        </div>
-
-      } @empty {
-        <div class="bg-[#1D283D] border border-slate-700 rounded-xl p-8 text-center text-slate-400">
-          <svg class="w-12 h-12 mx-auto text-slate-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <p class="text-lg font-medium">Aucune chambre disponible pour cet hôtel actuellement.</p>
-        </div>
-      }
-    </div>
+        }
+        
+      </div>
+      <br>
+    </section>
 
   } @else {
-    <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-4 rounded-lg mt-10 text-center font-medium">
+    <div style="background-color: #fee2e2; border: 1px solid #fca5a5; color: #ef4444; padding: 1rem; border-radius: 8px; margin-top: 3rem; text-align: center; font-weight: bold;" role="alert">
       Hôtel introuvable.
     </div>
   }
 
-</div>
+</main>

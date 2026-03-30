@@ -85,7 +85,7 @@ app.use('/api/auth', authApiRoutes); // Pour login, register, profile en API
 app.use('/api/profile', profileApiRoutes); // Pour /api/profile
 app.use('/api/rooms', roomApiRoutes); // Pour /api/rooms
 app.use('/api/booking', bookingApiRoutes); // Pour /api/booking
-app.use('/api/contact', contactApiController);
+app.use('/api/contact', contactApiController); // Pour /api/contact (POST)
 
 // ****************************************************
 // ****************************************************
@@ -108,14 +108,6 @@ app.get("/", async (req, res) => {
 });
 
 
-// Ecoute du port local -------------------------------------------------------
-// Version avec async/await pour s'assurer que la connexion à la BD est OK avant de démarrer le serveur
-// version de base sans les tests
-// app.listen(port, () => {
-//   console.log(`\nServer is running on http://localhost:${port}`);
-//   console.log("Test OK: Base de données connectée via .env");
-// });
-
 // Version avec module.exports pour les tests avec Supertest
 if (require.main === module) {
   // Si le fichier est lancé directement (node server.js), on démarre le serveur
@@ -125,5 +117,5 @@ if (require.main === module) {
   });
 }
 
-// On exporte l'app pour que Supertest puisse l'utiliser
+// Export de l'app pour que Supertest puisse l'utiliser
 module.exports = app;

@@ -63,7 +63,11 @@ export class BookingComponent implements OnInit {
       });
     }
 
-  };
+    // écoute chaque modification ou changement de date
+    this.bookingForm.valueChanges.subscribe(() => {
+      this.calculeTotal();
+    });
+  }
 
   calculeTotal() {
     if (!this.room) return;
@@ -89,7 +93,8 @@ export class BookingComponent implements OnInit {
 
       if (diffDays > 0) {
         this.numberOfNights = diffDays;
-        this.totalPrice = diffDays * this.room.prix_base;
+        const rawTotal = diffDays * this.room.prix_base;
+        this.totalPrice = Math.round(rawTotal * 100) / 100;
       } else {
         this.numberOfNights = 0;
         this.totalPrice = 0;

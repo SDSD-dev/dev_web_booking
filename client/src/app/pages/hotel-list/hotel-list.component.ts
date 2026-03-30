@@ -1,6 +1,7 @@
 // src/app/pages/hotel-list/hotel-list.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { HotelService, Hotel } from '../../services/hotel.service';
+import { RouterLink } from '@angular/router';
 import { HotelCardComponent } from '../../components/hotel-card/hotel-card.component';
 import { HomeSearchComponent } from '../../components/home-search/home-search.component';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-hotel-list',
   standalone: true,
-  imports: [HotelCardComponent, HomeSearchComponent], // On importe le pipe pour l'utiliser dans le HTML
+  imports: [RouterLink, HotelCardComponent, HomeSearchComponent], // On importe le pipe pour l'utiliser dans le HTML
   templateUrl: './hotel-list.component.html',
   styleUrl: './hotel-list.component.scss',
 })

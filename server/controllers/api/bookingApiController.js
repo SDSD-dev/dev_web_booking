@@ -27,6 +27,7 @@ exports.createCheckoutSession = async (req, res) => {
 
         const customerEmail = req.session.userInfos ? req.session.userInfos.email : undefined;
 
+        // Création de la session de paiement Stripe
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
