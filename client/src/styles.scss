@@ -68,6 +68,9 @@ h3 {
   padding: 0 2rem;
   width: 100%;
 }
+
+/* -------------------------------------- */
+/* ---               Nav              --- */
 /* -------------------------------------- */
 
 /* --- Ligne du Haut (Logo & Boutons) --- */
@@ -330,7 +333,8 @@ h3 {
 
 
 /* ----------------------------------------- */
-/* --- Grid pour les cartes de Promotion --- */
+/* --- Grid pour les cartes Promotion    --- */
+/* ----------------------------------------- */
 .promo-grid {
     display: grid;
     /* - auto-fit : le nombre de colonnes s'adapte à la largeur disponible.
@@ -417,8 +421,6 @@ h3 {
 .card-button:hover {
     background-color: #5fc8c3;
 }
-/* --- FIN Carte de Promotion pour la homepage --- */
-
 
 /* -------------------------------------------------- */
 /* --- Conteneur global des résultats (recherche) --- */
@@ -544,7 +546,7 @@ h3 {
     background-color: #5fc8c3; /* Ton hover original */
 }
 
-/* --- L'astuce des étoiles (CSS Variables) --- */
+/* --- les étoiles --- */
 .header-top-row {
     display: flex;
     justify-content: space-between;
@@ -552,14 +554,14 @@ h3 {
 }
 
 .stars-container {
-    /* On calcule le pourcentage de remplissage (ex: 3.5 / 5 = 70%) */
+    /* pourcentage de remplissage (ex: 3.5 / 5 = 70%) */
     --percent: calc(var(--rating) / 5 * 100%);
     display: inline-flex;
     align-items: center;
     gap: 5px;
 }
 
-/* On génère les 5 étoiles en texte brut via le CSS */
+/* génère les 5 étoiles en texte brut via le CSS */
 .stars-container::before {
     content: '★★★★★';
     font-size: 1.3rem;
@@ -787,9 +789,7 @@ h3 {
     box-sizing: border-box;
 }
 
-/* -------------------------------------- */
 /* --- RESPONSIVE MOBILE (< 900px)    --- */
-/* -------------------------------------- */
 
 @media (max-width: 900px) {
     /* La carte passe d'une ligne (3 colonnes) à une colonne (3 lignes) */
@@ -811,9 +811,9 @@ h3 {
 }
 /* -------------------------------------- */
 
-/* ========================================= */
-/* --- PAGE ADMINISTRATION                 --- */
-/* ========================================= */
+/* -------------------------------------- */
+/* --- PAGE ADMINISTRATION            --- */
+/* -------------------------------------- */
 
 .admin-dashboard {
     padding-top: 2rem;
@@ -899,9 +899,9 @@ h3 {
     font-weight: bold;
 }
 
-/* ========================================= */
-/* --- BOUTONS D'ACTION DU TABLEAU       --- */
-/* ========================================= */
+/* -------------------------------------- */
+/* --- BOUTONS D'ACTION TABLEAU       --- */
+/* -------------------------------------- */
 
 .col-actions {
     text-align: right; /* Aligne l'en-tête "Actions" à droite */
@@ -972,8 +972,9 @@ button.btn-action {
 
 
 
-
+/* ------------------------------------------- */
 /* --- Masquer les éléments mobiles sur PC --- */
+/* ------------------------------------------- */
 @media (min-width: 769px) {
   .mobile-separator, 
   .mobile-auth-btn {
@@ -1330,7 +1331,7 @@ button.btn-action {
 }
 
 .footer-title {
-    color: #9a9a9a;
+    color: #70625c;
     font-size: 1.1rem;
     margin: 0 0 1.5rem 0;
     text-transform: uppercase; /* Majuscules pour les titres de section */
@@ -1366,7 +1367,7 @@ button.btn-action {
 }
 
 .footer-links a {
-    color: #857d73;
+    color: #70625c;
     text-decoration: none;
     transition: color 0.2s, padding-left 0.2s;
     font-size: 0.95rem;
@@ -1493,23 +1494,4 @@ button.btn-action {
         padding-left: 0; /* Désactive la translation qui rend bizarre au centre */
     }
 }
-
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
-
-// main {
-//     flex: 1; 
-//     padding: 20px;
-//     max-width: 1200px;
-//     margin: 0;
-//     width: 100%;
-// }
-
-// body, html {
-//     margin: 0;
-//     padding: 0;
-//     height: 100%;
-//     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-// }
 

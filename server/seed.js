@@ -38,8 +38,8 @@ function createRandomHotel() {
     name: createHotelName(), // Utilisation de la fonction helper
     address: faker.location.streetAddress(), // Plus précis pour une adresse
     // city: faker.location.city(),
-    city: faker.helpers.arrayElement(CITIES), // Limité à 5 villes
-    country: "France", // Simplification pour le test -> 1 seul pays
+    city: faker.helpers.arrayElement(CITIES), // Limité à 6 villes
+    country: "France",
     // country: faker.location.country(),
     currency: faker.helpers.arrayElement(["EUR", "USD", "GBP"]), // Ex: 'EUR', 'USD', 'GBP'
     piscine: faker.datatype.boolean(),
@@ -108,16 +108,16 @@ function createRandomChambres() {
 
 // NOTE: Cette fonction simule des commandes passées.
 function createRandomCommandes() {
-  // 1. Générer la date de début (entre il y a 1 an et dans 2 ans)
+  // 1-Générer la date de début (entre il y a 1 an et dans 2 ans)
   const start = faker.date.future({
     years: 2,
     refDate: faker.date.past({ years: 1 }),
   });
 
-  // 2. Générer la date de fin APRÈS la date de début (+1 à +10 jours)
+  // 2-Générer la date de fin APRÈS la date de début (+1 à +10 jours)
   const end = faker.date.soon({ days: 10, refDate: start });
 
-  // 3. Générer les autres dates
+  // 3-Générer les autres dates
   const date_commande = faker.date.past({ days: 30, refDate: start });
   const date_reservation = date_commande;
   return {
@@ -174,7 +174,7 @@ function createRandomAvis() {
 
 // IMAGES ---------------------------------------------------------------------------
 
-// Le chemin vers le dossier d'images (attention position du seed.js -> normalement dans dossier 'server/' )
+// Le chemin vers le dossier d'images (attention position du seed.js -> dossier 'server/' )
 const BASE_DIR = path.join(__dirname, "public");
 
 const HOTEL_IMAGES_DIR = path.join(BASE_DIR, "img_hotels");
@@ -363,8 +363,7 @@ async function seedDatabase() {
     const chambresData = createRandomChambres();
     const randomHotelId = faker.helpers.arrayElement(hotelsIds); // <-- Ajout de la FK
 
-    const [result] = await connection.execute(
-      // CORRECTION 1: Cible la bonne table (chambres)
+    const [result] = await connection.execute(      
       "INSERT INTO chambres (type_chambre, capacite_max, nombre_total_unites, prix_base, prix_enfant_sup, description_chambre, reduction_pourcentage, date_fin_promo, hotel_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         chambresData.type_chambre,
@@ -431,8 +430,7 @@ async function seedDatabase() {
   for (let i = 0; i < 30; i++) {
     const contactData = createRandomContact();
 
-    const [result] = await connection.execute(
-      // CORRECTION 2: Cible la bonne table (contact)
+    const [result] = await connection.execute(      
       "INSERT INTO contact (nom, prenom, email, telephone, message, rgpd, date_envoi, statut) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         contactData.nom,
@@ -442,10 +440,10 @@ async function seedDatabase() {
         contactData.message,
         contactData.rgpd,
         contactData.date_envoi,
-        contactData.statut, // Votre code avait 9 paramètres ici pour 8 colonnes SQL, corrigé
+        contactData.statut,
       ]
     );
-    // Pas besoin de stocker l'ID
+
   }
   console.log(`   [+] 30 Contacts insérés.`);
 
