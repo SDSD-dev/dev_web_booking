@@ -3,10 +3,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Room, HotelService } from '../../services/hotel.service';
+import { HotelService } from '../../services/hotel.service';
+import { Room } from '../../interfaces/hotel.model';
 import { RoomService } from '../../services/room/room.service';
 import { BookingService } from '../../services/booking/booking.service';
-
 
 
 @Component({

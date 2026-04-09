@@ -2,7 +2,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { HotelService, Hotel } from '../../../services/hotel.service';
+import { HotelService } from '../../../services/hotel.service';
+import { Hotel } from '../../../interfaces/hotel.model';
+
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -24,9 +27,10 @@ export class AdminDashboardComponent implements OnInit {
 
   // Fonction pour charger la liste des hôtels
   loadHotels() {
-    this.hotelService.getHotels().subscribe({
+    // avec une limite à 100 hôtels
+    this.hotelService.getHotels(1, 100).subscribe({
       next: (data) => {
-        this.hotels = data;
+        this.hotels = data.hotels;
         this.isLoading = false;
       },
       error: (err) => console.error(err)
@@ -48,6 +52,4 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
-
-
 }

@@ -2,14 +2,31 @@
 const HotelManager = require("../../models/HotelManager");
 
 // API pour obtenir la liste des hôtels
+// exports.getHotels = async (req, res) => {
+//     try {
+//         const hotels = await HotelManager.findAll();
+//         res.json(hotels); 
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+// API pour obtenir la liste des hôtels(avec pagination)
 exports.getHotels = async (req, res) => {
     try {
-        const hotels = await HotelManager.findAll();
-        res.json(hotels); 
+        // Récupération du numéro de la page
+        const page = parseInt(req.query.page) || 1;
+        // limite d'hôtels par page
+        const limit = parseInt(req.query.limit) || 4;
+
+        const data = await HotelManager.findAll(page, limit);
+
+        // data contient { hotels, currentPage, totalPages, totalItems }
+        res.json(data);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message })
     }
-};
+}
 
 // API pour obtenir le détail d'un hôtel avec ses chambres
 exports.getHotelDetail = async (req, res) => {

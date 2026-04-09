@@ -3,7 +3,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // Pour lire l'URL
 import { CommonModule } from '@angular/common'; // Pour le pipe async, json, currency
 import { RouterLink } from "@angular/router";
-import { HotelService, HotelDetailResponse } from '../../services/hotel.service';
+import { HotelService } from '../../services/hotel.service';
+import { HotelDetailResponse } from '../../interfaces/hotel.model';
 
 @Component({
   selector: 'app-hotel-detail',

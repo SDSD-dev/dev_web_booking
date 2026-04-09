@@ -11,10 +11,22 @@
           <app-hotel-card [hotel]="hotel"></app-hotel-card>
         }
       </section>
+      @if (totalPages > 1) {
+        <div class="pagination-container">
+          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="btn-pagination"> 
+            &laquo; Précédent
+          </button>
+          <span class="pagination-info">Page {{ currentPage }} sur {{ totalPages }}</span>
+          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn-pagination">
+            Suivant &raquo;
+          </button>
+        </div>
+
+      }
     } @else {
       <div class="loading-state" style="text-align: center; padding: 3rem 0; color: #64748b;">
         <p>Chargement des données API...</p>
-        <p><small><em>(Assurez-vous d'être connecté sur le serveur Node !)</em></small></p>
+        <p><small><em> Veuillez patienter </em></small></p>
       </div>
     }
   </div>

@@ -1,7 +1,6 @@
 // src/app/components/home-search/home-search.component.ts
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HotelService } from '../../services/hotel.service';
 
 @Component({
   selector: 'app-home-search',
@@ -15,7 +14,6 @@ export class HomeSearchComponent {
   // private hotelService = inject(HotelService);
 
   // Envoie les résultats au parent (HotelListComponent)
-  // @Output() searchResults = new EventEmitter<any[]>();
   @Output() searchCriteria = new EventEmitter<any>();
 
   // Définition du formulaire de recherche

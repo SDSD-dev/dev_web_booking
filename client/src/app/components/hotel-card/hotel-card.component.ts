@@ -2,7 +2,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // Importez l'interface Hotel pour le typage
-import { Hotel } from '../../services/hotel.service';
+import { Hotel } from '../../interfaces/hotel.model';
 import { RouterLink } from "@angular/router";
 
 @Component({

@@ -19,10 +19,10 @@ export class ContactComponent {
   contactForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
     prenom: ['', Validators.required], 
-    email: ['', Validators.required], 
+    email: ['', [Validators.required, Validators.email]], 
     phone: [''], 
     message: ['', Validators.required], 
-    consent_public: ['', Validators.requiredTrue],
+    consent_public: [false, Validators.requiredTrue],
   });
 
   // Message de retour après soumission

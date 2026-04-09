@@ -44,6 +44,10 @@ h3 {
   font-size: 2rem;
 }
 
+/* Formulaire -> champ requis et asterisk */
+.required-asterisk { color: #e74c3c; }
+.error-message { color: #e74c3c; display: block; margin-top: 5px; font-weight: bold; }
+
 /* Déclaration de la police */
 @font-face {
   font-family: 'OpenDyslexic';
@@ -104,6 +108,13 @@ h3 {
 
 .btn-primary:hover {
   background-color: #5fc8c3;
+}
+
+.btn-primary:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* --- Ajustements Logo --- */
@@ -255,7 +266,7 @@ h3 {
 /* --- Grille CSS pour les champs --- */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colonnes sur PC */
+  grid-template-columns: repeat(4, 1fr); /* desktop */
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -632,6 +643,47 @@ h3 {
     }    
 
 }
+
+/* -------------------------------------- */
+/* ---     Pagination des résultats   --- */
+/* -------------------------------------- */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.btn-pagination {
+  background-color: #357e7a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  background-color: #5fc8c3;
+  transform: translateY(-2px);
+}
+
+.btn-pagination:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-weight: bold;
+  color: #475569;
+}
+
+
 /* -------------------------------------- */
 
 
@@ -1041,7 +1093,7 @@ button.btn-action {
     flex-direction: column;
     align-items: center; /* Centre les liens horizontalement */
     padding: 1rem 0;
-    gap: 1.5rem; /* Plus d'espace pour de gros doigts sur tactile */
+    gap: 1.5rem; /* Plus d'espace sur tactile */
   }
 
   .bottom-nav a {
@@ -1058,7 +1110,7 @@ button.btn-action {
   }
 
   .mobile-auth-btn {
-    width: 80%; /* Le bouton prend presque toute la largeur du menu */
+    width: 80%; /* Le bouton prend % de la largeur du menu */
     text-align: center;
     margin-top: 0.5rem;
   }
@@ -1068,7 +1120,7 @@ button.btn-action {
   }
   
   .form-grid {
-    grid-template-columns: 1fr; /* Tout passe sur 1 seule colonne */
+    grid-template-columns: 1fr; /* 1 colonne pour mobile */
     gap: 1rem;
   }
 

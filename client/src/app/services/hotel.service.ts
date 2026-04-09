@@ -3,42 +3,43 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PaginatedHotelResponse, Hotel, Room, HotelDetailResponse } from '../interfaces/hotel.model';
 
-// 'hotel'
-export interface Hotel {
-  id_hotel: number;
-  name: string;
-  address: string;
-  city: string;
-  description_hotel: string;
-  cover_image?: string; // ? signifie qu'il peut être null si pas d'image
-  prix_base?: number; // Le prix minimum trouvé
-  average_rating?: number | string; // La note SQL (souvent renvoyée en string par le driver MySQL)
-  review_count?: number; // Nombre d'avis
-  piscine?: number;
-  spa?: number;
-  animaux?: number;
-  wifi?: number;
-  parking?: number;
-}
-// 'room'
-export interface Room {
-  id_chambre : number;
-  type_chambre: string;
-  capacite_max: number;
-  nombre_total_unites: number;
-  prix_base: number;
-  prix_enfant_sup?: number;
-  description_chambre?: string;
-  reduction_pourcentage?: string;
-  date_fin_promo?: Date;
-  image_room?: string;
-}
-// 'HotelDetailResponse'
-export interface HotelDetailResponse {
-  hotel: Hotel;
-  chambres: Room[];
-}
+// // 'hotel'
+// export interface Hotel {
+//   id_hotel: number;
+//   name: string;
+//   address: string;
+//   city: string;
+//   description_hotel: string;
+//   cover_image?: string; // ? signifie qu'il peut être null si pas d'image
+//   prix_base?: number; // Le prix minimum trouvé
+//   average_rating?: number | string; // La note SQL (souvent renvoyée en string par le driver MySQL)
+//   review_count?: number; // Nombre d'avis
+//   piscine?: number;
+//   spa?: number;
+//   animaux?: number;
+//   wifi?: number;
+//   parking?: number;
+// }
+// // 'room'
+// export interface Room {
+//   id_chambre : number;
+//   type_chambre: string;
+//   capacite_max: number;
+//   nombre_total_unites: number;
+//   prix_base: number;
+//   prix_enfant_sup?: number;
+//   description_chambre?: string;
+//   reduction_pourcentage?: string;
+//   date_fin_promo?: Date;
+//   image_room?: string;
+// }
+// // 'HotelDetailResponse'
+// export interface HotelDetailResponse {
+//   hotel: Hotel;
+//   chambres: Room[];
+// }
 
 @Injectable({
   providedIn: 'root',
@@ -49,10 +50,16 @@ export class HotelService {
 
   lastSearchCriteria: any = null;
 
-  getHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>('/api/hotels');
+  // getHotels(): Observable<Hotel[]> {
+  //   return this.http.get<Hotel[]>('/api/hotels');
+  // }
+
+  // méthode pour récupérer les hôtels avec pagination
+  getHotels(page: number = 1, limit: number = 4): Observable<PaginatedHotelResponse> {
+    return this.http.get<PaginatedHotelResponse>(`/api/hotels?page=${page}&limit=${limit}`);
   }
 
+  // méthode pour récupérer les détails d'un hôtel, avec possibilité de filtrer par date
   getHotelById(id: number, dateDebut?: string | null, dateFin?: string | null): Observable<HotelDetailResponse> {
     let params = new HttpParams();
     if (dateDebut) params = params.set('dateDebut', dateDebut);
@@ -60,6 +67,7 @@ export class HotelService {
     return this.http.get<HotelDetailResponse>(`/api/hotels/${id}`, { params: params });
   }
 
+  // méthode de recherche d'hôtels avec critères avancés
   searchHotels(criteria: any): Observable<Hotel[]> {
 
     this.lastSearchCriteria = criteria; // Save des critères de recherche
@@ -81,14 +89,17 @@ export class HotelService {
     return this.http.get<Hotel[]>('/api/hotels/search', { params: params })
   };
 
+  // Méthodes d'administration
   createHotel(data: any): Observable<any> {
     return this.http.post('/api/hotels', data);
   }
 
+  // Méthode pour mettre à jour un hôtel, en envoyant les données modifiées
   updateHotel(id: number, data: any): Observable<any> {
     return this.http.put(`/api/hotels/${id}`, data);
   }
 
+  // Méthode pour supprimer un hôtel en utilisant son ID
   deleteHotel(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

@@ -137,19 +137,53 @@ class HotelManager {
     };
 
 
-  // Récupérer tous les hôtels (avec image de couverture)
-static async findAll() {
-    const sql = `SELECT 
-      hotel.*, 
+// Récupérer tous les hôtels (avec image de couverture)
+// static async findAll() {
+//     const sql = `SELECT 
+//       hotel.*, 
+//       (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image,
+//       (SELECT MIN(prix_base) FROM chambres WHERE hotel_id = hotel.id_hotel) as prix_base,
+//       (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as average_rating,
+//       (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as review_count
+//     FROM hotel 
+//     ORDER BY hotel.id_hotel DESC`;
+//     const [rows] = await db.execute(sql);
+//     return rows;
+//   };
+
+  static async findAll(page = 1, limit = 4) {
+    // offset calcule le nombre d'enregistrements à sauter avant de commencer à récupérer les résultats
+    // permet d'afficher les résultats par "pages" sans tout charger en une fois
+    const offset = (page - 1) * limit;
+
+    const sql = `
+    SELECT hotel.*, 
       (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image,
       (SELECT MIN(prix_base) FROM chambres WHERE hotel_id = hotel.id_hotel) as prix_base,
       (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as average_rating,
       (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as review_count
     FROM hotel 
-    ORDER BY hotel.id_hotel DESC`;
-    const [rows] = await db.execute(sql);
-    return rows;
+    ORDER BY hotel.id_hotel DESC
+    LIMIT ? OFFSET ?`;
+
+    // Certains drivers SQL exigent des chaînes pour les placeholders, donc .toString() est une précaution pour éviter les erreurs de type.
+    const [rows] = await db.execute(sql, [limit.toString(), offset.toString()]);
+
+    // Requête pour compter le nombre total d'hôtels (pour savoir combien de pages on a)
+    const [countResult] = await db.execute(`SELECT COUNT(id_hotel) as total FROM hotel`);
+    const totalItems = countResult[0].total;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    // Renvoie de l'objet complet (pas juste un tableau)
+    return {
+      hotels: rows,
+      currentPage: page,
+      totalPages: totalPages,
+      totalItems: totalItems
+    };
   };
+
+  
 
   // Créer un nouvel hôtel
   static async create(data) {

@@ -6,7 +6,7 @@ const checkAuth = require('../../middleware/authMiddleware');
 const checkAdmin = require('../../middleware/adminMiddleware');
 
 // GET : Récupérer la liste des hôtels (API)
-router.get('/hotels', checkAuth, hotelApiController.getHotels);
+router.get('/hotels', hotelApiController.getHotels);
 
 // GET : résultât de recherche
 router.get('/hotels/search', hotelApiController.searchHotels); // comme c'est public pas de checkAuth
