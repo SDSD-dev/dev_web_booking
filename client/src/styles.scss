@@ -5,6 +5,9 @@
   padding: 0;
 }
 
+/* -------------------------------------- */
+/* ---       styles globaux           --- */
+/* -------------------------------------- */
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -29,6 +32,11 @@ section {
     background: transparent !important; /* Enlève le fond gris global */
     max-width: none !important; /* Enlève la contrainte de largeur */
     width: auto;
+}
+
+h1 {
+  color: #334155;
+  font-size: 2rem;
 }
 
 h2 {
@@ -74,7 +82,7 @@ h3 {
 }
 
 /* -------------------------------------- */
-/* ---               Nav              --- */
+/* ---    Navigation (bar et bas)     --- */
 /* -------------------------------------- */
 
 /* --- Ligne du Haut (Logo & Boutons) --- */
@@ -104,6 +112,10 @@ h3 {
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+.btn-primary-add {
+  padding: 0.70rem 1.25rem;
 }
 
 .btn-primary:hover {
@@ -234,7 +246,10 @@ h3 {
   right: 1rem;
 }
 
-/* Rendre la nav responsive en CSS classique */
+/* ---------------------------------------- */
+/* ---    nav responsive                --- */
+/* ---------------------------------------- */
+
 /* --- Style du bouton Burger (Caché sur PC par défaut) --- */
 .burger-menu {
   display: none; 
@@ -253,26 +268,46 @@ h3 {
 
 /* ---------------------------------------- */
 /* --- Style du formulaire de recherche --- */
+/* ---------------------------------------- */
+
 /* --- Conteneur du formulaire          --- */
 .compact-search-form {
   background-color: #f4f4f4;
-  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   max-width: 900px;
+//   min-width: 800px;
   margin: 2rem auto;
   border-radius: 1.2rem; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+//   position: absolute;
+//   top: 50%;              /* centré verticalement */
+//   left: 50%;             /* centré horizontalement */
+//   transform: translate(-50%, 0%);
+//   z-index: 10;           /* passe devant le carrousel */
 }
 
 /* --- Grille CSS pour les champs --- */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* desktop */
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes sur PC */
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
 .full-width {
-  grid-column: span 4; /* Le sélecteur de ville prend toute la ligne */
+  grid-column: span 4;
+}
+
+/* --- Grille CSS pour formulaire de recherche --- */
+.search-form-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.search-width {
+  grid-column: span 2;
 }
 
 /* --- Labels --- */
@@ -332,15 +367,152 @@ h3 {
   color: #475569;
   font-weight: 500;
   font-size: 0.9rem;
-
 }
 
 .custom-checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #2563eb; /* Colore la case à cocher nativement ! */
+  accent-color: #357e7a; /* Colore la case à cocher nativement ! */
 }
+
+/* ------------------------------------------- */
+/* --- Masquer les éléments mobiles sur PC --- */
+/* ------------------------------------------- */
+@media (min-width: 769px) {
+  .mobile-separator, 
+  .mobile-auth-btn {
+    display: none !important;
+  }
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* --- Responsive : Mode Mobile --- */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@media (max-width: 768px) {
+  /* réduit le logo */
+  .main-logo {
+    max-height: 40px; 
+  }
+
+  /* ajuste le bouton accessibilité */
+  .btn-accessibility {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  /* change les textes du bouton accessibilité */
+  .btn-text-full {
+    display: none;
+  }
+  .btn-text-short {
+    display: inline;
+  }
+
+  /* affiche le burger */
+  .burger-menu {
+    display: block;
+  }
+
+  /* cache les gros boutons de la barre du haut s'il n'y a plus de place */
+  .desktop-only {
+    display: none;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: row; /* Force l'alignement à l'horizontale */
+    align-items: center;
+    flex-wrap: nowrap; /* Interdit formellement le passage à la ligne */
+    gap: 0.5rem; /* Petit espace entre le bouton Dyslexie et Connexion/Burger */
+  }
+
+  /* transforme la bande grise en menu déroulant */
+  .bottom-nav {
+    display: none; /* Caché par défaut */
+    position: absolute; /* Sort du flux normal pour passer par-dessus le reste du site */
+    width: 100%;
+    z-index: 50;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Petite ombre pour détacher le menu */
+  }
+
+  /* Cette classe sera ajoutée par Javascript lors du clic ! */
+  .bottom-nav.is-open {
+    display: block;
+  }
+
+  /* empile les liens verticalement */
+  .bottom-nav-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les liens horizontalement */
+    padding: 1rem 0;
+    gap: 1.5rem; /* Plus d'espace sur tactile */
+  }
+
+  .bottom-nav a {
+    font-size: 1.1rem; /* Un peu plus grand sur mobile */
+    padding: 0.5rem; /* Zone cliquable élargie */
+  }
+
+  /* Style des boutons d'auth dans le menu déroulant */
+  .mobile-separator {
+    width: 80%;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 0.5rem 0;
+  }
+
+  .mobile-auth-btn {
+    width: 80%; /* Le bouton prend % de la largeur du menu */
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .compact-search-form {
+    padding: 1.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr; /* 1 colonne pour mobile */
+    gap: 1rem;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  /* --- Grille CSS pour formulaire de recherche --- */
+  .search-form-grid {
+    grid-template-columns: 1fr; /* 1 colonne pour mobile */
+    gap: 1rem;
+  }
+
+  .search-width {
+    grid-column: span 1;
+  }
+
+  .form-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkbox-group {
+    justify-content: center;
+  }
+
+}
+
+// @media (max-width: 1280px) {
+//   .compact-search-form {
+//   min-width: 250px;
+//   position: relative;
+//   top: 0%;
+//   left: 0%;
+//   transform: translate(0%, 0%);
+//   z-index: 10;
+// }
+// }
 
 
 /* ----------------------------------------- */
@@ -432,6 +604,8 @@ h3 {
 .card-button:hover {
     background-color: #5fc8c3;
 }
+/* --- FIN Carte de Promotion pour la homepage --- */
+
 
 /* -------------------------------------------------- */
 /* --- Conteneur global des résultats (recherche) --- */
@@ -454,7 +628,7 @@ h3 {
     display: flex; /* Flexbox pour l'alignement horizontal image/texte */
     background: #f4f4f4;
     border-radius: 8px;
-    margin: 2rem 0; 
+    // margin: 2rem 0; 
     overflow: hidden; /* Pour que les bords arrondis s'appliquent aussi à l'image */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Idem ombre promo */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -841,7 +1015,9 @@ h3 {
     box-sizing: border-box;
 }
 
+/* -------------------------------------- */
 /* --- RESPONSIVE MOBILE (< 900px)    --- */
+/* -------------------------------------- */
 
 @media (max-width: 900px) {
     /* La carte passe d'une ligne (3 colonnes) à une colonne (3 lignes) */
@@ -1024,125 +1200,10 @@ button.btn-action {
 
 
 
-/* ------------------------------------------- */
-/* --- Masquer les éléments mobiles sur PC --- */
-/* ------------------------------------------- */
-@media (min-width: 769px) {
-  .mobile-separator, 
-  .mobile-auth-btn {
-    display: none !important;
-  }
-}
 
-/* --- Responsive : Mode Mobile --- */
-@media (max-width: 768px) {
-  /* réduit le logo */
-  .main-logo {
-    max-height: 40px; 
-  }
-
-  /* ajuste le bouton accessibilité */
-  .btn-accessibility {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.85rem;
-  }
-  
-  /* change les textes du bouton accessibilité */
-  .btn-text-full {
-    display: none;
-  }
-  .btn-text-short {
-    display: inline;
-  }
-
-  /* affiche le burger */
-  .burger-menu {
-    display: block;
-  }
-
-  /* cache les gros boutons de la barre du haut s'il n'y a plus de place */
-  .desktop-only {
-    display: none;
-  }
-
-  .nav-right {
-    display: flex;
-    flex-direction: row; /* Force l'alignement à l'horizontale */
-    align-items: center;
-    flex-wrap: nowrap; /* Interdit formellement le passage à la ligne */
-    gap: 0.5rem; /* Petit espace entre le bouton Dyslexie et Connexion/Burger */
-  }
-
-  /* transforme la bande grise en menu déroulant */
-  .bottom-nav {
-    display: none; /* Caché par défaut */
-    position: absolute; /* Sort du flux normal pour passer par-dessus le reste du site */
-    width: 100%;
-    z-index: 50;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Petite ombre pour détacher le menu */
-  }
-
-  /* Cette classe sera ajoutée par Javascript lors du clic ! */
-  .bottom-nav.is-open {
-    display: block;
-  }
-
-  /* empile les liens verticalement */
-  .bottom-nav-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre les liens horizontalement */
-    padding: 1rem 0;
-    gap: 1.5rem; /* Plus d'espace sur tactile */
-  }
-
-  .bottom-nav a {
-    font-size: 1.1rem; /* Un peu plus grand sur mobile */
-    padding: 0.5rem; /* Zone cliquable élargie */
-  }
-
-  /* Style des boutons d'auth dans le menu déroulant */
-  .mobile-separator {
-    width: 80%;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 0.5rem 0;
-  }
-
-  .mobile-auth-btn {
-    width: 80%; /* Le bouton prend % de la largeur du menu */
-    text-align: center;
-    margin-top: 0.5rem;
-  }
-
-  .compact-search-form {
-    padding: 1.5rem;
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr; /* 1 colonne pour mobile */
-    gap: 1rem;
-  }
-
-  .full-width {
-    grid-column: span 1;
-  }
-
-  .form-bottom {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .checkbox-group {
-    justify-content: center;
-  }
-
-}
-
-
-/* ========================================= */
-/* --- PAGE RÉCAPITULATIF (CHECKOUT)     --- */
-/* ========================================= */
+/* -------------------------------------- */
+/* --- PAGE RÉCAPITULATIF (CHECKOUT)  --- */
+/* -------------------------------------- */
 
 .checkout-container {
     display: flex;
@@ -1358,9 +1419,9 @@ button.btn-action {
 
 
 
-/* ========================================= */
-/* --- FOOTER PRINCIPAL                  --- */
-/* ========================================= */
+/* -------------------------------------- */
+/* --- FOOTER PRINCIPAL               --- */
+/* -------------------------------------- */
 
 .site-footer {
     background-color: #ffffff;
@@ -1515,9 +1576,9 @@ button.btn-action {
     margin: 0;
 }
 
-/* ========================================= */
-/* --- RESPONSIVE MOBILE & TABLETTE      --- */
-/* ========================================= */
+/* -------------------------------------- */
+/* --- RESPONSIVE MOBILE & TABLETTE   --- */
+/* -------------------------------------- */
 
 @media (max-width: 1024px) {
     /* Sur tablette : 2 colonnes (2 lignes de 2) */

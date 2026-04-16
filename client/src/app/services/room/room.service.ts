@@ -10,6 +10,7 @@ import { Room } from '../../interfaces/hotel.model';
 export class RoomService {
   private http = inject(HttpClient);
 
+  // Méthode pour récupérer les détails d'une chambre
   getRoomById(id: number): Observable<Room> {
     return this.http.get<Room>(`/api/rooms/${id}`);
   }

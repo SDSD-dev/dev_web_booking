@@ -15,7 +15,7 @@
         </button>
 
         @if (authService.currentUserSig()) {
-          <button (click)="logout()" class="btn-primary desktop-only">Déconnexion</button>
+          <button (click)="logout()" class="btn-primary btn-primary-add desktop-only">Déconnexion</button>
         } @else {
           <a routerLink="/login" class="btn-primary desktop-only">Connexion</a>
         }

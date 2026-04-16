@@ -1,90 +1,110 @@
 # dev_web_booking
 
-Projet Formation - online booking applications
+#  Plateforme de Réservation Hôtelière Full-Stack
 
-# Plateforme de Réservation Hôtelière - Projet Full Stack
+![Angular](https://img.shields.io/badge/Angular-20+-dd0031?logo=angular)
+![Node.js](https://img.shields.io/badge/Node.js-22.x-339933?logo=node.js)
+![MySQL](https://img.shields.io/badge/MySQL-Relationnel-4479A1?logo=mysql)
 
-Ce projet est réalisé dans le cadre de mon projet de fin d'études pour le titre de **Développeur Web Full Stack**.
-L'objectif est de concevoir et développer une application web complète de réservation en ligne (type Booking.com), en respectant des contraintes techniques précises pour valider les compétences Front-End, Back-End et Architecture.
+##  Présentation du Projet
+Ce projet est développé dans le cadre de ma certification de **Développeur Web Full Stack**. Il s'agit d'une application complète de réservation d'hôtels en ligne. 
 
-## 🎯 Objectifs Pédagogiques
+L'application repose sur une **architecture découplée** : une API REST codée "from scratch" en Node.js, consommée par une Single Page Application (SPA) Angular. Le développement a été mené avec une approche **"Back-end First"**, garantissant la solidité des données métier avant l'intégration d'une interface utilisateur pensée pour l'accessibilité.
 
-* **Bloc 1 (Front-End) :** Intégration responsive, accessibilité (ARIA), HTML5/CSS3.
-* **Bloc 2 (Back-End) :** Développement **"From Scratch"** (sans framework back-end type Symfony/NestJS) pour maîtriser la logique MVC, la POO et le SQL brut.
-* **Bloc 3 (Framework - À venir) :** Évolution vers une architecture API Rest avec un Front-End moderne (Angular).
+---
 
-## 🛠️ Stack Technique Actuelle (Bloc 1 & 2)
+##  Objectifs de Certification (Blocs de compétences)
 
-* **Serveur :** Node.js / Express
-* **Base de Données :** MySQL (avec `mysql2` connector)
-* **Templating :** EJS (Embedded JavaScript)
-* **Front-End :** HTML5, CSS3 (Vanilla + Custom), JavaScript
-* **Outils :**
-  * `Faker.js` : Génération de données de test (Seeding).
-  * `Bcrypt` : Hachage sécurisé des mots de passe.
-  * `Dotenv` : Gestion des variables d'environnement.
+Ce projet valide trois grands domaines d'expertise :
 
-## 🏗️ Architecture
+* **Bloc 1 - Intégration Front-End Native :** Création d'une interface UI/UX "from scratch" (sans framework CSS) en **HTML5 / CSS3 pur** (Flexbox/Grid). Focus majeur sur l'**Accessibilité (A11y/WCAG)** et la manipulation du DOM en **JavaScript Vanilla**.
+* **Bloc 2 - Back-End & Architecture des Données :** Développement d'une architecture **MVC** sur-mesure en Node.js (sans ORM lourd). Modélisation de base de données relationnelle (MySQL), sécurité et intégration d'API tierce (Stripe).
+* **Bloc 3 - Framework Client Riche (SPA) :** Développement du Front-End applicatif avec **Angular 20+** (Standalone Components, RxJS, Reactive Forms) pour une expérience utilisateur fluide et asynchrone.
 
-Le projet suit strictement le modèle **MVC (Modèle - Vue - Contrôleur)** pour assurer la maintenabilité et la séparation des responsabilités :
+---
 
-* **Models :** Classes POO gérant les interactions SQL (ex: `HotelManager`, `UserManager`).
-* **Controllers :** Logique métier orchestrant les requêtes et les réponses.
-* **Views :** Fichiers EJS découpés en "partials" (header, footer) pour l'interface utilisateur.
+##  Stack Technique & Écosystème
 
-## 🎨 Conception & UI/UX
+### Moteur / Back-End (API REST)
+* **Serveur :** Node.js / Express (utilisé uniquement pour le routage HTTP).
+* **Base de Données :** MySQL (Requêtes SQL natives via `mysql2`).
+* **Sécurité :** `Bcrypt` (Hachage des mots de passe), Gestion des Sessions côté serveur.
+* **Paiement :** API **Stripe** (Checkout Sessions).
+* **Outils Dev :** `Faker.js` (Génération du jeu de données Seed), `Dotenv` (Variables d'environnement).
 
-L'approche de développement privilégie la fonctionnalité (Back-End First). Cependant, l'expérience utilisateur (UX) et l'interface (UI) ont été conçues en amont.
+### Interface / Front-End (SPA)
+* **Framework :** Angular 20+ (TypeScript).
+* **Style :** CSS3 Natif (Mobile-first, Grid, Flexbox).
+* **État & Données :** Services Angular, `HttpClient`, Observables (RxJS).
+* **Formulaires :** `ReactiveFormsModule` avec validateurs synchrones.
 
-* **Outil de maquettage :** Figma.
-* **État du Design :** Maquettes Haute-Fidélité (Hi-Fi) réalisées.
-* **Approche :** Mobile-First, respectant les heuristiques d'utilisabilité.
+---
 
-> **Note :** La capture d'écran ci-dessous montre la maquette cible.
-http://www.darkserge.com/wp-content/uploads/2025/12/SDSD-dev-Screeshot-FIGMA-02.jpg
+##  Fonctionnalités Principales
 
-## 🚀 État d'Avancement
+###  Sécurité & Utilisateurs (RBAC)
+* Système d'inscription et de connexion avec hachage cryptographique.
+* **Guardians Angular & Middlewares Node :** Protection stricte des routes selon le rôle (Visiteur, Client, Administrateur).
+* Gestion du profil utilisateur et de l'historique des commandes.
 
-### ✅ Back-End & Architecture (Terminé - Bloc 2)
+###  Parcours de Réservation & E-commerce
+* Recherche et consultation du catalogue d'hôtels avec **Pagination Fullstack** (SQL `LIMIT/OFFSET` synchronisé avec l'UI Angular).
+* Tunnel de réservation fluide avec figeage des prix dans la base de données pour garantir l'intégrité comptable.
+* Délégation sécurisée du flux de paiement via **Stripe**.
 
-* **Architecture Hybride :** Le serveur Node.js agit comme un serveur MVC classique (pour EJS) ET comme une API REST (pour Angular) simultanément.
-* **Base de Données :** Modèle relationnel complet (MySQL) avec script de `seed` pour données de test.
-* **Logique Métier :**
-    * Algorithme de vérification de disponibilité (gestion des conflits de dates).
-    * Jointures SQL optimisées pour la récupération des images (Cover).
-* **Administration (Back-Office) :** Interface CRUD complète pour gérer les hôtels et services (réservée aux Admins).
-* **Paiement :** Intégration fonctionnelle de **Stripe** (Checkout session & Webhook simulé).
+###  Accessibilité (A11y) & Inclusion
+* Respect des balises sémantiques HTML5 et intégration d'attributs `ARIA`.
+* Contrats de couleurs validés pour les normes WCAG (contrastes).
+* **Feature JS Vanilla :** Module d'assistance permettant l'activation à la volée de la police **OpenDyslexic** avec persistance des préférences (`localStorage`).
+* Navigation complète réalisable au clavier.
 
-### ✅ Front-End "Server-Side" (EJS - Terminé)
+###  Back-Office Administrateur
+* Tableau de bord sécurisé (CRUD) permettant de gérer dynamiquement les hôtels du catalogue.
 
-* **Tunnel de Réservation :** Flux complet fonctionnel (Recherche -> Détail -> Panier -> Paiement -> Confirmation).
-* **Espace Client :** Historique des commandes et possibilité d'annuler une réservation.
-* **Communication :** Formulaire de contact connecté à la BDD.
+---
 
-### 🚧 Front-End "SPA" (Angular - En cours - Bloc 3)
+##  Architecture du Code
 
-* **Architecture :**
-    * Mise en place d'Angular v20+ avec **Standalone Components**.
-    * Configuration du **Proxy** pour éviter les problèmes CORS avec l'API Node.js.
-    * Structure stricte : Services, Smart Components (Pages) & Dumb Components (UI).
-* **Fonctionnalités implémentées :**
-    * Connexion API REST (`HttpClient`).
-    * Affichage dynamique de la liste des hôtels (Composant `HotelList`).
-    * Cartes Hôtels réutilisables (`HotelCard`) avec gestion des images distantes.
-* **Design :** Intégration HTML/CSS responsive de la page d'accueil.
+Le projet est divisé pour assurer une séparation stricte des responsabilités (Separation of Concerns) :
 
-### 📅 À venir (Roadmap)
+1.  **Back-End (MVC) :**
+    * `Managers` : Logique de base de données (Requêtes préparées, Transactions SQL, ON DELETE CASCADE/SET NULL pour le RGPD).
+    * `Controllers` : Logique métier.
+    * `Routes` : Points d'entrée de l'API.
+2.  **Front-End (Angular) :**
+    * `Smart Components` : Composants conteneurs gérant la donnée (Pages).
+    * `Dumb Components` : Composants de présentation isolés recevant la donnée via `@Input()`.
+    * `Models` : Interfaces TypeScript pour le mapping strict des réponses JSON.
 
-* **Finalisation Angular :**
-    * Portage du Tunnel de réservation (Datepicker & Formulaires Réactifs).
-    * Gestion de l'authentification côté Angular (Session/Cookie).
-* **Polissage UI/UX (Bloc 1) :** Harmonisation du Design System (CSS) entre la version EJS et Angular selon la maquette Figma.
-* **DevOps :** Tests unitaires (Jest/Jasmine) et déploiement CI/CD.
+---
 
-## ⚙️ Installation
+##  Installation & Déploiement Local
 
-1. Cloner le dépôt. 
-2. `npm install` pour installer les dépendances. 
-3. Configurer le fichier `.env` (DB_HOST, DB_USER, etc.). 
-4. Lancer `node server/seed.js` pour initialiser la BDD. 
-5. Lancer `node server/server.js` pour démarrer l'application.
+### 1. Prérequis
+* Node.js (v22+)
+* MySQL Server (v8+)
+* Angular CLI (`npm install -g @angular/cli`)
+
+### 2. Configuration du Back-End (API)
+
+* Dans le dossier backend/racine : `npm install`
+
+* Créer un fichier **.env** à la racine (voir .env.example) : DB_HOST, DB_USER, DB_PASS, DB_NAME, STRIPE_SECRET_KEY, etc.
+
+* Générer les données de test (Base de données) : `node seed.js`
+
+* Lancer le serveur de développement (Port 3000 par défaut) : `npm run dev` ou `nodemon server.js`
+
+
+### 3. Configuration du Front-End (Angular)
+
+* Dans le dossier client/angular : `npm install`
+
+* Lancer le serveur de développement Angular (Port 4200)
+* Le **proxy.conf.json**. redirigera automatiquement les appels /api vers le port 3000
+ng serve
+
+### Note sur le Design (Version Alternative)
+* L'intégration actuelle est réalisée en CSS pur pour répondre aux exigences d'évaluation (Bloc 1).
+* Cependant, une version alternative de l'interface explorant l'utilisation du **framework Tailwind CSS** (basée sur une maquette **Figma** "Dark Mode") a été développée pour éprouver la scalabilité de l'API.
+* Cette version est consultable sur la branche : **archive/version-tailwind**

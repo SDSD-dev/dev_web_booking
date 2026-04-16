@@ -1,6 +1,6 @@
 // client/src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { HotelListComponent } from './pages/hotel-list/hotel-list.component';
+import { HotelHomeComponent } from './pages/hotel-home/hotel-home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -15,7 +15,7 @@ import { HotelFormComponent } from './pages/admin/hotel-form/hotel-form.componen
  
 export const routes: Routes = [
   // Route par défaut (la racine '')
-  { path: '', component: HotelListComponent },
+  { path: '', component: HotelHomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'register', component: RegisterComponent },

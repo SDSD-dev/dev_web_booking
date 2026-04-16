@@ -13,7 +13,7 @@ export class HomeSearchComponent {
   private fb = inject(FormBuilder);
   // private hotelService = inject(HotelService);
 
-  // Envoie les résultats au parent (HotelListComponent)
+  // Envoie les résultats au parent (HotelHomeComponent)
   @Output() searchCriteria = new EventEmitter<any>();
 
   // Définition du formulaire de recherche

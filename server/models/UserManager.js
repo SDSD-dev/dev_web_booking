@@ -88,6 +88,20 @@ class UserManager {
           id
       ]);
   }
+
+  // Récupération du mot de passe 
+  static async getPasswordById(userId) {
+    const [users] = await db.execute('SELECT mot_de_passe_hash FROM connexions WHERE client_id = ?', [userId]);
+    // si utilisateur trouvé
+    return users.length > 0 ? users[0].mot_de_passe_hash : null;
+  }
+
+  // Mise à jour du mot de passe
+  static async updatePassword(userId, newHashedPassword) {
+    const [result] = await db.execute('UPDATE connexions SET mot_de_passe_hash = ? WHERE client_id = ?', [newHashedPassword, userId]);
+    return result;
+  }
+
 }
 
 module.exports = UserManager;

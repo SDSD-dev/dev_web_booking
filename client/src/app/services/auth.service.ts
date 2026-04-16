@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
 export interface User {
   email: string;
   nom: string;
-  role: string; // <--- C'est le plus important pour le Guard
+  role: string; // important pour le Guard !!!
   prenom?: string; // le ? veut dire optionnel
   id?: number;
 };
@@ -21,6 +21,7 @@ export class AuthService {
   // Signal pour stocker l'utilisateur connecté
   currentUserSig = signal<User | null>(null); // User | null soit c'est User soit c'est null
 
+  // Méthode de connexion
   login(credentials: any): Observable<any> {
     // On envoie email + password au serveur
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
@@ -31,6 +32,7 @@ export class AuthService {
     );
   }
 
+  // Méthode de déconnexion
   logout() {
     // Appel API pour tuer la session server
     this.http.post(`${this.apiUrl}/logout`, {}).subscribe({
@@ -42,6 +44,7 @@ export class AuthService {
     })    
   }
 
+  // Vérifie si l'utilisateur est déjà connecté (ex: après un refresh)
   checkAuth(): Observable<any> {
     return this.http.get(`${this.apiUrl}/check`).pipe(
       tap((response: any) => {
@@ -53,8 +56,9 @@ export class AuthService {
     );
   }
 
+  // Méthode d'inscription
   register(userData: any): Observable<any> {
-    // userData -> data utilisateur
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
+
 }

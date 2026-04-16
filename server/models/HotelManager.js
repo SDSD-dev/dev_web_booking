@@ -137,21 +137,22 @@ class HotelManager {
     };
 
 
-// Récupérer tous les hôtels (avec image de couverture)
-// static async findAll() {
-//     const sql = `SELECT 
-//       hotel.*, 
-//       (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image,
-//       (SELECT MIN(prix_base) FROM chambres WHERE hotel_id = hotel.id_hotel) as prix_base,
-//       (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as average_rating,
-//       (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as review_count
-//     FROM hotel 
-//     ORDER BY hotel.id_hotel DESC`;
-//     const [rows] = await db.execute(sql);
-//     return rows;
-//   };
+// Récupérer tous les hôtels (avec image de couverture) -> EJS
+static async findAll() {
+    const sql = `SELECT 
+      hotel.*, 
+      (SELECT url_image FROM hotel_images WHERE hotel_id = hotel.id_hotel LIMIT 1) as cover_image,
+      (SELECT MIN(prix_base) FROM chambres WHERE hotel_id = hotel.id_hotel) as prix_base,
+      (SELECT AVG(note) FROM avis WHERE hotel_id = hotel.id_hotel) as average_rating,
+      (SELECT COUNT(*) FROM avis WHERE hotel_id = hotel.id_hotel) as review_count
+    FROM hotel 
+    ORDER BY hotel.id_hotel DESC`;
+    const [rows] = await db.execute(sql);
+    return rows;
+  };
 
-  static async findAll(page = 1, limit = 4) {
+  // Récupérer tous les hôtels (avec image de couverture) -> Angular 
+  static async findAllPaginated(page = 1, limit = 4) {
     // offset calcule le nombre d'enregistrements à sauter avant de commencer à récupérer les résultats
     // permet d'afficher les résultats par "pages" sans tout charger en une fois
     const offset = (page - 1) * limit;

@@ -84,7 +84,7 @@ exports.checkSession = async (req, res) => {
         });
     } else {
         // Pas de session
-        return res.status(401).json({ isAuthenticated: false });
+        return res.status(200).json({ isAuthenticated: false });
     }
 };
 

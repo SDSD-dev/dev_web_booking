@@ -23,19 +23,28 @@ export class UserService {
   private http = inject(HttpClient);
   private apiUrl = '/api/profile';
 
+  // Méthode pour récupérer le profil de l'utilisateur
   getProfile(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
 
+  // Méthode pour mettre à jour le profil
   updateProfile(data: any): Observable<any> {
     return this.http.put(this.apiUrl, data);
   }
-
+  
+  // Méthode pour récupérer l'historique des réservations
   getBookings(): Observable<BookingHistory[]> {
     return this.http.get<BookingHistory[]>(`${this.apiUrl}/bookings`);
   }
 
+  // Méthode pour annuler une réservation
   cancelBooking(orderId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/bookings/${orderId}/cancel`, {})
+  }
+
+  // Méthode pour changer le mot de passe
+  updatePassword(passwordData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/password`, passwordData);
   }
 }

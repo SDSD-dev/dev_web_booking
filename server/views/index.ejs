@@ -18,125 +18,125 @@
     <button id="carousel-next" class="carousel-btn next" aria-label="Image suivante">&#10095;</button>
   </section>
 
-<form action="search" method="GET" class="compact-search-form" novalidate>
-  
-  <div class="form-grid">
+  <form action="search" method="GET" class="compact-search-form" novalidate>
     
-    <div class="form-group full-width">
-      <label for="lieu">Villes</label>
-      <select name="lieu" id="lieu" class="rounded-input" required>
-        <option value="" disabled selected>-- Choisissez une destination --</option>
-        <option value="Paris">Paris</option>
-        <option value="Lyon">Lyon</option>
-        <option value="Lille">Lille</option>
-        <option value="Bordeaux">Bordeaux</option>
-        <option value="Marseille">Marseille</option>
-        <option value="Lourdes">Lourdes</option>
-      </select>
+    <div class="search-form-grid">
+      
+      <div class="form-group search-width">
+        <label for="lieu">Destination</label>
+        <select name="lieu" id="lieu" class="rounded-input" required>
+          <option value="" disabled selected>-- Choisissez une destination --</option>
+          <option value="Paris">Paris</option>
+          <option value="Lyon">Lyon</option>
+          <option value="Lille">Lille</option>
+          <option value="Bordeaux">Bordeaux</option>
+          <option value="Marseille">Marseille</option>
+          <option value="Lourdes">Lourdes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="date_debut">Arrivée</label>
+        <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="date_fin">Départ</label>
+        <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="adultes">Adultes</label>
+        <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="enfants">Enfants</label>
+        <input type="number" id="enfants" name="enfants" value="0" min="0" class="rounded-input">
+      </div>
+
     </div>
 
-    <div class="form-group">
-      <label for="date_debut">Arrivée</label>
-      <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
-    </div>
+    <div class="form-bottom">
+      
+      <div class="checkbox-group">
+        <label class="custom-checkbox">
+          <input type="checkbox" name="animaux" value="true">
+          <span>Animaux</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="wifi" value="true">
+          <span>Wi-Fi</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="piscine" value="true">
+          <span>Piscine</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="spa" value="true">
+          <span>Spa / Bien-être</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" name="parking" value="true">
+          <span>Parking</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary">Rechercher</button>
     
-    <div class="form-group">
-      <label for="date_fin">Départ</label>
-      <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
     </div>
 
-    <div class="form-group">
-      <label for="adultes">Adultes</label>
-      <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
-    </div>
-    
-    <div class="form-group">
-      <label for="enfants">Enfants</label>
-      <input type="number" id="enfants" name="enfants" value="0" min="0" class="rounded-input">
-    </div>
+  </form>
 
-  </div>
+  <h2><span style="color: #357e7a;">Nos</span> Promotions</h2>
 
-  <div class="form-bottom">
-    
-    <div class="checkbox-group">
-      <label class="custom-checkbox">
-        <input type="checkbox" name="animaux" value="true">
-        <span>Animaux</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" name="wifi" value="true">
-        <span>Wi-Fi</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" name="piscine" value="true">
-        <span>Piscine</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" name="spa" value="true">
-        <span>Spa / Bien-être</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" name="parking" value="true">
-        <span>Parking</span>
-      </label>
-    </div>
-
-    <button type="submit" class="btn-primary">Rechercher</button>
-  
-  </div>
-
-</form>
-
-<h2>Nos Promotions</h2>
-
-<section class="promo-grid">    
-  <div class="card">
-    <div class="card-image">
-      <img src="img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Chambre Deluxe">
-    </div>
-    <div class="card-content">
-      <h3 class="card-title">Le Kiehn - Larson Resort</h3>
-      <p class="card-subtitle">En centre-ville de Bordeaux</p>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <div class="card-footer">
-        <span class="card-price">155,79 €</span>
-        <a class="card-button" href="http://localhost:3000/hotel/447">Réserver</a>
+  <section class="promo-grid">    
+    <div class="card">
+      <div class="card-image">
+        <img src="img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Chambre Deluxe">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Le Kiehn - Larson Resort</h3>
+        <p class="card-subtitle">En centre-ville de Bordeaux</p>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="card-footer">
+          <span class="card-price">155,79 €</span>
+          <a class="card-button" href="http://localhost:3000/hotel/447">Réserver</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-image">
-      <img src="img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Chambre Deluxe">
-    </div>
-    <div class="card-content">
-      <h3 class="card-title">Le Kutch LLC Lodge</h3>
-      <p class="card-subtitle">En centre-ville de Lourdes</p>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <div class="card-footer">
-        <span class="card-price">73,48 €</span>
-        <a class="card-button" href="http://localhost:3000/hotel/438">Réserver</a>
+    <div class="card">
+      <div class="card-image">
+        <img src="img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Chambre Deluxe">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Le Kutch LLC Lodge</h3>
+        <p class="card-subtitle">En centre-ville de Lourdes</p>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="card-footer">
+          <span class="card-price">73,48 €</span>
+          <a class="card-button" href="http://localhost:3000/hotel/438">Réserver</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-image">
-      <img src="img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Chambre Deluxe">
-    </div>
-    <div class="card-content">
-      <h3 class="card-title">Le Volkman and Schuppe Lodge</h3>
-      <p class="card-subtitle">En centre-ville de Paris</p>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <div class="card-footer">
-        <span class="card-price">228,11 €</span>
-        <a class="card-button" href="http://localhost:3000/hotel/441">Réserver</a>
+    <div class="card">
+      <div class="card-image">
+        <img src="img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Chambre Deluxe">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Le Volkman and Schuppe Lodge</h3>
+        <p class="card-subtitle">En centre-ville de Paris</p>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="card-footer">
+          <span class="card-price">228,11 €</span>
+          <a class="card-button" href="http://localhost:3000/hotel/441">Réserver</a>
+        </div>
       </div>
     </div>
-  </div>
 
-</section>
+  </section>
 
 </main>
 <%- include('partials/footer.ejs') %>

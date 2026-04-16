@@ -17,9 +17,9 @@
 
 <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="compact-search-form" novalidate>
   
-  <div class="form-grid">
+  <div class="search-form-grid">
     
-    <div class="form-group full-width">
+    <div class="form-group search-width">
       <label for="lieu">Destination <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
       <select id="lieu" formControlName="city" class="rounded-input" required>
         <option value="" disabled selected>-- Choisissez une destination --</option>

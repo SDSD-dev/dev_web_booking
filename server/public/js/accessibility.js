@@ -1,28 +1,24 @@
 // public/js/accessibility.js
 document.addEventListener('DOMContentLoaded', () => {
-    const btnDyslexic = document.getElementById('btn-dyslexic');
     const body = document.body;
 
-    if (!btnDyslexic) return; // Sécurité si le bouton n'est pas sur la page
-
-    // Vérification de la mémoire du navigateur
+    // Initialisation : Vérifier si le mode est déjà activé dans la mémoire
     const isDyslexicModeActive = localStorage.getItem('dyslexicMode') === 'true';
-
-    // si déjà activé par l'utilisateur
     if (isDyslexicModeActive) {
         body.classList.add('dyslexic-mode');
-        btnDyslexic.setAttribute('aria-pressed', 'true');
-        }
+    }
 
-    // action du clic
-    btnDyslexic.addEventListener('click', () => {
-        // ajouter ou supprimer la classe dyslexic-mode
+    // On écoute les clics sur tout le document
+    document.addEventListener('click', (event) => {
+        // "closest" permet de vérifier si l'élément cliqué ou l'un de ses parents a l'id "btn-dyslexic"
+        const btnDyslexic = event.target.closest('#btn-dyslexic');
+        // Si ce n'est pas le bouton dyslexie qui a été cliqué, on ne fait rien
+        if (!btnDyslexic) return;
+        // Si c'est le bouton : on applique la logique
         body.classList.toggle('dyslexic-mode');
-        // vérification de l'état après le clic
+        
         const isActiveNow = body.classList.contains('dyslexic-mode');
-        // mise à jour del'accessibilité (Aria)
         btnDyslexic.setAttribute('aria-pressed', isActiveNow.toString());
-        // save dans la mémoire du navigateur
         localStorage.setItem('dyslexicMode', isActiveNow);
     });
 });

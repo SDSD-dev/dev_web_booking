@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
 
+  // Formulaire de profil avec validation
   profileForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
     prenom: ['', Validators.required],
@@ -28,13 +29,23 @@ export class ProfileComponent implements OnInit {
     pays: ['']
   });
 
-  // currentDate: any = new Date();
-
+  // Formulaire de changement de mot de passe 
+  passwordForm: FormGroup = this.fb.group({
+    oldPassword: ['', Validators.required],
+    newPassword: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required]},
+    { validators: this.passwordsMatchValidator });
+  
+  // Message divers
   message: string = '';
 
   // Nouvelle variable pour stocker la liste
   bookings: BookingHistory[] = [];
   loadingBookings = true;
+
+  // Variables pour le mot de passe
+  passwordMessage: string = '';
+  passwordError: string = '';
 
   // Méthode d'initialisation
   ngOnInit() {
@@ -121,6 +132,32 @@ export class ProfileComponent implements OnInit {
     return startDate >= today;
   }
 
+  // Changement de mot de passe -> Validateur maison
+  passwordsMatchValidator(form: FormGroup) {
+    const newPass = form.get('newPassword')?.value;
+    const confirmPass = form.get('confirmPassword')?.value;
+    return newPass === confirmPass ? null : { mismatch: true };
+  }
+
+  // Méthode pour le changement de mot de passe
+  onChangePassword() {
+    if (this.passwordForm.valid) {
+      this.userService.updatePassword({
+        oldPassword: this.passwordForm.value.oldPassword,
+        newPassword: this.passwordForm.value.newPassword
+      }).subscribe({
+        next: (res) => {
+          this.passwordMessage = res.message;
+          this.passwordError = '';
+          this.passwordForm.reset();
+        },
+      error: (err) => {
+        this.passwordError = err.error.message || "Erreur lors du changement";
+        this.passwordMessage = '';
+        }
+      });
+    }
+  }
 }
 
 

@@ -1,16 +1,6 @@
 // server/controllers/api/hotelApiController.js
 const HotelManager = require("../../models/HotelManager");
 
-// API pour obtenir la liste des hôtels
-// exports.getHotels = async (req, res) => {
-//     try {
-//         const hotels = await HotelManager.findAll();
-//         res.json(hotels); 
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// };
-
 // API pour obtenir la liste des hôtels(avec pagination)
 exports.getHotels = async (req, res) => {
     try {
@@ -19,7 +9,7 @@ exports.getHotels = async (req, res) => {
         // limite d'hôtels par page
         const limit = parseInt(req.query.limit) || 4;
 
-        const data = await HotelManager.findAll(page, limit);
+        const data = await HotelManager.findAllPaginated(page, limit);
 
         // data contient { hotels, currentPage, totalPages, totalItems }
         res.json(data);
