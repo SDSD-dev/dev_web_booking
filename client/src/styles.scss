@@ -90,6 +90,13 @@ h3 {
   border-bottom: 1px solid #e2e8f0;
   padding: 1rem 0;
   background-color: white;
+  transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.top-bar.scrolled-shadow {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background-color: #1a2436; /* Légèrement plus foncé pour contraster */
+  z-index: 1000;
 }
 
 .top-bar-inner {
@@ -437,7 +444,7 @@ h3 {
   }
 
   /* Cette classe sera ajoutée par Javascript lors du clic ! */
-  .bottom-nav.is-open {
+  .bottom-nav.active {
     display: block;
   }
 
