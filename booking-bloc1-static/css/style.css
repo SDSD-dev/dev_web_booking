@@ -323,9 +323,7 @@ h3 {
 /* ---     Style des formulaire         --- */
 /* ---------------------------------------- */
 
-/* --- Conteneur du formulaire          --- */
-
-/* Le conteneur qui se place par-dessus les images */
+/* Conteneur du formulaire par-dessus les images */
 .hero-form-overlay {
   position: absolute;
   bottom: 0;
@@ -338,9 +336,9 @@ h3 {
   box-sizing: border-box;
 }
 
-/* Le formulaire (légèrement translucide pour l'élégance) */
+/* formulaire de recherche */
 .hero-search-form {
-  background-color: rgba(244, 244, 244, 0.9);
+  background-color: rgba(244, 244, 244, 0.9); /* légèrement translucide */
   backdrop-filter: blur(8px); /* Effet verre dépoli moderne */
   width: 100%;
   max-width: 1200px;
@@ -353,20 +351,20 @@ h3 {
 /* La Grille principale (Ligne 1) */
 .hero-search-grid {
   display: grid;
-  /* Proportions ajustées : Options prend plus de place, les autres se partagent le reste */
+  /* Proportions de la grid */
   grid-template-columns: 1.5fr 1fr 1fr 0.8fr 0.8fr 1.5fr;
   gap: 1rem;
   align-items: start;
 }
 
-/* Fieldset pour les options (Enlève la bordure native moche) */
+/* Fieldset pour les options (Enlève la bordure native) */
 .options-fieldset {
   border: none;
   padding: 0;
   margin: 0;
 }
 
-/* Le legend sert de label pour l'accessibilité */
+/* legend sert de label pour l'accessibilité */
 .options-fieldset legend {
   font-size: 1rem;
   font-weight: 600;
@@ -404,11 +402,10 @@ h3 {
 .rounded-top-btn {
   padding: 0.8rem 4rem;
   font-size: 1.1rem;
-  background-color: #357e7a; /* Ton vert d'eau */
+  background-color: #357e7a;
   color: white;
-  border: none;
-  /* Arrondis haut-gauche et haut-droit uniquement */
-  border-radius: 1.5rem 1.5rem 0 0;
+  border: none; 
+  border-radius: 1.5rem 1.5rem 0 0;  /* Arrondis haut-gauche et haut-droit uniquement */
   cursor: pointer;
   font-weight: bold;
   transition:
@@ -428,7 +425,7 @@ h3 {
 
 @media (max-width: 1024px) {
   .hero-search-grid {
-    /* Sur tablette, on passe sur 3 colonnes */
+    /* Sur tablette -> 3 colonnes */
     grid-template-columns: 1fr 1fr 1fr;
   }
   .options-fieldset {
@@ -460,16 +457,15 @@ h3 {
   /* Remet le conteneur du formulaire dans le flux normal (sous l'image) */
   .hero-form-overlay {
     position: relative; /* Annule le position: absolute */
-    bottom: auto;
-    /* Petite astuce UI : une marge négative pour qu'il "morde" légèrement sur l'image */
-    margin-top: -20px; 
+    bottom: auto;    
+    margin-top: -20px; /* Marge négative pour "morde" légèrement sur l'image */
     padding: 0 1rem;
-    margin-bottom: 2rem; /* Ajoute un peu d'espace en bas de la page */
+    margin-bottom: 2rem; /* Ajoute de l'espace en bas de la page */
   }
 
   /* Ajustements visuels du formulaire mobile */
   .hero-search-form {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* On remet une ombre normale */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Remet une ombre normale */
   }
 
   /* Repasse la grille du formulaire sur 1 colonne */
@@ -479,7 +475,6 @@ h3 {
 
   /* Bouton de recherche redevient complètement ovale */
   .rounded-top-btn {
-    /* border-radius: 1.5rem;  */
     margin-left: -10px;
     width: 90%;
   }
@@ -511,18 +506,6 @@ h3 {
   grid-column: span 4;
 } */
 
-/* --- Grille CSS pour formulaire de recherche --- */
-/* .search-form-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.search-width {
-  grid-column: span 2;
-} */
-
 /* --- Labels --- */
 .form-group label {
   display: block;
@@ -538,7 +521,7 @@ h3 {
 .rounded-input {
   width: 100%;
   padding: 0.7rem 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   border: 1px solid #afbecf;
   border-radius: 1.5rem;
   background-color: white;
@@ -675,7 +658,7 @@ h3 {
     display: block;
   }
 
-  /* cache les gros boutons de la barre du haut s'il n'y a plus de place */
+  /* cache les boutons de la barre du haut */
   .desktop-only {
     display: none;
   }
@@ -697,7 +680,7 @@ h3 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Petite ombre pour détacher le menu */
   }
 
-  /* Cette classe sera ajoutée par Javascript lors du clic ! */
+  /* Classe ajoutée par Javascript avec le clic ! */
   .bottom-nav.is-open {
     display: block;
   }
@@ -712,7 +695,7 @@ h3 {
   }
 
   .bottom-nav a {
-    font-size: 1.1rem; /* Un peu plus grand sur mobile */
+    font-size: 1.1rem; /* Plus grand sur mobile */
     padding: 0.5rem; /* Zone cliquable élargie */
   }
 
@@ -734,14 +717,15 @@ h3 {
     padding: 1.5rem;
   }
 
-  .form-grid {
-    grid-template-columns: 1fr; /* 1 colonne pour mobile */
+  /* 1 colonne pour mobile */
+  /* .form-grid {
+    grid-template-columns: 1fr; 
     gap: 1rem;
-  }
+  } */
 
-  .full-width {
+  /* .full-width {
     grid-column: span 1;
-  }
+  } */
 
   /* --- Grille CSS pour formulaire de recherche --- */
   .search-form-grid {
@@ -967,7 +951,7 @@ h3 {
 .card-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #357e7a; /* Ton code couleur original */
+  background-color: #357e7a;
   color: white;
   text-decoration: none;
   border: none;
@@ -978,7 +962,7 @@ h3 {
 }
 
 .card-button:hover {
-  background-color: #5fc8c3; /* Ton hover original */
+  background-color: #5fc8c3; 
 }
 
 /* --- les étoiles --- */
@@ -1056,7 +1040,7 @@ h3 {
 
 /* Petit effet au survol */
 .amenity-badge:hover {
-  background-color: #357e7a; /* Ton vert signature */
+  background-color: #357e7a;
   color: white;
 }
 
@@ -1398,7 +1382,7 @@ button.btn-action {
     126,
     122,
     0.1
-  ); /* Ton vert en version très transparente */
+  ); /* vert très transparente */
   color: #357e7a;
   border: 1px solid rgba(53, 126, 122, 0.3);
 }
@@ -1429,7 +1413,7 @@ button.btn-action {
 
 .checkout-wrapper {
   width: 100%;
-  max-width: 600px; /* On limite la largeur pour la lisibilité */
+  max-width: 600px; /* Limite la largeur pour la lisibilité */
 }
 
 .checkout-card {
@@ -1442,7 +1426,7 @@ button.btn-action {
 
 /* --- En-tête --- */
 .checkout-header {
-  background: #70625c; /* Ton bleu nuit signature */
+  background: #70625c;
   color: white;
   padding: 2rem;
   text-align: center;
@@ -1587,7 +1571,7 @@ button.btn-action {
   border-top: 1px solid #e2e8f0;
 }
 
-/* On nettoie le formulaire pour éviter les vieux styles globaux */
+/* Nettoie le formulaire pour éviter les vieux styles globaux */
 .checkout-form {
   margin: 0 !important;
   padding: 0 !important;
@@ -1796,9 +1780,9 @@ button.btn-action {
   margin: 0;
 }
 
-/* -------------------------------------- */
-/* --- RESPONSIVE MOBILE & TABLETTE   --- */
-/* -------------------------------------- */
+/* ---------------------------------------------- */
+/* --- Footer Responsive -> Tablette/Mobile   --- */
+/* ---------------------------------------------- */
 
 @media (max-width: 1024px) {
   /* Sur tablette : 2 colonnes (2 lignes de 2) */
@@ -1827,3 +1811,53 @@ button.btn-action {
     padding-left: 0; /* Désactive la translation qui rend bizarre au centre */
   }
 }
+
+
+/* ------------------------------------ */
+/* --- Validation Formulaire (JS)   --- */
+/* ------------------------------------ */
+
+/* Texte inséré sous l'input par le JS */
+.error-feedback {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: -2px; /* Rapproche l'erreur de l'input */
+  margin-bottom: 8px; /* Remplace l'espace pour le label suivant */
+  margin-left: 10px;
+  min-height: 1.2rem; /* Garde la place réservée pour éviter les sauts */
+}
+
+/* On s'assure que la marge du bas des inputs est réduite pour laisser place à l'erreur */
+.form-group input:not([type="checkbox"]), 
+.form-group textarea {
+  margin-bottom: 4px;
+}
+
+/* L'état bloqué du bouton */
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  background-color: #94a3b8 !important; /* Bouton Gris neutre */
+  pointer-events: none; 
+}
+
+/* Bordures dynamiques */
+.input-success {
+  border-color: #2ecc71 !important;
+}
+
+.input-error {
+  border-color: #e74c3c !important;
+  background-color: #fdf2f2; /* Fond rouge */
+  animation: shake 0.4s ease-in-out;
+}
+
+/* animation quand le champ passe en erreur */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+

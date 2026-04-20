@@ -724,7 +724,7 @@ h3 {
 .card-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #357e7a; /* Ton code couleur original */
+    background-color: #357e7a;
     color: white;
     text-decoration: none;
     border: none;
@@ -735,7 +735,7 @@ h3 {
 }
 
 .card-button:hover {
-    background-color: #5fc8c3; /* Ton hover original */
+    background-color: #5fc8c3;
 }
 
 /* --- les étoiles --- */
@@ -807,7 +807,7 @@ h3 {
 
 /* Petit effet au survol */
 .amenity-badge:hover {
-    background-color: #357e7a; /* Ton vert signature */
+    background-color: #357e7a;
     color: white;
 }
 
@@ -1186,7 +1186,7 @@ button.btn-action {
 
 /* Variante : Voir (Vert) */
 .btn-view {
-    background-color: rgba(53, 126, 122, 0.1); /* Ton vert en version très transparente */
+    background-color: rgba(53, 126, 122, 0.1); /* vert transparent */
     color: #357e7a;
     border: 1px solid rgba(53, 126, 122, 0.3);
 }
@@ -1220,7 +1220,7 @@ button.btn-action {
 
 .checkout-wrapper {
     width: 100%;
-    max-width: 600px; /* On limite la largeur pour la lisibilité */
+    max-width: 600px; /* limite la largeur pour la lisibilité */
 }
 
 .checkout-card {
@@ -1233,7 +1233,7 @@ button.btn-action {
 
 /* --- En-tête --- */
 .checkout-header {
-    background: #70625c; /* Ton bleu nuit signature */
+    background: #70625c;
     color: white;
     padding: 2rem;
     text-align: center;
@@ -1378,7 +1378,7 @@ button.btn-action {
     border-top: 1px solid #e2e8f0;
 }
 
-/* On nettoie le formulaire pour éviter les vieux styles globaux */
+/* Nettoie le formulaire pour éviter les vieux styles globaux */
 .checkout-form {
     margin: 0 !important;
     padding: 0 !important;

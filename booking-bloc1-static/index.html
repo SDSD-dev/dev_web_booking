@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Réservez votre chambre d'hôtel en ligne facilement et rapidement. Découvrez nos hébergements, comparez les prix et profitez d'un séjour inoubliable. Projet de fin d'études avec base de données simulée.">
     <title>Bienvenue sur notre site de réservation !</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Hotel",
+        "name": "Planet Hotel",
+        "description": "Hôtel de luxe avec réservation en ligne."
+      }
+    </script>
     <link rel="icon" type="image/png" href="assets/img/Favicon-Hotel.png">
     <link rel="stylesheet" href="css/style.css" />      
   </head>
   <body>
     <header>
       <!-- Barre supérieure avec logo et navigation -->
-      <div class="top-bar">
+       
+      <div id="top" class="top-bar">
         <div class="container top-bar-inner">
           <div>
             <a href="index.html">
@@ -77,12 +86,12 @@
 
   <div class="hero-form-overlay">
     
-    <form action="/search" method="GET" class="hero-search-form" aria-label="Recherche d'hôtels" novalidate>
+    <form action="index.html" method="GET" class="hero-search-form" aria-label="Recherche d'hôtels" novalidate>
       
       <div class="hero-search-grid">
         
         <div class="form-group">
-          <label for="lieu">Destination</label>
+          <label for="lieu">Destination <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
           <select name="lieu" id="lieu" class="rounded-input" required>
             <option value="" disabled selected>-- Choix --</option>
             <option value="Paris">Paris</option>
@@ -95,17 +104,17 @@
         </div>
 
         <div class="form-group">
-          <label for="date_debut">Arrivée</label>
+          <label for="date_debut">Arrivée <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
           <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
         </div>
         
         <div class="form-group">
-          <label for="date_fin">Départ</label>
+          <label for="date_fin">Départ <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
           <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
         </div>
 
         <div class="form-group">
-          <label for="adultes">Adultes</label>
+          <label for="adultes">Adultes <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
           <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
         </div>
         
@@ -150,76 +159,6 @@
 
     
   </section>
-
-  <!-- <form action="search" method="GET" class="compact-search-form" novalidate>
-    
-    <div class="search-form-grid">
-      
-      <div class="form-group search-width">
-        <label for="lieu">Destination</label>
-        <select name="lieu" id="lieu" class="rounded-input" required>
-          <option value="" disabled selected>-- Choisissez une destination --</option>
-          <option value="Paris">Paris</option>
-          <option value="Lyon">Lyon</option>
-          <option value="Lille">Lille</option>
-          <option value="Bordeaux">Bordeaux</option>
-          <option value="Marseille">Marseille</option>
-          <option value="Lourdes">Lourdes</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="date_debut">Arrivée</label>
-        <input type="date" id="date_debut" name="date_debut" class="rounded-input" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="date_fin">Départ</label>
-        <input type="date" id="date_fin" name="date_fin" class="rounded-input" required>
-      </div>
-
-      <div class="form-group">
-        <label for="adultes">Adultes</label>
-        <input type="number" id="adultes" name="adultes" value="1" min="1" class="rounded-input" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="enfants">Enfants</label>
-        <input type="number" id="enfants" name="enfants" value="0" min="0" class="rounded-input">
-      </div>
-
-    </div>
-
-    <div class="form-bottom">
-      
-      <div class="checkbox-group">
-        <label class="custom-checkbox">
-          <input type="checkbox" name="animaux" value="true">
-          <span>Animaux</span>
-        </label>
-        <label class="custom-checkbox">
-          <input type="checkbox" name="wifi" value="true">
-          <span>Wi-Fi</span>
-        </label>
-        <label class="custom-checkbox">
-          <input type="checkbox" name="piscine" value="true">
-          <span>Piscine</span>
-        </label>
-        <label class="custom-checkbox">
-          <input type="checkbox" name="spa" value="true">
-          <span>Spa / Bien-être</span>
-        </label>
-        <label class="custom-checkbox">
-          <input type="checkbox" name="parking" value="true">
-          <span>Parking</span>
-        </label>
-      </div>
-
-      <button type="submit" class="btn-primary">Rechercher</button>
-    
-    </div>
-
-  </form> -->
 
   <h2><span style="color: #357e7a;">Nos</span> Promotions</h2>
 
@@ -270,6 +209,7 @@
     </div>
 
   </section>
+  
 
 </main>
     <footer class="site-footer">
@@ -329,7 +269,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 Planet Hotel. Tous droits réservés.</p>
+                <p>&copy; 2026 Planet Hotel. Tous droits réservés - <a href="#top">Retour en haut</a></p>
             </div>
         </div>
     </footer>
