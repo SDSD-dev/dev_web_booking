@@ -1,9 +1,23 @@
 <main>
-  <section class="login-section">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">    
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">      
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a routerLink="/" itemprop="item">
+          <span itemprop="name">Accueil</span>
+        </a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">Inscription</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
+  <section class="form-group">
     
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="compact-search-form" novalidate>
-      
-      <h3>Créer un compte</h3>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="compact-register-form" novalidate>
+      <h1>Formulaire d'inscription</h1>
 
       @if (errorMessage) {
         <div class="error-alert" role="alert" style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ef9a9a;">
@@ -16,50 +30,72 @@
         </div>
       }
 
-      <div class="form-group full-width">
-        <label for="nom">Nom <span aria-hidden="true" class="required-asterisk">*</span></label>
-        <input type="text" id="nom" formControlName="nom" class="rounded-input" autocomplete="family-name">
-      </div>
-      @if (registerForm.get('nom')?.errors?.['required'] && registerForm.get('nom')?.touched) {
-        <small class="error-message">Ce champ est requis.</small>
-      }
 
-      <div class="form-group full-width">
-        <label for="prenom">Prénom <span aria-hidden="true" class="required-asterisk">*</span></label>
-        <input type="text" id="prenom" formControlName="prenom" class="rounded-input" autocomplete="given-name">
-      </div>
-      @if (registerForm.get('prenom')?.errors?.['required'] && registerForm.get('prenom')?.touched) {
-        <small class="error-message">Ce champ est requis.</small>
-      }
 
-      <div class="form-group full-width">
-        <label for="telephone">Téléphone</label>
-        <input type="tel" id="telephone" formControlName="telephone" class="rounded-input" autocomplete="tel">
+
+
+      <div class="form-register-grid">
+        <div class="form-register-group">
+
+        </div>
+        <div class="form-register-group">
+
+        </div>
       </div>
-      @if (registerForm.get('telephone')?.errors?.['pattern'] && registerForm.get('telephone')?.touched) {
-        <small class="error-message">Format de téléphone invalide (chiffres uniquement).</small>
-      }
-      
-      <div class="form-group full-width">
-        <label for="email">Email <span aria-hidden="true" class="required-asterisk">*</span></label>
-        <input type="email" id="email" formControlName="email" class="rounded-input" autocomplete="email">
-      </div>
-      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-        <small class="error-message">
-          @if (registerForm.get('email')?.errors?.['required']) {
-            Ce champ est requis.
-          } @else if (registerForm.get('email')?.errors?.['email']) {
-            Format d'email invalide.
+
+
+
+      <div class="form-register-grid">
+        <div class="form-register-group">
+          <label for="nom">Nom (obligatoire) :</label>
+          <input type="text" id="nom" formControlName="nom" class="rounded-input" required autocomplete="family-name" />
+          @if (registerForm.get('nom')?.errors?.['required'] && registerForm.get('nom')?.touched) {
+            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
           }
-        </small>
-      }
-        
-      <div class="form-group full-width">
-        <label for="password">Mot de passe <span aria-hidden="true" class="required-asterisk">*</span></label>
-        <input type="password" id="password" formControlName="password" class="rounded-input" autocomplete="new-password">
+        </div>
+        <div class="form-register-group">
+          <label for="prenom">Prénom (obligatoire) :</label>
+          <input type="text" id="prenom" formControlName="prenom" class="rounded-input" required autocomplete="given-name" />
+          @if (registerForm.get('prenom')?.errors?.['required'] && registerForm.get('prenom')?.touched) {
+            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
+          }
+        </div>
       </div>
+
+
+      <div class="form-register-grid">
+        <div class="form-register-group">
+          <label for="email">Email (obligatoire) :</label>
+          <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email" />
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
+              @if (registerForm.get('email')?.errors?.['required']) {
+                Ce champ est requis.
+              } @else if (registerForm.get('email')?.errors?.['email']) {
+                Format d'email invalide.
+              }
+            </small>
+          }
+        </div>
+        <div class="form-register-group">
+          <label for="telephone">Téléphone (obligatoire) :</label>
+          <input type="tel" id="telephone" formControlName="telephone" class="rounded-input" required autocomplete="tel" />
+          @if (registerForm.get('telephone')?.invalid && registerForm.get('telephone')?.touched) {
+            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
+              @if (registerForm.get('telephone')?.errors?.['required']) {
+                Ce champ est requis.
+              } @else if (registerForm.get('telephone')?.errors?.['pattern']) {
+                Format de téléphone invalide.
+              }
+            </small>
+          }
+        </div>
+      </div>
+     
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="new-password" />
       @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-        <small class="error-message">
+        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
           @if (registerForm.get('password')?.errors?.['required']) {
             Ce champ est requis.
           } @else if (registerForm.get('password')?.errors?.['minlength']) {
@@ -67,16 +103,13 @@
           }
         </small>
       }
+      <br>
 
-      <div class="form-bottom">
-        <button type="submit" class="btn-primary" [disabled]="registerForm.invalid" style="width: 100%;">
-          S'inscrire
-        </button>
-      </div>
+      <button type="submit" class="btn-primary rounded-btn" [disabled]="registerForm.invalid" style="width: 100%;">S'inscrire</button>
 
       <p style="text-align: center; margin-top: 20px; font-size: 0.95rem;">
         Déjà inscrit ? 
-        <a routerLink="/login" style="color: #005ab9; font-weight: bold; text-decoration: none;">Se connecter</a>
+        <a routerLink="/login" style="color: #357e7a; font-weight: bold; text-decoration: none;">Se connecter</a>
       </p>
 
     </form>

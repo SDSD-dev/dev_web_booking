@@ -1,0 +1,192 @@
+/* -------------------------------------- */
+/* --- FOOTER PRINCIPAL               --- */
+/* -------------------------------------- */
+
+.site-footer {
+  background-color: #ffffff;
+  color: #686868;
+  padding-top: 2rem;
+  margin-top: auto; /* Pousse le footer tout en bas de la page si le contenu est court */
+}
+
+/* --- La Grille 4 Zones --- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales par défaut */
+  gap: 3rem 2rem; /* Espace vertical et horizontal entre les colonnes */
+  padding-bottom: 3rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  color: #70625c;
+  font-size: 1.1rem;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase; /* Majuscules pour les titres de section */
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.footer-text {
+  margin: 0 0 0.8rem 0;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+  color: #5fc8c3;
+  flex-shrink: 0;
+}
+
+/* --- Liens (Zone 2) --- */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  color: #70625c;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    padding-left 0.2s;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  color: #5fc8c3;
+  padding-left: 5px; /* Petit effet de translation */
+}
+
+/* --- Icônes Réseaux Sociaux (Zone 3) --- */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement transparent */
+  color: #535353;
+  border-radius: 50%; /* Boutons ronds */
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.social-link:hover {
+  background-color: #357e7a;
+  transform: translateY(-3px); /* Soulève l'icône */
+}
+
+/* --- Newsletter (Zone 4) --- */
+.newsletter-form {
+  width: 100%;
+  margin-top: 10px !important; /* Force l'espacement avec reset */
+}
+
+.newsletter-input-group {
+  display: flex;
+  width: 100%;
+}
+
+.newsletter-input {
+  flex: 1; /* Prend tout l'espace disponible */
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px 0 0 4px; /* Arrondi à gauche seulement */
+  outline: none;
+  font-size: 0.9rem;
+  color: #334155;
+  border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.newsletter-btn {
+  background-color: #357e7a;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 0 4px 4px 0; /* Arrondi à droite seulement */
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.newsletter-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.newsletter-btn:hover {
+  background-color: #5fc8c3;
+}
+
+/* --- Bandeau Copyright (Tout en bas) --- */
+.footer-bottom {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(124, 124, 124, 0.5);
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+/* ---------------------------------------------- */
+/* --- Footer Responsive -> Tablette/Mobile   --- */
+/* ---------------------------------------------- */
+
+@media (max-width: 1024px) {
+  /* Sur tablette : 2 colonnes (2 lignes de 2) */
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Sur smartphone : 1 seule colonne */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem; /* Ajoute un peu plus d'espace vertical entre les blocs */
+  }
+
+  .footer-col {
+    align-items: center; /* Centre le contenu sur mobile */
+    text-align: center;
+  }
+
+  .footer-text {
+    justify-content: center; /* Centre les icônes de contact avec le texte */
+  }
+
+  .footer-links a:hover {
+    padding-left: 0; /* Désactive la translation qui rend bizarre au centre */
+  }
+}

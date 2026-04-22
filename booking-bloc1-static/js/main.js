@@ -83,22 +83,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-    /* -------------------------------------------
-     Dates du formulaire de recherche
-     ------------------------------------------- */
-    // Script pour gérer les dates dans le formulaire de recherche
-    // Empêche de choisir une date passée
-    // Définit la date minimale pour les deux champs de date
+  /* -------------------------------------------
+    Dates du formulaire de recherche
+    ------------------------------------------- */
+  // Script pour gérer les dates dans le formulaire de recherche
+  // Empêche de choisir une date passée
+  // Définit la date minimale pour les deux champs de date
+  const dateDebutInput = document.getElementById("date_debut");
+  const dateFinInput = document.getElementById("date_fin");
+
+  // On encapsule tout le code dans un "if" pour s'assurer que les champs existent bien
+  if (dateDebutInput && dateFinInput) {
+    
+    // Si on rentre ici, c'est qu'on est bien sur la page d'accueil avec le formulaire de recherche
     const today = new Date().toISOString().split("T")[0];
-    document.getElementById("date_debut").setAttribute("min", today);
-    document.getElementById("date_fin").setAttribute("min", today);
-    const dateDebutInput = document.getElementById("date_debut");
-    const dateFinInput = document.getElementById("date_fin");
+    
+    dateDebutInput.setAttribute("min", today);
+    dateFinInput.setAttribute("min", today);
 
     dateDebutInput.addEventListener("change", function () {
       dateFinInput.setAttribute("min", this.value);
     });
+    
+  }
 
+  /* --------------------------------
+  EFFET STICKY HEADER
+  -------------------------------- */
+  // cible -> barre supérieure du header
+  const topBar = document.querySelector('.top-bar');
+
+  if (topBar) {
+    // On écoute l'événement de défilement (scroll) de la page
+    window.addEventListener('scroll', () => {
+      
+      // Si on descend de plus de 50 pixels
+      if (window.scrollY > 50) {
+        // On ajoute une classe pour l'ombre
+        topBar.classList.add('scrolled-shadow');
+      } else {
+        // Sinon on la retire (retour tout en haut)
+        topBar.classList.remove('scrolled-shadow');
+      }
+      
+    });
+  }
 
 });
+
 

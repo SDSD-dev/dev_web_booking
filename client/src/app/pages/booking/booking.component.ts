@@ -24,12 +24,14 @@ export class BookingComponent implements OnInit {
   private hotelService = inject(HotelService);
 
   room: Room | null = null;
+
   bookingForm: FormGroup = this.fb.group({
     dateDebut: ['', Validators.required],
     dateFin: ['', Validators.required],
     adults: [1, [Validators.required, Validators.min(1)]],
     children: [0, [Validators.required, Validators.min(0)]]
   });
+  
   totalPrice: number = 0;
   numberOfNights: number = 0;
   isCapacityExceeded: boolean = false;

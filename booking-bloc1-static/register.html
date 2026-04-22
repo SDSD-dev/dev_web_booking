@@ -7,7 +7,7 @@
     <meta name="description" content="Réservez votre chambre d'hôtel en ligne facilement et rapidement. Découvrez nos hébergements, comparez les prix et profitez d'un séjour inoubliable. Projet de fin d'études avec base de données simulée.">
     <title>Inscription</title>
     <link rel="icon" type="image/png" href="assets/img/Favicon-Hotel.png">
-    <link rel="stylesheet" href="css/style.css" />      
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <header>
@@ -55,7 +55,7 @@
       </nav>
     </header>
 <main>
-  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">    
+  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container-sm">    
     <ol itemscope itemtype="https://schema.org/BreadcrumbList">      
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a href="index.html" itemprop="item">
@@ -71,18 +71,18 @@
   </nav>
   <section class="form-group">
     <form action="register.html" method="POST" class="compact-form" novalidate>
-      <h3>Formulaire d'inscription</h3>
+      <h1>Formulaire d'inscription</h1>
       <label for="nom">Nom (obligatoire) :</label>
       <input type="text" id="nom" name="nom" class="rounded-input" required />
       <label for="prenom">Prénom (obligatoire) :</label>
       <input type="text" id="prenom" name="prenom" class="rounded-input" required />
       <label for="email">Email (obligatoire) :</label>
       <input type="email" id="email" name="email" class="rounded-input" required />
-      <label for="telephone">Téléphone :</label>
+      <label for="telephone">Téléphone (obligatoire) :</label>
       <input type="tel" id="telephone" name="telephone" class="rounded-input" required />
      
       <label>Mot de passe :</label>
-      <input type="password" name="mot_de_passe" class="rounded-input" required /></label>
+      <input type="password" name="mot_de_passe" class="rounded-input" required />
       <br>
 
       <button type="submit" class="btn-primary rounded-btn">S'inscrire</button>
@@ -132,11 +132,10 @@
 
             <div class="footer-col">
                 <h4 class="footer-title">Newsletter</h4>
-                <p class="footer-text">Recevez nos meilleures offres et actualités.</p>
-                
+                <label for="newsletter-email" class="footer-text">Recevez nos meilleures offres et actualités.</label>                
                 <form action="#" method="POST" class="newsletter-form inline-action-form">
                     <div class="newsletter-input-group">
-                        <input type="email" placeholder="Votre adresse e-mail" required class="newsletter-input">
+                        <input type="email" id="newsletter-email" placeholder="Votre adresse e-mail" required class="newsletter-input">
                         <button type="submit" class="newsletter-btn" aria-label="validation newsletter">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>

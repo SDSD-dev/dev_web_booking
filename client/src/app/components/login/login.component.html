@@ -1,9 +1,23 @@
 <main>
-  <section class="login-section">
-    
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="compact-search-form" novalidate>
+  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">    
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">      
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a routerLink="/" itemprop="item">
+          <span itemprop="name">Accueil</span>
+        </a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">Connexion</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
+  <section class="form-group">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="compact-form" novalidate>
       
-      <h3>Connexion Espace Client</h3>
+      <h1>Connexion</h1>
 
       @if (errorMessage) {
         <div class="error-alert" role="alert" style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ef9a9a;">
@@ -11,23 +25,37 @@
         </div>
       }
 
-      <div class="form-group full-width">
-        <label for="email">Email : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-        <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email">
-      </div>
+      <label for="email">Email : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+      <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email">
+      
+      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
+          @if (loginForm.get('email')?.errors?.['required']) {
+            Ce champ est requis.
+          } @else if (loginForm.get('email')?.errors?.['email']) {
+            Format d'email invalide.
+          }
+        </small>
+      }
 
-      <div class="form-group full-width">
-        <label for="password">Mot de passe : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-        <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="current-password">
-      </div>
+      <label for="password">Mot de passe : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+      <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="current-password">
+      
+      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
+      }
 
-      <div class="form-bottom">
-        <button type="submit" class="btn-primary rounded-btn" [disabled]="loginForm.invalid">
-          Se connecter
-        </button>
-      </div>
+      <br>
+
+      <button type="submit" class="btn-primary rounded-btn" [disabled]="loginForm.invalid" style="width: 100%;">
+        Se connecter
+      </button>
+
+      <p style="text-align: center; margin-top: 20px; font-size: 0.95rem;">
+        Pas encore de compte ? 
+        <a routerLink="/register" style="color: #357e7a; font-weight: bold; text-decoration: none;">S'inscrire</a>
+      </p>
 
     </form>
-
   </section>
 </main>

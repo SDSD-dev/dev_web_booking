@@ -62,7 +62,7 @@ export class HotelHomeComponent {
       // on affiche que 4 hôtels du grand tableau d'hôtels
       this.hotels = this.allSearchResults.slice(startIndex, endIndex);
       setTimeout(() => {
-          window.scrollTo({ top: 800, behavior: 'smooth' });
+          window.scrollTo({ top: 500, behavior: 'smooth' });
         }, 50);
     }
   }

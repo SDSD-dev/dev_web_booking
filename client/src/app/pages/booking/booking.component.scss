@@ -1,0 +1,217 @@
+/* -------------------------------------- */
+/* --- PAGE RÉCAPITULATIF (CHECKOUT)  --- */
+/* -------------------------------------- */
+
+.checkout-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem 5rem 1rem;
+}
+
+.checkout-wrapper {
+  width: 100%;
+  max-width: 600px; /* Limite la largeur pour la lisibilité */
+}
+
+.checkout-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+/* --- En-tête --- */
+.checkout-header {
+  background: #70625c;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.checkout-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.checkout-header p {
+  margin: 0;
+  color: #ceddf0;
+  font-size: 0.95rem;
+}
+
+/* --- Corps du reçu --- */
+.checkout-body {
+  padding: 2rem;
+}
+
+.summary-section {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.summary-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* 1. Bloc Hôtel */
+.summary-hotel-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.summary-hotel-info h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1e293b;
+}
+
+.room-badge {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.summary-address {
+  color: #64748b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.summary-address svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bloc Dates (Grille) */
+.dates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  text-align: center;
+}
+
+.date-box {
+  background: #f8fafc;
+  padding: 1rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+}
+
+.highlight-box {
+  background: rgba(53, 126, 122, 0.05);
+  border-color: rgba(53, 126, 122, 0.2);
+}
+
+.date-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.date-value {
+  display: block;
+  font-weight: bold;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+/* Bloc Prix */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #475569;
+}
+
+.price-divider {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 15px 0;
+}
+
+.total-row {
+  margin-top: 15px;
+  align-items: center;
+}
+
+.total-row span:first-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.total-price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #357e7a;
+}
+
+/* --- Pied et Formulaire --- */
+.checkout-footer {
+  background: #f8fafc;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Nettoie le formulaire pour éviter les vieux styles globaux */
+.checkout-form {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  max-width: 100% !important;
+}
+
+.btn-pay {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  background-color: #357e7a;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.btn-pay:hover {
+  background-color: #5fc8c3;
+}
+
+.btn-pay:active {
+  transform: scale(0.98); /* Petit effet d'enfoncement au clic */
+}
+
+.btn-pay svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* --- Responsive Mobile --- */
+@media (max-width: 600px) {
+  .dates-grid {
+    grid-template-columns: 1fr; /* Les dates s'empilent sur mobile */
+  }
+
+  .summary-hotel-info {
+    flex-direction: column;
+    align-items: flex-start; /* Aligne à gauche sur mobile */
+    gap: 10px;
+  }
+}

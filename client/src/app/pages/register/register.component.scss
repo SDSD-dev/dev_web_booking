@@ -1,0 +1,55 @@
+/* ----------------------------- */
+/* --- FORMULAIRE REGISTER   --- */
+/* ----------------------------- */
+
+.compact-register-form {
+  background-color: #f4f4f4;
+  padding: 0.5rem 1rem 1rem 1rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Grille CSS pour les champs --- */
+.form-register-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.full-register-width {
+  grid-column: span 2;
+}
+
+/* --- Labels --- */
+.form-register-group label {
+  display: block;
+  font-size: 1rem;
+  /* margin-top: 10px; */
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.2rem;
+  margin-left: 0.5rem; /* Aligne le label avec le bord arrondi de l'input */
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* --- Responsive : Mode Mobile --- */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@media (max-width: 768px) {
+  .compact-register-form {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  /* 1 colonne pour mobile */
+  .form-register-grid {
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+  }
+
+  .full-register-width {
+    grid-column: span 1;
+  }
+}

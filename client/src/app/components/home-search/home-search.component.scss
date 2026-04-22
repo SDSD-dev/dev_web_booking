@@ -1,0 +1,321 @@
+/* ------------------------ */
+/* --- Carrousel        --- */
+/* ------------------------ */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 60vh; /* Prend 60% de la hauteur de l'écran */
+  min-height: 400px;
+  overflow: hidden;
+}
+
+/* Le conteneur prend toute la place */
+.carousel-track {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* empile toutes les slides au même endroit */
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Invisibles par défaut */
+  transition: opacity 1s ease-in-out; /* Effet de fondu d'une seconde */
+  z-index: 1;
+}
+
+/* La slide active devient visible */
+.carousel-slide.active {
+  opacity: 1;
+  z-index: 2; /* Passe au-dessus des autres */
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplit sans déformer */
+  object-position: center; /* Centre l'image */
+  display: block;
+}
+
+/* --- Boutons du Carrousel --- */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #334155;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  z-index: 10; /* Important: Doit être au-dessus des images (z-index: 2) */
+}
+
+.carousel-btn:hover {
+  background-color: #357e7a;
+  color: white;
+}
+
+.carousel-btn.prev {
+  left: 1.5rem;
+}
+
+.carousel-btn.next {
+  right: 1.5rem;
+}
+
+/* ---------------------------------------- */
+/* ---     Style des formulaire         --- */
+/* ---------------------------------------- */
+
+/* Conteneur du formulaire par-dessus les images */
+.hero-form-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 20; /* Doit être supérieur au z-index des slides et des boutons du carrousel */
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* formulaire de recherche */
+.hero-search-form {
+  background-color: rgba(244, 244, 244, 0.9); /* légèrement translucide */
+  backdrop-filter: blur(8px); /* Effet verre dépoli moderne */
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 1.2rem;
+  padding: 0.6rem 0.3rem 0 1rem; /* Pas de padding en bas pour coller le bouton */
+  margin-bottom: 2rem;
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15); /* Ombre vers le haut */
+}
+
+/* La Grille principale (Ligne 1) */
+.hero-search-grid {
+  display: grid;
+  /* Proportions de la grid */
+  grid-template-columns: 1.5fr 1fr 1fr 0.8fr 0.8fr 1.5fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* Fieldset pour les options (Enlève la bordure native) */
+.options-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* legend sert de label pour l'accessibilité */
+.options-fieldset legend {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.4rem;
+  margin-left: 0.5rem;
+  padding: 0;
+}
+
+/* Grille 2 colonnes pour les checkboxes */
+.options-2-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1rem;
+  /* background-color: white; */
+  /* border: 1px solid #afbecf; */
+  border-radius: 1rem; /* Moins rond que les inputs pour l'esthétique */
+  padding: 0rem 0.5rem;
+}
+
+.options-col {
+  display: flex;
+  flex-direction: column;
+  /* gap: 0.02rem; */
+}
+
+/* Ligne 2 : Bouton centré et collé en bas */
+.hero-form-bottom {
+  display: flex;
+  justify-content: center;
+  /* margin-top: 0.5rem; */
+}
+
+/* Bouton spécifique : arrondis uniquement en haut */
+.search-btn {
+  padding: 0.8rem 4rem;
+  font-size: 1.1rem;
+  background-color: #357e7a;
+  color: white;
+  border: none; 
+  border-radius: 1.5rem 1.5rem 0 0;  /* Arrondis haut-gauche et haut-droit uniquement */
+  cursor: pointer;
+  font-weight: bold;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.search-btn:hover {
+  background-color: #5fc8c3;
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+   Responsive (Tablettes & Mobiles)
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+@media (max-width: 1024px) {
+  .hero-search-grid {
+    /* Sur tablette -> 3 colonnes */
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .options-fieldset {
+    grid-column: span 3; /* Les options prennent toute la largeur en bas */
+  }
+}
+
+@media (max-width: 768px) {
+  
+  /* Transforme le conteneur principal en colonne */
+  .hero-carousel {
+    height: auto; /* Supprime la hauteur fixe de 60vh */
+    min-height: auto; /* Supprime l'ancienne bidouille des 850px */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Donne une hauteur fixe uniquement aux images pour mobile */
+  .carousel-track {
+    height: 350px; 
+    flex-shrink: 0;
+  }
+
+  /* Repositionne les flèches du carrousel au centre de l'image (350 / 2 = 175px) */
+  .carousel-btn {
+    top: 175px; 
+  }
+
+  /* Remet le conteneur du formulaire dans le flux normal (sous l'image) */
+  .hero-form-overlay {
+    position: relative; /* Annule le position: absolute */
+    bottom: auto;    
+    margin-top: -20px; /* Marge négative pour "morde" légèrement sur l'image */
+    padding: 0 1rem;
+    margin-bottom: 2rem; /* Ajoute de l'espace en bas de la page */
+  }
+
+  /* Ajustements visuels du formulaire mobile */
+  .hero-search-form {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Remet une ombre normale */
+  }
+
+  /* Repasse la grille du formulaire sur 1 colonne */
+  .hero-search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Bouton de recherche */
+  .search-btn {
+    margin-left: -10px;
+    width: 90%;
+  }
+
+  /* les options prennent toute la largeur */
+  .options-fieldset {
+    grid-column: span 1;
+  }
+}
+
+.compact-form {
+  background-color: #f4f4f4;
+  padding: 0.5rem 1rem 1rem 1rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Labels --- */
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  /* margin-top: 10px; */
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.2rem;
+  margin-left: 0.5rem; /* Aligne le label avec le bord arrondi de l'input */
+}
+
+/* --- Inputs ultra ronds --- */
+.rounded-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.2rem;
+  border: 1px solid #afbecf;
+  border-radius: 1.5rem;
+  background-color: white;
+  color: #334155;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  /* transition: border-color 0.2s, box-shadow 0.2s; */
+}
+
+.rounded-input:focus {
+  border-color: #5fc8c3;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* --- Zone basse (Filtres et Bouton) --- */
+.form-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.2rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap; /* Sécurité si l'écran est petit */
+  gap: 0.5rem;
+}
+
+/* --- Checkboxes --- */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  color: #475569;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #357e7a; /* Colore la case à cocher */
+}
+

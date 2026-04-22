@@ -1,8 +1,8 @@
 <main>
-  <div class="admin-dashboard">
+  <div class="container admin-dashboard">
 
     <section class="form-group" style="margin-bottom: 40px;">
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="compact-search-form" novalidate>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="compact-form" novalidate>
         
         <h1>Informations Personnelles</h1>
         <p style="color: #64748b; padding-bottom: 1rem;">Gérez vos informations personnelles et vos coordonnées.</p>
@@ -70,7 +70,7 @@
 
 
 
-      <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="compact-search-form" novalidate>
+      <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="compact-form" novalidate>
         <h3>Changer de mot de passe</h3>
 
         @if (passwordMessage) {

@@ -1,86 +1,97 @@
-<section class="custom-carousel" aria-label="Galerie des hôtels en vedette">
+<section class="hero-carousel" aria-label="Galerie des hôtels en vedette" aria-roledescription="carousel">
   
-  <div class="carousel-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
-    
-    @for (img of images; track img) {
-      <div class="carousel-slide">
-        <img [src]="img" alt="Photo de présentation d'un de nos hôtels">
+  <div class="carousel-track" id="carousel-track" aria-live="off">
+    @for (img of images; track img; let i = $index) {
+      
+      <div class="carousel-slide" 
+           [class.active]="currentIndex === i" 
+           role="group" 
+           aria-roledescription="slide" 
+           [attr.aria-label]="(i + 1) + ' sur ' + images.length">
+           
+        <img [src]="img" 
+             alt="Photo de présentation d'un de nos hôtels" 
+             [attr.fetchpriority]="i === 0 ? 'high' : null" 
+             [attr.loading]="i === 0 ? null : 'lazy'">
       </div>
+      
     }
-
   </div>
 
   <button (click)="prev()" class="carousel-btn prev" aria-label="Afficher l'image précédente">&#10094;</button>
   <button (click)="next()" class="carousel-btn next" aria-label="Afficher l'image suivante">&#10095;</button>
 
+  <div class="hero-form-overlay">
+    
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hero-search-form" aria-label="Recherche d'hôtels" novalidate>
+      
+      <div class="hero-search-grid">
+        
+        <div class="form-group">
+          <label for="lieu">Destination <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+          <select id="lieu" formControlName="city" class="rounded-input" required>
+            <option value="" disabled selected>-- Choix --</option>
+            <option value="Paris">Paris</option>
+            <option value="Lyon">Lyon</option>
+            <option value="Lille">Lille</option>
+            <option value="Bordeaux">Bordeaux</option>
+            <option value="Marseille">Marseille</option>
+            <option value="Lourdes">Lourdes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="date_debut">Arrivée <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+          <input type="date" id="date_debut" formControlName="dateDebut" [min]="today" class="rounded-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="date_fin">Départ <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+          <input type="date" id="date_fin" formControlName="dateFin" [min]="minDepartureDate" class="rounded-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="adultes">Adultes <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
+          <input type="number" id="adultes" formControlName="adults" min="1" class="rounded-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="enfants">Enfants</label>
+          <input type="number" id="enfants" formControlName="children" min="0" class="rounded-input">
+        </div>
+
+        <fieldset class="form-group options-fieldset">
+          <legend>Options</legend>
+          <div class="options-2-col">
+            <div class="options-col">
+              <label class="custom-checkbox">
+                <input type="checkbox" formControlName="wifi"> <span> Wi-Fi</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" formControlName="piscine"> <span> Piscine</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" formControlName="spa"> <span> Spa</span>
+              </label>
+            </div>
+            <div class="options-col">
+              <label class="custom-checkbox">
+                <input type="checkbox" formControlName="animaux"> <span> Animaux</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" formControlName="parking"> <span> Parking</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+
+      <div class="hero-form-bottom">
+        <button type="submit" class="search-btn">Rechercher</button>
+      </div>
+
+    </form>
+  </div>
+    
 </section>
-
-<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="compact-search-form" novalidate>
-  
-  <div class="search-form-grid">
-    
-    <div class="form-group search-width">
-      <label for="lieu">Destination <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <select id="lieu" formControlName="city" class="rounded-input" required>
-        <option value="" disabled selected>-- Choisissez une destination --</option>
-        <option value="Paris">Paris</option>
-        <option value="Lyon">Lyon</option>
-        <option value="Lille">Lille</option>
-        <option value="Bordeaux">Bordeaux</option>
-        <option value="Marseille">Marseille</option>
-        <option value="Lourdes">Lourdes</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="date_debut">Arrivée <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <input type="date" id="date_debut" formControlName="dateDebut" [min]="today" class="rounded-input" required>
-    </div>
-    
-    <div class="form-group">
-      <label for="date_fin">Départ <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <input type="date" id="date_fin" formControlName="dateFin" [min]="minDepartureDate" class="rounded-input" required>
-    </div>
-
-    <div class="form-group">
-      <label for="adultes">Adultes <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <input type="number" id="adultes" formControlName="adults" min="1" class="rounded-input" required>
-    </div>
-    
-    <div class="form-group">
-      <label for="enfants">Enfants</label>
-      <input type="number" id="enfants" formControlName="children" min="0" class="rounded-input">
-    </div>
-
-  </div>
-
-  <div class="form-bottom">
-    
-    <div class="checkbox-group">
-      <label class="custom-checkbox">
-        <input type="checkbox" formControlName="animaux">
-        <span>Animaux</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" formControlName="wifi">
-        <span>Wi-Fi</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" formControlName="piscine">
-        <span>Piscine</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" formControlName="spa">
-        <span>Spa / Bien-être</span>
-      </label>
-      <label class="custom-checkbox">
-        <input type="checkbox" formControlName="parking">
-        <span>Parking</span>
-      </label>
-    </div>
-
-    <button type="submit" class="btn-primary" [disabled]="searchForm.invalid">Rechercher</button>
-  
-  </div>
-
-</form>
