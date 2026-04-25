@@ -1,0 +1,459 @@
+/* -------------------------------------- */
+/* ---    Navigation (bar et bas)     --- */
+/* -------------------------------------- */
+
+/* --- Bar du Haut (Logo & Boutons)   --- */
+
+.top-bar {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 0;
+  background-color: white;
+}
+
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo à gauche, boutons à droite */
+}
+
+/* Style des liens-boutons */
+.btn-primary {
+  display: inline-block; /* <a> respecte le padding/margin comme un bouton */
+  font-size: 1rem;
+  padding: 0.5rem 1.25rem;
+  margin-top: 1rem;
+  background-color: #357e7a;
+  color: white;
+  text-decoration: none; /* Enlève le soulignement des liens */
+  border: none;
+  border-radius: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #5fc8c3;
+}
+
+/* --- Ajustements Logo --- */
+.main-logo {
+  max-height: 60px; /* Taille par défaut sur PC */
+  width: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* --- bouton d'accessibilité --- */
+.btn-accessibility {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+  border: 1px solid #94a3b8;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s;
+}
+
+/* Gestion du texte du bouton selon l'écran */
+.btn-text-short {
+  display: none; /* Caché sur PC */
+}
+
+/* --- Ligne du Bas (Menu avec fond)  --- */
+
+.bottom-nav {
+  /* background-color: #bcada6; */
+  background-color: #70625c;
+  padding: 0.5rem 0;
+}
+
+.bottom-nav-inner {
+  display: flex;
+  justify-content: center; /* Centre parfaitement tous les liens ! */
+  align-items: center;
+  gap: 8rem; /* Espace régulier entre chaque lien */
+  text-decoration: none;
+}
+
+.bottom-nav a {
+  color: white; /* Couleur du texte de la nav */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.bottom-nav a:hover {
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------- */
+/* ---    nav responsive                --- */
+/* ---------------------------------------- */
+
+/* --- Style du bouton Burger (Caché sur PC par défaut) --- */
+.burger-menu {
+  display: none;
+  background: none;
+  border: none;
+  color: #334155;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.burger-menu .icon {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ------------------------------------------- */
+/* --- Masquer les éléments mobiles sur PC --- */
+/* ------------------------------------------- */
+@media (min-width: 769px) {
+  .mobile-separator,
+  .mobile-auth-btn {
+    display: none !important;
+  }
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* --- Nav Responsive Mobile    --- */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@media (max-width: 768px) {
+  /* réduit le logo */
+  .main-logo {
+    max-height: 40px;
+  }
+
+  /* ajuste le bouton accessibilité */
+  .btn-accessibility {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  /* change les textes du bouton accessibilité */
+  .btn-text-full {
+    display: none;
+  }
+  .btn-text-short {
+    display: inline;
+  }
+
+  /* affiche le burger */
+  .burger-menu {
+    display: block;
+  }
+
+  /* cache les boutons de la barre du haut */
+  .desktop-only {
+    display: none;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: row; /* Force l'alignement à l'horizontale */
+    align-items: center;
+    flex-wrap: nowrap; /* Interdit formellement le passage à la ligne */
+    gap: 0.5rem; /* Petit espace entre le bouton Dyslexie et Connexion/Burger */
+  }
+
+  /* transforme la bande grise en menu déroulant */
+  .bottom-nav {
+    display: none; /* Caché par défaut */
+    position: absolute; /* Sort du flux normal pour passer par-dessus le reste du site */
+    width: 100%;
+    z-index: 50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Petite ombre pour détacher le menu */
+  }
+
+  /* Classe ajoutée par Javascript avec le clic ! */
+  .bottom-nav.is-open {
+    display: block;
+  }
+
+  /* empile les liens verticalement */
+  .bottom-nav-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les liens horizontalement */
+    padding: 1rem 0;
+    gap: 1.5rem; /* Plus d'espace doigts sur tactile */
+  }
+
+  .bottom-nav a {
+    font-size: 1.1rem; /* Plus grand sur mobile */
+    padding: 0.5rem; /* Zone cliquable élargie */
+  }
+
+  /* Style des boutons d'auth dans le menu déroulant */
+  .mobile-separator {
+    width: 80%;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 0.5rem 0;
+  }
+
+  .mobile-auth-btn {
+    width: 80%; /* Le bouton prend % de la largeur du menu */
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+}
+
+
+/* ---------------------------------------- */
+/* ---     fil d’Ariane (breadcrumb)    --- */
+/* ---------------------------------------- */
+
+/* Conteneur principal */
+.breadcrumb-nav {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Reset de la liste pour enlever les numéros par défaut */
+.breadcrumb-nav ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Alignement des éléments */
+.breadcrumb-nav li {
+  display: flex;
+  align-items: center;
+}
+
+/* Le séparateur visuel (Ignoré par les lecteurs d'écran) */
+.breadcrumb-nav li:not(:last-child)::after {
+  content: ">"; /* Le chevron */
+  margin: 0 10px;
+  color: #64748b;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* Les liens */
+.breadcrumb-nav a {
+  text-decoration: none;
+  color: #1d4a48; /* La couleur demandée */
+  font-weight: 500;
+  transition:
+    color 0.2s ease,
+    text-decoration 0.2s ease;
+}
+.breadcrumb-nav a:hover {
+  text-decoration: underline;
+  color: #245754;
+}
+
+/* La page courante */
+.breadcrumb-nav li[aria-current="page"] {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+
+/* -------------------------------------- */
+/* --- FOOTER PRINCIPAL               --- */
+/* -------------------------------------- */
+
+.site-footer {
+  background-color: #ffffff;
+  color: #686868;
+  padding-top: 2rem;
+  margin-top: auto; /* Pousse le footer tout en bas de la page si le contenu est court */
+}
+
+/* --- La Grille 4 Zones --- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales par défaut */
+  gap: 3rem 2rem; /* Espace vertical et horizontal entre les colonnes */
+  padding-bottom: 3rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  color: #70625c;
+  font-size: 1.1rem;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase; /* Majuscules pour les titres de section */
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.footer-text {
+  margin: 0 0 0.8rem 0;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+  color: #5fc8c3;
+  flex-shrink: 0;
+}
+
+/* --- Liens (Zone 2) --- */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  color: #70625c;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    padding-left 0.2s;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  color: #5fc8c3;
+  padding-left: 5px; /* Petit effet de translation */
+}
+
+/* --- Icônes Réseaux Sociaux (Zone 3) --- */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement transparent */
+  color: #535353;
+  border-radius: 50%; /* Boutons ronds */
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.social-link:hover {
+  background-color: #357e7a;
+  transform: translateY(-3px); /* Soulève l'icône */
+}
+
+/* --- Newsletter (Zone 4) --- */
+.newsletter-form {
+  width: 100%;
+  margin-top: 10px !important; /* Force l'espacement avec reset */
+}
+
+.newsletter-input-group {
+  display: flex;
+  width: 100%;
+}
+
+.newsletter-input {
+  flex: 1; /* Prend tout l'espace disponible */
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px 0 0 4px; /* Arrondi à gauche seulement */
+  outline: none;
+  font-size: 0.9rem;
+  color: #334155;
+  border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.newsletter-btn {
+  background-color: #357e7a;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 0 4px 4px 0; /* Arrondi à droite seulement */
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.newsletter-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.newsletter-btn:hover {
+  background-color: #5fc8c3;
+}
+
+/* --- Bandeau Copyright (Tout en bas) --- */
+.footer-bottom {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(124, 124, 124, 0.5);
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+/* ---------------------------------------------- */
+/* --- Footer Responsive -> Tablette/Mobile   --- */
+/* ---------------------------------------------- */
+
+@media (max-width: 1024px) {
+  /* Sur tablette : 2 colonnes (2 lignes de 2) */
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Sur smartphone : 1 seule colonne */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem; /* Ajoute un peu plus d'espace vertical entre les blocs */
+  }
+
+  .footer-col {
+    align-items: center; /* Centre le contenu sur mobile */
+    text-align: center;
+  }
+
+  .footer-text {
+    justify-content: center; /* Centre les icônes de contact avec le texte */
+  }
+
+  .footer-links a:hover {
+    padding-left: 0; /* Désactive la translation qui rend bizarre au centre */
+  }
+}
+
+/* --- Fin Footer ----------------------------------- */

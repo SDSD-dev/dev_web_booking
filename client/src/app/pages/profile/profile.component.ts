@@ -1,7 +1,7 @@
 // src/app/pages/profile/profile.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserService, BookingHistory } from '../../services/user/user.service';
@@ -133,9 +133,9 @@ export class ProfileComponent implements OnInit {
   }
 
   // Changement de mot de passe -> Validateur maison
-  passwordsMatchValidator(form: FormGroup) {
-    const newPass = form.get('newPassword')?.value;
-    const confirmPass = form.get('confirmPassword')?.value;
+  passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const newPass = control.get('newPassword')?.value;
+    const confirmPass = control.get('confirmPassword')?.value;
     return newPass === confirmPass ? null : { mismatch: true };
   }
 

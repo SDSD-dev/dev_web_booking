@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { Hotel } from '../../interfaces/hotel.model';
 import { HotelCardComponent } from '../../components/hotel-card/hotel-card.component';
 import { HomeSearchComponent } from '../../components/home-search/home-search.component';
-// import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -19,7 +18,6 @@ import { HomeSearchComponent } from '../../components/home-search/home-search.co
 export class HotelHomeComponent {
   // Injection du service
   private hotelService = inject(HotelService);
-  // authService = inject(AuthService);
 
   hotels: Hotel[] = [];
   loading = false;

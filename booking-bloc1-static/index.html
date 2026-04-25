@@ -16,6 +16,7 @@
     </script>
     <link rel="icon" type="image/png" href="assets/img/Favicon-Hotel.png">
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/layout.css" />
   </head>
   <body>
     <header>
@@ -65,24 +66,24 @@
     </header>
     <main>
 
-      <section class="hero-carousel" aria-label="Galerie des hôtels en vedette" aria-roledescription="carousel">
+    <section class="hero-carousel" aria-label="Galerie des hôtels en vedette" aria-roledescription="carousel">
       
-        <div class="carousel-track" id="carousel-track" aria-live="off">
-          <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="1 sur 3">
-            <img src="assets/img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" alt="Vue extérieure de l'Hotel Truc au crépuscule" fetchpriority="high">
-          </div>
-          
-          <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 sur 3">
-            <img src="assets/img_hotels/2025-11-21-1019_0_Original_resultat.jpg" alt="Vue extérieure de l'Hotel Machin" loading="lazy">
-          </div>
-          
-          <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 sur 3">
-            <img src="assets/img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" alt="Vue extérieure de l'Hotel Bidule" loading="lazy">
-          </div>
+      <div class="carousel-track" id="carousel-track" aria-live="off">
+        <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="1 sur 3">
+          <img src="assets/img_hotels/2025-11-21-1027_0_Original_01_resultat.jpg" alt="Vue extérieure de l'Hotel Truc au crépuscule" fetchpriority="high">
         </div>
+        
+        <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 sur 3">
+          <img src="assets/img_hotels/2025-11-21-1019_0_Original_resultat.jpg" alt="Vue extérieure de l'Hotel Machin" loading="lazy">
+        </div>
+        
+        <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 sur 3">
+          <img src="assets/img_hotels/2025-11-21-1019_0_Original_01_resultat.jpg" alt="Vue extérieure de l'Hotel Bidule" loading="lazy">
+        </div>
+      </div>
 
-        <button id="carousel-prev" class="carousel-btn prev" aria-label="Image précédente">&#10094;</button>
-        <button id="carousel-next" class="carousel-btn next" aria-label="Image suivante">&#10095;</button>
+      <button id="carousel-prev" class="carousel-btn prev" aria-label="Image précédente">&#10094;</button>
+      <button id="carousel-next" class="carousel-btn next" aria-label="Image suivante">&#10095;</button>
 
       <div class="hero-form-overlay">
         
@@ -253,7 +254,7 @@
             </div>
 
             <div class="footer-col">
-                <h4 class="footer-title">Newsletter</h4>
+                <h3 class="footer-title">Newsletter</h3>
                 <label for="newsletter-email" class="footer-text">Recevez nos meilleures offres et actualités.</label>                
                 <form action="#" method="POST" class="newsletter-form inline-action-form">
                     <div class="newsletter-input-group">

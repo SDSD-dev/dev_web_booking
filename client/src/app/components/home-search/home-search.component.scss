@@ -181,11 +181,43 @@
    Responsive (Tablettes & Mobiles)
    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
-@media (max-width: 1024px) {
+@media (max-width: 1090px) {
   .hero-search-grid {
     /* Sur tablette -> 3 colonnes */
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  .hero-search-form {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 0.6rem 1rem 0 1rem;
+  }
+
+  /* Donne une hauteur fixe uniquement aux images pour mobile */
+  .carousel-track {
+    height: 350px; 
+    flex-shrink: 0;
+  }
+
+  /* Repositionne les flèches du carrousel au centre de l'image (350 / 2 = 175px) */
+  .carousel-btn {
+    top: 175px; 
+  }
+  /* Transforme le conteneur principal en colonne */
+  .hero-carousel {
+    height: auto; /* Supprime la hauteur fixe de 60vh */
+    min-height: auto; /* Supprime la hauteur minimale */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-form-overlay {
+    position: relative; /* Annule le position: absolute */
+    bottom: auto;    
+    margin-top: -20px; /* Marge négative pour "morde" légèrement sur l'image */
+    padding: 0 1rem;
+    margin-bottom: 2rem; /* Ajoute de l'espace en bas de la page */
+  }
+
   .options-fieldset {
     grid-column: span 3; /* Les options prennent toute la largeur en bas */
   }
@@ -266,7 +298,7 @@
 /* --- Inputs ultra ronds --- */
 .rounded-input {
   width: 100%;
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 1rem;
   margin-bottom: 0.2rem;
   border: 1px solid #afbecf;
   border-radius: 1.5rem;
