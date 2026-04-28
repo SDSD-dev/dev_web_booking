@@ -29,7 +29,7 @@ Ce projet valide trois grands domaines d'expertise :
 
 * **`/documents/`** : Contient tous les documents de conception (Dossier de projet détaillé, schémas UML, architecture MVC, supports de présentation).
 * **`/booking-bloc1-static/`** : **[Bloc 1]** Intégration Front-End native statique et responsive (HTML5 / CSS3 / JavaScript natif), expurgée de toute logique serveur.
-  * **[Consulter la version en ligne (GitHub Pages)](https://sdsd-dev.github.io/dev_web_booking/index.html)**
+  * **[Consulter la version en ligne (GitHub Pages)](https://sdsd-dev.github.io/dev_web_booking/booking-bloc1-static/index.html)**
 * **`/server/`** : **[Bloc 2]** Moteur Back-End et API REST (Node.js, Express, MySQL). Contient la logique métier, la sécurité et la modélisation de la base de données.
 * **`/client/`** : **[Bloc 3]** Single Page Application (Angular 20+). L'interface utilisateur dynamique qui consomme l'API Node.js.
 
