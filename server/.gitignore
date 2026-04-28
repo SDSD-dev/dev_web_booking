@@ -30,7 +30,6 @@ build/
 coverage/
 
 # Dependency lock files (optionnel selon ton gestionnaire)
-package-lock.json
 yarn.lock
 
 # Misc

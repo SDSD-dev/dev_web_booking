@@ -1,4 +1,6 @@
-# dev_web_booking
+# Projet.Final.DA.SILVA.DIAS.Serge.2026
+
+Projet final de DA SILVA DIAS Serge - Certification Développeur Web Full Stack (2026)
 
 #  Plateforme de Réservation Hôtelière Full-Stack
 
@@ -20,6 +22,17 @@ Ce projet valide trois grands domaines d'expertise :
 * **Bloc 1 - Intégration Front-End Native :** Création d'une interface UI/UX "from scratch" (sans framework CSS) en **HTML5 / CSS3 pur** (Flexbox/Grid). Focus majeur sur l'**Accessibilité (A11y/WCAG)** et la manipulation du DOM en **JavaScript Vanilla**.
 * **Bloc 2 - Back-End & Architecture des Données :** Développement d'une architecture **MVC** sur-mesure en Node.js (sans ORM lourd). Modélisation de base de données relationnelle (MySQL), sécurité et intégration d'API tierce (Stripe).
 * **Bloc 3 - Framework Client Riche (SPA) :** Développement du Front-End applicatif avec **Angular 20+** (Standalone Components, RxJS, Reactive Forms) pour une expérience utilisateur fluide et asynchrone.
+
+---
+
+## 📂 Structure du Dépôt (Livrables de Certification)
+
+* **`/documents/`** : Contient tous les documents de conception (Dossier de projet détaillé, schémas UML, architecture MVC, supports de présentation).
+* **`/booking-bloc1-static/`** : **[Bloc 1]** Intégration Front-End native statique et responsive (HTML5 / CSS3 / JavaScript natif), expurgée de toute logique serveur.
+  * **[Consulter la version en ligne (GitHub Pages)](https://sdsd-dev.github.io/dev_web_booking/index.html)**
+* **`/server/`** : **[Bloc 2]** Moteur Back-End et API REST (Node.js, Express, MySQL). Contient la logique métier, la sécurité et la modélisation de la base de données.
+* **`/client/`** : **[Bloc 3]** Single Page Application (Angular 20+). L'interface utilisateur dynamique qui consomme l'API Node.js.
+
 
 ---
 
@@ -87,7 +100,7 @@ Le projet est divisé pour assurer une séparation stricte des responsabilités 
 
 ### 2. Configuration du Back-End (API)
 
-* Dans le dossier backend/racine : `npm install`
+* Dans le dossier server/ : `npm install`
 
 * Créer un fichier **.env** à la racine (voir .env.example) : DB_HOST, DB_USER, DB_PASS, DB_NAME, STRIPE_SECRET_KEY, etc.
 
@@ -98,7 +111,7 @@ Le projet est divisé pour assurer une séparation stricte des responsabilités 
 
 ### 3. Configuration du Front-End (Angular)
 
-* Dans le dossier client/angular : `npm install`
+* Dans le dossier client/ : `npm install`
 
 * Lancer le serveur de développement Angular (Port 4200)
 * Le **proxy.conf.json**. redirigera automatiquement les appels /api vers le port 3000
