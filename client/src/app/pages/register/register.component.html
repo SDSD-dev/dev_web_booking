@@ -1,74 +1,80 @@
-<main>
-  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">    
-    <ol itemscope itemtype="https://schema.org/BreadcrumbList">      
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a routerLink="/" itemprop="item">
+<main class="w-full pb-16">
+
+  <!-- Fil d'Ariane -->
+  <nav aria-label="Fil d'Ariane" class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6">    
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center space-x-2 text-sm text-slate-400">      
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+        <a routerLink="/" itemprop="item" class="hover:text-[#005ab9] transition-colors">
           <span itemprop="name">Accueil</span>
         </a>
         <meta itemprop="position" content="1" />
+        <svg class="w-4 h-4 mx-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page" class="text-slate-200 font-medium">
         <span itemprop="name">Inscription</span>
         <meta itemprop="position" content="2" />
       </li>
     </ol>
   </nav>
 
-  <section class="form-group">
+  <!-- Section Formulaire -->
+  <section class="max-w-xl mx-auto mt-6 mb-20 p-8 bg-[#1D283D] border border-slate-700 rounded-2xl shadow-2xl w-full">
     
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="compact-register-form" novalidate>
-      <h1>Formulaire d'inscription</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+      <h1 class="text-3xl font-bold text-slate-100 mb-8 text-center">Créer un compte</h1>
 
+      <!-- Alertes (Erreur / Succès) -->
       @if (errorMessage) {
-        <div class="error-alert" role="alert" style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ef9a9a;">
+        <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm font-medium flex items-center gap-2" role="alert">
+          <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           {{ errorMessage }}
         </div>
       }
       @if (successMessage) {
-        <div class="success-alert" role="status" style="background-color: #e8f5e9; color: #2e7d32; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #a5d6a7;">
+        <div class="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-sm font-medium flex items-center gap-2" role="status">
+          <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           {{ successMessage }}
         </div>
       }
 
-
-
-
-
-      <div class="form-register-grid">
-        <div class="form-register-group">
-
-        </div>
-        <div class="form-register-group">
-
-        </div>
-      </div>
-
-
-
-      <div class="form-register-grid">
-        <div class="form-register-group">
-          <label for="nom">Nom (obligatoire) :</label>
-          <input type="text" id="nom" formControlName="nom" class="rounded-input" required autocomplete="family-name" />
+      <!-- Grille Nom / Prénom -->
+      <div class="flex flex-col md:flex-row gap-5 mb-5">
+        
+        <!-- Nom -->
+        <div class="flex flex-col flex-1">
+          <label for="nom" class="block text-sm font-medium text-slate-300 mb-2">
+            Nom <span class="text-red-400" aria-hidden="true">*</span>
+          </label>
+          <input type="text" id="nom" formControlName="nom" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="family-name" />
           @if (registerForm.get('nom')?.errors?.['required'] && registerForm.get('nom')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
+            <small class="text-red-400 text-sm font-medium mt-2 block">Ce champ est requis.</small>
           }
         </div>
-        <div class="form-register-group">
-          <label for="prenom">Prénom (obligatoire) :</label>
-          <input type="text" id="prenom" formControlName="prenom" class="rounded-input" required autocomplete="given-name" />
+
+        <!-- Prénom -->
+        <div class="flex flex-col flex-1">
+          <label for="prenom" class="block text-sm font-medium text-slate-300 mb-2">
+            Prénom <span class="text-red-400" aria-hidden="true">*</span>
+          </label>
+          <input type="text" id="prenom" formControlName="prenom" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="given-name" />
           @if (registerForm.get('prenom')?.errors?.['required'] && registerForm.get('prenom')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
+            <small class="text-red-400 text-sm font-medium mt-2 block">Ce champ est requis.</small>
           }
         </div>
+
       </div>
 
-
-      <div class="form-register-grid">
-        <div class="form-register-group">
-          <label for="email">Email (obligatoire) :</label>
-          <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email" />
+      <!-- Grille Email / Téléphone -->
+      <div class="flex flex-col md:flex-row gap-5 mb-5">
+        
+        <!-- Email -->
+        <div class="flex flex-col flex-1">
+          <label for="email" class="block text-sm font-medium text-slate-300 mb-2">
+            Email <span class="text-red-400" aria-hidden="true">*</span>
+          </label>
+          <input type="email" id="email" formControlName="email" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="email" />
           @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
+            <small class="text-red-400 text-sm font-medium mt-2 block">
               @if (registerForm.get('email')?.errors?.['required']) {
                 Ce champ est requis.
               } @else if (registerForm.get('email')?.errors?.['email']) {
@@ -77,41 +83,59 @@
             </small>
           }
         </div>
-        <div class="form-register-group">
-          <label for="telephone">Téléphone (obligatoire) :</label>
-          <input type="tel" id="telephone" formControlName="telephone" class="rounded-input" required autocomplete="tel" />
+
+        <!-- Téléphone -->
+        <div class="flex flex-col flex-1">
+          <label for="telephone" class="block text-sm font-medium text-slate-300 mb-2">
+            Téléphone <span class="text-red-400" aria-hidden="true">*</span>
+          </label>
+          <input type="tel" id="telephone" formControlName="telephone" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="tel" />
           @if (registerForm.get('telephone')?.invalid && registerForm.get('telephone')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
+            <small class="text-red-400 text-sm font-medium mt-2 block">
               @if (registerForm.get('telephone')?.errors?.['required']) {
                 Ce champ est requis.
               } @else if (registerForm.get('telephone')?.errors?.['pattern']) {
-                Format de téléphone invalide.
+                Format invalide.
               }
             </small>
           }
         </div>
+
       </div>
      
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="new-password" />
-      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
-          @if (registerForm.get('password')?.errors?.['required']) {
-            Ce champ est requis.
-          } @else if (registerForm.get('password')?.errors?.['minlength']) {
-            6 caractères minimum requis.
-          }
-        </small>
-      }
-      <br>
+      <!-- Mot de passe -->
+      <div class="mb-8">
+        <label for="password" class="block text-sm font-medium text-slate-300 mb-2">
+          Mot de passe <span class="text-red-400" aria-hidden="true">*</span>
+        </label>
+        <input type="password" id="password" formControlName="password" class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="new-password" />
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <small class="text-red-400 text-sm font-medium mt-2 flex items-center gap-1">
+            @if (registerForm.get('password')?.errors?.['required']) {
+              Ce champ est requis.
+            } @else if (registerForm.get('password')?.errors?.['minlength']) {
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              6 caractères minimum requis.
+            }
+          </small>
+        }
+      </div>
 
-      <button type="submit" class="btn-primary rounded-btn" [disabled]="registerForm.invalid" style="width: 100%;">S'inscrire</button>
+      <!-- Bouton d'inscription -->
+      <button type="submit" [disabled]="registerForm.invalid" 
+              class="w-full py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-all duration-200 shadow-md disabled:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">
+        S'inscrire
+      </button>
 
-      <p style="text-align: center; margin-top: 20px; font-size: 0.95rem;">
+      <!-- Lien vers la connexion -->
+      <p class="text-center mt-6 text-sm text-slate-400">
         Déjà inscrit ? 
-        <a routerLink="/login" style="color: #357e7a; font-weight: bold; text-decoration: none;">Se connecter</a>
+        <a routerLink="/login" class="text-[#005ab9] hover:text-[#007bff] hover:underline font-bold transition-colors">
+          Se connecter
+        </a>
       </p>
 
     </form>
   </section>
+  
 </main>

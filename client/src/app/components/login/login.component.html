@@ -1,61 +1,86 @@
-<main>
-  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">    
-    <ol itemscope itemtype="https://schema.org/BreadcrumbList">      
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a routerLink="/" itemprop="item">
+<main class="w-full pb-16">
+  
+  <!-- Fil d'Ariane -->
+  <nav aria-label="Fil d'Ariane" class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6">    
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center space-x-2 text-sm text-slate-400">      
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+        <a routerLink="/" itemprop="item" class="hover:text-[#005ab9] transition-colors">
           <span itemprop="name">Accueil</span>
         </a>
         <meta itemprop="position" content="1" />
+        <!-- Séparateur SVG -->
+        <svg class="w-4 h-4 mx-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page" class="text-slate-200 font-medium">
         <span itemprop="name">Connexion</span>
         <meta itemprop="position" content="2" />
       </li>
     </ol>
   </nav>
 
-  <section class="form-group">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="compact-form" novalidate>
+  <!-- Section Formulaire de Connexion -->
+  <section class="max-w-md mx-auto mt-6 mb-20 p-8 bg-[#1D283D] border border-slate-700 rounded-2xl shadow-2xl w-full">
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
       
-      <h1>Connexion</h1>
+      <h1 class="text-3xl font-bold text-slate-100 mb-8 text-center">Connexion</h1>
 
+      <!-- Message d'erreur global (ex: Mauvais identifiants) -->
       @if (errorMessage) {
-        <div class="error-alert" role="alert" style="background-color: #ffebee; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ef9a9a;">
+        <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm font-medium" role="alert">
           {{ errorMessage }}
         </div>
       }
 
-      <label for="email">Email : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email">
-      
-      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
-          @if (loginForm.get('email')?.errors?.['required']) {
-            Ce champ est requis.
-          } @else if (loginForm.get('email')?.errors?.['email']) {
-            Format d'email invalide.
-          }
-        </small>
-      }
+      <!-- Champ Email -->
+      <div class="mb-5">
+        <label for="email" class="block text-sm font-medium text-slate-300 mb-2">
+          Email <span class="text-red-400" aria-hidden="true">*</span>
+        </label>
+        <input type="email" id="email" formControlName="email" 
+               class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:border-transparent outline-none text-white transition-all shadow-inner" 
+               required autocomplete="email">
+        
+        <!-- Erreurs Email -->
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <small class="text-red-400 text-sm font-medium mt-2 block">
+            @if (loginForm.get('email')?.errors?.['required']) {
+              Ce champ est requis.
+            } @else if (loginForm.get('email')?.errors?.['email']) {
+              Format d'email invalide.
+            }
+          </small>
+        }
+      </div>
 
-      <label for="password">Mot de passe : <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-      <input type="password" id="password" formControlName="password" class="rounded-input" required autocomplete="current-password">
-      
-      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-        <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
-      }
+      <!-- Champ Mot de passe -->
+      <div class="mb-8">
+        <label for="password" class="block text-sm font-medium text-slate-300 mb-2">
+          Mot de passe <span class="text-red-400" aria-hidden="true">*</span>
+        </label>
+        <input type="password" id="password" formControlName="password" 
+               class="w-full px-4 py-2.5 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:border-transparent outline-none text-white transition-all shadow-inner" 
+               required autocomplete="current-password">
+        
+        <!-- Erreurs Mot de passe -->
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <small class="text-red-400 text-sm font-medium mt-2 block">Ce champ est requis.</small>
+        }
+      </div>
 
-      <br>
-
-      <button type="submit" class="btn-primary rounded-btn" [disabled]="loginForm.invalid" style="width: 100%;">
+      <!-- Bouton Submit -->
+      <button type="submit" [disabled]="loginForm.invalid" 
+              class="w-full px-8 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-colors shadow-md disabled:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">
         Se connecter
       </button>
 
-      <p style="text-align: center; margin-top: 20px; font-size: 0.95rem;">
+      <!-- Lien vers l'inscription -->
+      <p class="text-center mt-6 text-sm text-slate-400">
         Pas encore de compte ? 
-        <a routerLink="/register" style="color: #357e7a; font-weight: bold; text-decoration: none;">S'inscrire</a>
+        <a routerLink="/register" class="text-[#005ab9] hover:text-[#007bff] font-bold hover:underline transition-colors">S'inscrire</a>
       </p>
 
     </form>
   </section>
+  
 </main>

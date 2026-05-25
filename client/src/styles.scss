@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /* --- Variables et Reset basique --- */
 * {
   box-sizing: border-box;
@@ -14,11 +19,11 @@ body {
   margin: 0;
 }
 
-main {
-  background-color: #e9e6df;
-  padding-bottom: 1rem;
-  min-height: 80vh;
-}
+// main {
+//   background-color: #141c2b;
+//   padding-bottom: 1rem;
+//   min-height: 80vh;
+// }
 
 section {
   margin-bottom: 1rem;

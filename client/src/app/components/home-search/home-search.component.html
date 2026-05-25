@@ -1,35 +1,46 @@
-<section class="hero-carousel" aria-label="Galerie des hôtels en vedette" aria-roledescription="carousel">
+<!-- Section Carrousel (Conteneur parent en relative) -->
+<section class="relative w-full mx-auto h-[700px] md:h-[650px] overflow-hidden shadow-xl group" aria-label="Galerie des hôtels en vedette" aria-roledescription="carousel">
   
-  <div class="carousel-track" id="carousel-track" aria-live="off">
+  <!-- Piste du Carrousel -->
+  <div class="relative w-full h-full" id="carousel-track" aria-live="off">
     @for (img of images; track img; let i = $index) {
       
-      <div class="carousel-slide" 
-           [class.active]="currentIndex === i" 
+      <!-- Slide (Gestion du fondu avec Angular et Tailwind) -->
+      <div class="absolute inset-0 transition-opacity duration-700 ease-in-out"
+           [ngClass]="currentIndex === i ? 'opacity-100 z-10' : 'opacity-0 z-0'"
            role="group" 
            aria-roledescription="slide" 
            [attr.aria-label]="(i + 1) + ' sur ' + images.length">
            
         <img [src]="img" 
              alt="Photo de présentation d'un de nos hôtels" 
+             class="w-full h-full object-cover object-bottom block"
              [attr.fetchpriority]="i === 0 ? 'high' : null" 
              [attr.loading]="i === 0 ? null : 'lazy'">
+             
+        <!-- Voile assombrissant sur l'image pour mieux lire le formulaire -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent"></div>
       </div>
       
     }
   </div>
 
-  <button (click)="prev()" class="carousel-btn prev" aria-label="Afficher l'image précédente">&#10094;</button>
-  <button (click)="next()" class="carousel-btn next" aria-label="Afficher l'image suivante">&#10095;</button>
+  <!-- Boutons Précédent / Suivant -->
+  <button (click)="prev()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white/70 hover:bg-blue-600 text-slate-800 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md" aria-label="Afficher l'image précédente">&#10094;</button>
+  <button (click)="next()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white/70 hover:bg-blue-600 text-slate-800 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md" aria-label="Afficher l'image suivante">&#10095;</button>
 
-  <div class="hero-form-overlay">
+  <!-- L'OVERLAY DU FORMULAIRE -->
+  <div class="absolute bottom-0 md:bottom-6 left-1/2 -translate-x-1/2 w-full md:w-[95%] max-w-[1000px] z-30 p-2 md:p-0">
     
-    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hero-search-form" aria-label="Recherche d'hôtels" novalidate>
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="bg-[#1D283D]/95 backdrop-blur-md border border-slate-700/50 rounded-xl shadow-2xl p-4 md:p-6" aria-label="Recherche d'hôtels" novalidate>
       
-      <div class="hero-search-grid">
+      <!-- Grille Principale (Ville, Dates, Personnes) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
         
-        <div class="form-group">
-          <label for="lieu">Destination <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-          <select id="lieu" formControlName="city" class="rounded-input" required>
+        <!-- Destination -->
+        <div class="flex flex-col">
+          <label for="lieu" class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Destination <span class="text-red-400">*</span></label>
+          <select id="lieu" formControlName="city" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white text-sm cursor-pointer appearance-none" required>
             <option value="" disabled selected>-- Choix --</option>
             <option value="Paris">Paris</option>
             <option value="Lyon">Lyon</option>
@@ -40,55 +51,64 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="date_debut">Arrivée <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-          <input type="date" id="date_debut" formControlName="dateDebut" [min]="today" class="rounded-input" required>
+        <!-- Arrivée -->
+        <div class="flex flex-col">
+          <label for="date_debut" class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Arrivée <span class="text-red-400">*</span></label>
+          <input type="date" id="date_debut" formControlName="dateDebut" [min]="today" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white text-sm [color-scheme:dark]" required>
         </div>
         
-        <div class="form-group">
-          <label for="date_fin">Départ <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-          <input type="date" id="date_fin" formControlName="dateFin" [min]="minDepartureDate" class="rounded-input" required>
+        <!-- Départ -->
+        <div class="flex flex-col">
+          <label for="date_fin" class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Départ <span class="text-red-400">*</span></label>
+          <input type="date" id="date_fin" formControlName="dateFin" [min]="minDepartureDate" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white text-sm [color-scheme:dark]" required>
         </div>
 
-        <div class="form-group">
-          <label for="adultes">Adultes <span aria-hidden="true" style="color: #e74c3c;">*</span></label>
-          <input type="number" id="adultes" formControlName="adults" min="1" class="rounded-input" required>
+        <!-- Adultes -->
+        <div class="flex flex-col">
+          <label for="adultes" class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Adultes <span class="text-red-400">*</span></label>
+          <input type="number" id="adultes" formControlName="adults" min="1" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white text-sm" required>
         </div>
         
-        <div class="form-group">
-          <label for="enfants">Enfants</label>
-          <input type="number" id="enfants" formControlName="children" min="0" class="rounded-input">
+        <!-- Enfants -->
+        <div class="flex flex-col">
+          <label for="enfants" class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Enfants</label>
+          <input type="number" id="enfants" formControlName="children" min="0" class="w-full px-3 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white text-sm">
         </div>
-
-        <fieldset class="form-group options-fieldset">
-          <legend>Options</legend>
-          <div class="options-2-col">
-            <div class="options-col">
-              <label class="custom-checkbox">
-                <input type="checkbox" formControlName="wifi"> <span> Wi-Fi</span>
-              </label>
-              <label class="custom-checkbox">
-                <input type="checkbox" formControlName="piscine"> <span> Piscine</span>
-              </label>
-              <label class="custom-checkbox">
-                <input type="checkbox" formControlName="spa"> <span> Spa</span>
-              </label>
-            </div>
-            <div class="options-col">
-              <label class="custom-checkbox">
-                <input type="checkbox" formControlName="animaux"> <span> Animaux</span>
-              </label>
-              <label class="custom-checkbox">
-                <input type="checkbox" formControlName="parking"> <span> Parking</span>
-              </label>
-            </div>
-          </div>
-        </fieldset>
 
       </div>
 
-      <div class="hero-form-bottom">
-        <button type="submit" class="search-btn">Rechercher</button>
+      <!-- Ligne du Bas (Options + Bouton) -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mt-4 pt-4 border-t border-slate-600/50">
+        
+        <!-- Options Checkboxes -->
+        <fieldset class="w-full md:flex-1">
+          <legend class="sr-only">Options</legend>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors">
+              <input type="checkbox" formControlName="wifi" class="w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded"> Wi-Fi
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors">
+              <input type="checkbox" formControlName="piscine" class="w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded"> Piscine
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors">
+              <input type="checkbox" formControlName="spa" class="w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded"> Spa
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors">
+              <input type="checkbox" formControlName="animaux" class="w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded"> Animaux
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors">
+              <input type="checkbox" formControlName="parking" class="w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded"> Parking
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Bouton Submit -->
+        <div class="w-full md:w-auto shrink-0 mt-2 md:mt-0">
+          <button type="submit" [disabled]="searchForm.invalid" class="w-full md:w-auto px-8 py-2.5 bg-[#005ab9] hover:bg-[#007bff] disabled:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all duration-200 shadow-md">
+            Rechercher
+          </button>
+        </div>
+
       </div>
 
     </form>

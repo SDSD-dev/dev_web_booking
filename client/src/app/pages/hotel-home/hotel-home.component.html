@@ -1,90 +1,122 @@
-<main>
+<main class="w-full pb-16">
   
-
+  <!-- Composant de recherche (Carrousel + Formulaire) -->
   <app-home-search (searchCriteria)="handleSearch($event)"></app-home-search>
 
-
-  <div class="container">
+  <!-- ==========================================
+       SECTION RÉSULTATS DE RECHERCHE
+       ========================================== -->
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+    
     @if (!loading) {  
-      <section class="search-results-grid" aria-label="Résultats de votre recherche">
+      <!-- Grille des résultats (Composants enfants) -->
+      <section class="flex flex-col gap-6" aria-label="Résultats de votre recherche">
         @for (hotel of hotels; track hotel.id_hotel) {
           <app-hotel-card [hotel]="hotel"></app-hotel-card>
         }
       </section>
+      
+      <!-- Pagination -->
       @if (totalPages > 1) {
-        <div class="pagination-container">
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="btn-pagination"> 
+        <div class="flex justify-center items-center gap-4 mt-12">
+          <button (click)="goToPage(currentPage - 1)" 
+                  [disabled]="currentPage === 1" 
+                  class="px-4 py-2 bg-[#1D283D] text-slate-300 border border-slate-600 rounded-lg font-medium transition-colors hover:bg-[#005ab9] hover:text-white hover:border-[#005ab9] disabled:opacity-50 disabled:cursor-not-allowed"> 
             &laquo; Précédent
           </button>
-          <span class="pagination-info">Page {{ currentPage }} sur {{ totalPages }}</span>
-          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn-pagination">
+          
+          <span class="text-slate-400 font-medium">Page <strong class="text-slate-200">{{ currentPage }}</strong> sur {{ totalPages }}</span>
+          
+          <button (click)="goToPage(currentPage + 1)" 
+                  [disabled]="currentPage === totalPages" 
+                  class="px-4 py-2 bg-[#1D283D] text-slate-300 border border-slate-600 rounded-lg font-medium transition-colors hover:bg-[#005ab9] hover:text-white hover:border-[#005ab9] disabled:opacity-50 disabled:cursor-not-allowed">
             Suivant &raquo;
           </button>
         </div>
-
       }
+      
     } @else {
-      <div class="loading-state" style="text-align: center; padding: 3rem 0; color: #64748b;">
-        <p>Chargement des données API...</p>
-        <p><small><em> Veuillez patienter </em></small></p>
+      <!-- État de chargement -->
+      <div class="flex flex-col items-center justify-center py-20 text-slate-400">
+        <!-- Petit spinner SVG optionnel pour le style -->
+        <svg class="animate-spin h-8 w-8 text-[#005ab9] mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        <p class="text-lg font-medium text-slate-300">Chargement des données API...</p>
+        <p class="text-sm mt-2"><em>Veuillez patienter quelques instants</em></p>
       </div>
     }
   </div>
 
-  <div>
-    <h1 style="text-align: center; margin: 3rem 0 2rem 0; color: #1e293b;"><span style="color: #357e7a;">Nos</span> Hôtels d'Exception</h1>
+  <!-- ==========================================
+       SECTION HÔTELS EN PROMOTION
+       ========================================== -->
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+    
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-slate-100 mb-10">
+      <span class="text-[#005ab9]">Nos</span> Hôtels d'Exception
+    </h1>
 
-    <section class="promo-grid" aria-label="Nos hôtels en promotion">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Nos hôtels en promotion">
       
-      <article class="card">
-        <div class="card-image">
-          <img src="assets/img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Photo du Kiehn - Larson Resort">
+      <!-- Carte Promo 1 -->
+      <article class="flex flex-col bg-[#1D283D] rounded-xl min-h-[350px] overflow-hidden border border-slate-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50 transition-all duration-300 group">
+        <div class="overflow-hidden">
+          <img class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105" src="assets/img_hotels/2025-11-21-1044_0_Original_01_resultat.jpg" alt="Photo du Kiehn - Larson Resort">
         </div>
-        <div class="card-content">
-          <h2 class="card-title">Le Kiehn - Larson Resort</h2>
-          <p class="card-subtitle">En centre-ville de Bordeaux</p>
-          <p class="card-text">Vito benevolentia truculenter crapula cetera brevis calcar clamo. Angelus temptatio suadeo astrum vestrum teres copia bis arcus deleniti tametsi harum. Aegre conatus deprecator tribuo repudiandae perspiciatis.</p>
-          
-          <div class="card-footer">
-            <span class="card-price">À partir de 155,79 €</span>
-            <a [routerLink]="['/hotel', 447]" class="card-button btn-primary">Réserver</a>
+        <div class="flex flex-col flex-1 justify-between p-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-200 mb-1">Le Kiehn - Larson Resort</h2>
+            <p class="text-slate-500 text-sm font-medium mb-4">En centre-ville de Bordeaux</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Vito benevolentia truculenter crapula cetera brevis calcar clamo. Angelus temptatio suadeo astrum vestrum teres copia bis arcus deleniti tametsi harum. Aegre conatus deprecator tribuo repudiandae perspiciatis.</p>
           </div>
-        </div>
+          <div class="mt-6 flex flex-col items-center">
+            <span class="text-slate-300 text-sm mb-3">À partir de <strong class="text-[#005ab9] text-lg font-bold">155,79 €</strong> / nuit</span>
+            <a [routerLink]="['/hotel', 447]" class="w-full text-center px-6 py-2.5 bg-[#005ab9] text-white rounded-lg font-bold hover:bg-[#007bff] transition-colors shadow-md">
+              Réserver
+            </a>
+          </div>
+        </div>    
       </article>
 
-      <article class="card">
-        <div class="card-image">
-          <img src="assets/img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Photo du Kutch LLC Lodge">
+      <!-- Carte Promo 2 -->
+      <article class="flex flex-col bg-[#1D283D] rounded-xl min-h-[350px] overflow-hidden border border-slate-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50 transition-all duration-300 group">
+        <div class="overflow-hidden">
+          <img class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105" src="assets/img_hotels/2025-11-21-1133_0_Original_resultat.jpg" alt="Photo du Kutch LLC Lodge">
         </div>
-        <div class="card-content">
-          <h2 class="card-title">Le Kutch LLC Lodge</h2>
-          <p class="card-subtitle">En centre-ville de Lourdes</p>
-          <p class="card-text">Tardus soluta comburo spargo depulso. Neque suscipio desparatus vociferor. Strenuus ipsum caput avaritia adstringo cohaero in arma tenuis atqui. Solitudo denego ab averto vapulus vulgivagus.</p>
-          
-          <div class="card-footer">
-            <span class="card-price">À partir de 73,48 €</span>
-            <a [routerLink]="['/hotel', 438]" class="card-button btn-primary">Réserver</a>
+        <div class="flex flex-col flex-1 justify-between p-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-200 mb-1">Le Kutch LLC Lodge</h2>
+            <p class="text-slate-500 text-sm font-medium mb-4">En centre-ville de Lourdes</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Tardus soluta comburo spargo depulso. Neque suscipio desparatus vociferor. Strenuus ipsum caput avaritia adstringo cohaero in arma tenuis atqui. Solitudo denego ab averto vapulus vulgivagus.</p>
           </div>
-        </div>
+          <div class="mt-6 flex flex-col items-center">
+            <span class="text-slate-300 text-sm mb-3">À partir de <strong class="text-[#005ab9] text-lg font-bold">73,48 €</strong> / nuit</span>
+            <a [routerLink]="['/hotel', 438]" class="w-full text-center px-6 py-2.5 bg-[#005ab9] text-white rounded-lg font-bold hover:bg-[#007bff] transition-colors shadow-md">
+              Réserver
+            </a>
+          </div>
+        </div>    
       </article>
 
-      <article class="card">
-        <div class="card-image">
-          <img src="assets/img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Photo du Volkman and Schuppe Lodge">
+      <!-- Carte Promo 3 -->
+      <article class="flex flex-col bg-[#1D283D] rounded-xl min-h-[350px] overflow-hidden border border-slate-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50 transition-all duration-300 group">
+        <div class="overflow-hidden">
+          <img class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105" src="assets/img_hotels/2025-11-21-1136_0_Original_resultat.jpg" alt="Photo du Volkman and Schuppe Lodge">
         </div>
-        <div class="card-content">
-          <h2 class="card-title">Le Volkman and Schuppe Lodge</h2>
-          <p class="card-subtitle">En centre-ville de Paris</p>
-          <p class="card-text">Uter cicuta atrocitas circumvenio surculus defungo illo damno. Calamitas temeritas aqua vomito ventosus territo versus bene tunc. Crinis carmen cribro arcus deleniti tametsi harum.</p>
-          
-          <div class="card-footer">
-            <span class="card-price">À partir de 228,11 €</span>
-            <a [routerLink]="['/hotel', 441]" class="card-button btn-primary">Réserver</a>
+        <div class="flex flex-col flex-1 justify-between p-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-200 mb-1">Le Volkman and Schuppe Lodge</h2>
+            <p class="text-slate-500 text-sm font-medium mb-4">En centre-ville de Paris</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Uter cicuta atrocitas circumvenio surculus defungo illo damno. Calamitas temeritas aqua vomito ventosus territo versus bene tunc. Crinis carmen cribro arcus deleniti tametsi harum.</p>
           </div>
-        </div>
+          <div class="mt-6 flex flex-col items-center">
+            <span class="text-slate-300 text-sm mb-3">À partir de <strong class="text-[#005ab9] text-lg font-bold">228,11 €</strong> / nuit</span>
+            <a [routerLink]="['/hotel', 441]" class="w-full text-center px-6 py-2.5 bg-[#005ab9] text-white rounded-lg font-bold hover:bg-[#007bff] transition-colors shadow-md">
+              Réserver
+            </a>
+          </div>
+        </div>    
       </article>
 
     </section>
   </div>
-
 </main>

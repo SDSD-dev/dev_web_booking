@@ -1,11 +1,12 @@
 // src/app/components/home-search/home-search.component.ts
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-search',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './home-search.component.html',
   styleUrl: './home-search.component.scss',
 })
