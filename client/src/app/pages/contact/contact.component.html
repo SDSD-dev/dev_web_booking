@@ -1,90 +1,105 @@
-<main>
-  <nav aria-label="Fil d'Ariane" class="breadcrumb-nav container">  
-    <ol itemscope itemtype="https://schema.org/BreadcrumbList">    
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a routerLink="/" itemprop="item">
+<main class="w-full pb-16">
+
+  <nav aria-label="Fil d'Ariane" class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6">    
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center space-x-2 text-sm text-slate-400">      
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+        <a routerLink="/" itemprop="item" class="hover:text-[#005ab9] transition-colors">
           <span itemprop="name">Accueil</span>
         </a>
         <meta itemprop="position" content="1" />
+        <svg class="w-4 h-4 mx-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page" class="text-slate-200 font-medium">
         <span itemprop="name">Contact</span>
         <meta itemprop="position" content="2" />
       </li>
     </ol>
   </nav>
 
-  <section class="contact-grid-container" aria-label="Page de contact et localisation">
-    
-    <div class="contact-form-column">
-      <div class="map-container">
+  <section class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8" aria-label="Page de contact et localisation">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+
+      <div class="w-full h-[400px] lg:h-full min-h-[400px] lg:min-h-[600px] rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative">
         <iframe 
           src="https://maps.google.com/maps?q=Paris&t=&z=13&ie=UTF8&iwloc=&output=embed" 
           allowfullscreen="" 
           loading="lazy" 
           referrerpolicy="no-referrer-when-downgrade" 
-          title="Carte interactive Google Maps centrant la ville de Paris">
+          title="Carte interactive Google Maps centrant la ville de Paris"
+          class="absolute inset-0 w-full h-full border-0">
         </iframe>
       </div>
-    </div>
 
-    <div class="contact-map-column">
-      
-      @if (contactMessage) {
-        <div role="status" style="background-color: #e8f5e9; color: #2e7d32; padding: 15px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #a5d6a7; text-align: center; font-weight: bold;">
-          {{ contactMessage }}
-        </div>
-      }
-
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="compact-contact-form" novalidate>
-        <h1>Formulaire de contact</h1>
+      <div class="bg-[#1D283D] border border-slate-700 rounded-2xl shadow-2xl p-6 sm:p-8 w-full">
         
-        <div class="form-group">
-          
-          <label for="nom">Nom (obligatoire) :</label>
-          <input type="text" id="nom" formControlName="nom" class="rounded-input" required autocomplete="family-name" />
-          @if (contactForm.get('nom')?.errors?.['required'] && contactForm.get('nom')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
-          }
-          
-          <label for="prenom">Prénom (obligatoire) :</label>
-          <input type="text" id="prenom" formControlName="prenom" class="rounded-input" required autocomplete="given-name" />
-          @if (contactForm.get('prenom')?.errors?.['required'] && contactForm.get('prenom')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
-          }
-          
-          <label for="email">Email (obligatoire) :</label>
-          <input type="email" id="email" formControlName="email" class="rounded-input" required autocomplete="email" />
-          @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">
-              @if (contactForm.get('email')?.errors?.['required']) {
-                Ce champ est requis.
-              } @else if (contactForm.get('email')?.errors?.['email']) {
-                Format d'email invalide.
-              }
-            </small>
-          }
-          
-          <label for="phone">Téléphone :</label>
-          <input type="tel" id="phone" formControlName="phone" class="rounded-input" autocomplete="tel" />
-          <label for="message">Message (obligatoire) :</label>
-          <textarea id="message" formControlName="message" rows="5" class="rounded-input" required></textarea>
-          @if (contactForm.get('message')?.errors?.['required'] && contactForm.get('message')?.touched) {
-            <small class="error-message" style="color: #e74c3c; display: block; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600;">Ce champ est requis.</small>
-          }
-          
-          <label class="custom-checkbox" style="margin-top: 15px; margin-bottom: 20px;">
-            <input type="checkbox" formControlName="consent_public" required>
-            <span> J'accepte que mes données soient traitées dans le cadre de ma demande de contact.</span>
-          </label>
+        @if (contactMessage) {
+          <div class="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-sm font-medium flex items-center gap-2" role="status">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            {{ contactMessage }}
+          </div>
+        }
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate class="flex flex-col gap-5">
           
           <div>
-            <button type="submit" class="btn-primary rounded-btn" [disabled]="contactForm.invalid" style="width: 100%;">Envoyer</button>
+            <h1 class="text-3xl font-bold text-slate-100 mb-2">Formulaire de contact</h1>
+            <p class="text-slate-400 text-sm mb-4">Une question ? N'hésitez pas à nous envoyer un message.</p>
           </div>
 
-        </div>
-      </form>
-    </div>
+          <div class="flex flex-col sm:flex-row gap-5">
+            <div class="flex flex-col flex-1">
+              <label for="nom" class="text-sm font-medium text-slate-300 mb-2">Nom <span class="text-red-400" aria-hidden="true">*</span></label>
+              <input type="text" id="nom" formControlName="nom" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="family-name" />
+              @if (contactForm.get('nom')?.errors?.['required'] && contactForm.get('nom')?.touched) {
+                <small class="text-red-400 text-sm font-medium mt-2">Ce champ est requis.</small>
+              }
+            </div>
+            
+            <div class="flex flex-col flex-1">
+              <label for="prenom" class="text-sm font-medium text-slate-300 mb-2">Prénom <span class="text-red-400" aria-hidden="true">*</span></label>
+              <input type="text" id="prenom" formControlName="prenom" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="given-name" />
+              @if (contactForm.get('prenom')?.errors?.['required'] && contactForm.get('prenom')?.touched) {
+                <small class="text-red-400 text-sm font-medium mt-2">Ce champ est requis.</small>
+              }
+            </div>
+          </div>
 
+          <div class="flex flex-col">
+            <label for="email" class="text-sm font-medium text-slate-300 mb-2">Email <span class="text-red-400" aria-hidden="true">*</span></label>
+            <input type="email" id="email" formControlName="email" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" required autocomplete="email" />
+            @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+              <small class="text-red-400 text-sm font-medium mt-2">
+                @if (contactForm.get('email')?.errors?.['required']) { Ce champ est requis. }
+                @else if (contactForm.get('email')?.errors?.['email']) { Format d'email invalide. }
+              </small>
+            }
+          </div>
+
+          <div class="flex flex-col">
+            <label for="phone" class="text-sm font-medium text-slate-300 mb-2">Téléphone</label>
+            <input type="tel" id="phone" formControlName="phone" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner" autocomplete="tel" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="message" class="text-sm font-medium text-slate-300 mb-2">Message <span class="text-red-400" aria-hidden="true">*</span></label>
+            <textarea id="message" formControlName="message" rows="5" class="w-full px-4 py-2 bg-[#18191C] border border-slate-600 rounded-lg focus:ring-2 focus:ring-[#005ab9] focus:outline-none text-white transition-colors shadow-inner resize-y" required></textarea>
+            @if (contactForm.get('message')?.errors?.['required'] && contactForm.get('message')?.touched) {
+              <small class="text-red-400 text-sm font-medium mt-2">Ce champ est requis.</small>
+            }
+          </div>
+
+          <label class="flex items-start gap-3 cursor-pointer text-slate-300 text-sm font-medium hover:text-white transition-colors mt-2">
+            <input type="checkbox" formControlName="consent_public" required class="mt-1 shrink-0 w-4 h-4 accent-[#005ab9] bg-slate-800 border-slate-600 rounded">
+            <span class="leading-relaxed">J'accepte que mes données soient traitées dans le cadre de ma demande de contact.</span>
+          </label>
+
+          <button type="submit" [disabled]="contactForm.invalid" class="w-full mt-4 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-all duration-200 shadow-md disabled:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">
+            Envoyer
+          </button>
+
+        </form>
+      </div>
+
+    </div>
   </section>
 </main>

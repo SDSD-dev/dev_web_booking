@@ -1,57 +1,73 @@
-<main class="container" style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+<main class="w-full min-h-[60vh] flex items-center justify-center pb-16 px-4 mt-10">
   
-  <section class="checkout-card" style="text-align: center; padding: 3rem 2rem; max-width: 600px; width: 100%;">
+  <section class="max-w-2xl w-full bg-[#1D283D] border border-slate-700 rounded-2xl p-8 md:p-12 shadow-2xl text-center">
 
+    <!-- ==========================================
+         ÉTAT 1 : VÉRIFICATION EN COURS (LOADING)
+         ========================================== -->
     @if (isLoading) {
-      <div aria-live="polite">
-        <svg style="width: 60px; height: 60px; color: #005ab9; animation: spin 1s linear infinite; margin: 0 auto 1.5rem auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" opacity="0.25"></circle>
-          <path d="M12 2a10 10 0 0 1 10 10" opacity="0.75"></path>
+      <div aria-live="polite" class="flex flex-col items-center">
+        
+        <!-- Spinner SVG natif Tailwind (animate-spin) -->
+        <svg class="w-16 h-16 text-[#005ab9] animate-spin mb-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" class="opacity-25"></circle>
+          <path d="M12 2a10 10 0 0 1 10 10" class="opacity-75"></path>
         </svg>
         
-        <h1 class="section-title" style="margin-bottom: 1rem;">Vérification du paiement...</h1>
-        <p style="color: #64748b; font-size: 1.1rem; font-weight: bold;">Ne fermez pas cette page.</p>
-        
-        <style>
-          @keyframes spin { 100% { transform: rotate(360deg); } }
-        </style>
+        <h1 class="text-2xl md:text-3xl font-bold text-slate-100 mb-3">Vérification du paiement...</h1>
+        <p class="text-lg font-medium text-slate-400 bg-[#18191C] px-4 py-2 rounded-lg border border-slate-700 inline-block">Ne fermez pas cette page.</p>
       </div>
     }
 
+    <!-- ==========================================
+         ÉTAT 2 : SUCCÈS
+         ========================================== -->
     @if (!isLoading && success) {
-      <div aria-live="assertive">
-        <svg style="width: 80px; height: 80px; color: #10b981; margin: 0 auto 1.5rem auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div aria-live="assertive" class="flex flex-col items-center">
+        
+        <svg class="w-20 h-20 text-emerald-500 mb-6 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
 
-        <h1 class="page-title" style="color: #10b981; font-size: 3rem; margin-bottom: 0.5rem;">Félicitations !</h1>
-        <h2 class="section-title" style="margin-bottom: 2rem;">Votre réservation est confirmée.</h2>
+        <!-- Titre avec effet de dégradé textuel (bg-clip-text) -->
+        <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600 mb-2">
+          Félicitations !
+        </h1>
+        <h2 class="text-xl md:text-2xl font-bold text-slate-200 mb-10">Votre réservation est confirmée.</h2>
         
-        <div class="action-buttons" style="justify-content: center; flex-wrap: wrap; gap: 15px;">
-          <a routerLink="/profile" class="btn-primary">Voir mes réservations</a>
-          
-          <a routerLink="/" class="btn-primary" style="background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e1;">
+        <!-- flex-wrap géré avec sm:flex-row pour le responsive -->
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+          <a routerLink="/profile" class="w-full sm:w-auto px-8 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-colors shadow-md">
+            Voir mes réservations
+          </a>
+          <a routerLink="/" class="w-full sm:w-auto px-8 py-3 bg-[#18191C] hover:bg-slate-700 border border-slate-600 text-slate-300 hover:text-white font-bold rounded-lg transition-colors shadow-sm">
             Retour à l'accueil
           </a>
         </div>
       </div>
     }
 
+    <!-- ==========================================
+         ÉTAT 3 : ERREUR
+         ========================================== -->
     @if (!isLoading && errorMessage) {
-      <div role="alert">
-        <svg style="width: 80px; height: 80px; color: #ef4444; margin: 0 auto 1.5rem auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div role="alert" class="flex flex-col items-center">
+        
+        <svg class="w-20 h-20 text-red-500 mb-6 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
 
-        <h1 class="page-title" style="color: #ef4444; font-size: 3rem; margin-bottom: 0.5rem;">Oups !</h1>
-        <p class="section-title" style="color: #ef4444; margin-bottom: 2rem;">{{ errorMessage }}</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-2">
+          Oups !
+        </h1>
+        <p class="text-lg md:text-xl font-bold text-slate-300 mb-10">{{ errorMessage }}</p>
         
-        <div class="action-buttons" style="justify-content: center;">
-          <a routerLink="/" class="btn-primary">Retourner à l'accueil</a>
-        </div>
+        <a routerLink="/" class="px-8 py-3 bg-[#005ab9] hover:bg-[#007bff] text-white font-bold rounded-lg transition-colors shadow-md">
+          Retourner à l'accueil
+        </a>
       </div>
     }
 
