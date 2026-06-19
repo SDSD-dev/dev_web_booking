@@ -51,33 +51,17 @@ app.use(express.static(path.join(__dirname, "../server/public")));
 // Permet d'accéder aux fichiers statiques via /public (ex: /public/css/style.css)
 app.use('/public', express.static('public'));
 
-// Configurer EJS
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
 // ****************************************************
 // ****************************************************
 
-// --- IMPORT DES ROUTES ---
-const authRoutes = require("./routes/authRoutes");
-const contactRoutes = require("./routes/contactRoutes");
-const hotelRoutes = require("./routes/hotelRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
-const adminRoutes = require("./routes/adminRoutes");
-// Import routes API
+// --- IMPORT DES ROUTES API ---
 const hotelApiRoutes = require('./routes/api/hotelRoutes');
 const authApiRoutes = require('./routes/api/authRoutes');
 const profileApiRoutes = require('./routes/api/profileRoutes');
 const roomApiRoutes = require('./routes/api/roomRoutes');
 const bookingApiRoutes = require('./routes/api/bookingRoutes');
 const contactApiController = require('./routes/api/contactRoutes')
-
-// --- UTILISATION DES ROUTES ---
-app.use("/", authRoutes); // Pour login, register, profile
-app.use("/", contactRoutes); // Pour /contact (GET et POST)
-app.use("/", hotelRoutes); // Pour /search (GET)
-app.use("/", bookingRoutes); // Pour /bookingRoutes (GET)
-app.use("/admin", adminRoutes); // Pour /adminRoutes (GET)
 
 // --- ROUTES API (JSON) ---
 app.use('/api', hotelApiRoutes); // Pour /api/hotels et /api/hotels/:id
@@ -89,24 +73,6 @@ app.use('/api/contact', contactApiController); // Pour /api/contact (POST)
 
 // ****************************************************
 // ****************************************************
-
-// --- Route principale pour la Home Page -------------------------------------------------------
-app.get("/", async (req, res) => {
-
-  // Initialiser les données pour garantir que la variable existe toujours
-  let viewData = {
-    title: "Bienvenue sur notre site de réservation !",
-    subtitle: "Accueil",
-    content:
-      "Ceci est un contenu dynamique provenant d'un objet, avec la key 'content'.",
-    imageName: "2025-11-21-1019_0_Original_resultat.jpg",
-    // Initialiser hotelsList pour garantir qu'elle existe toujours
-    hotelsList: [],
-  };
-
-  res.render("index", viewData);
-});
-
 
 // Version avec module.exports pour les tests avec Supertest
 if (require.main === module) {
